@@ -1,0 +1,20 @@
+.home-content {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.home-name {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.home-title {
+
+}

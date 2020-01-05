@@ -1,0 +1,44 @@
+.navigation-container {
+    display: flex;
+    margin: 1rem 0 0 0;
+
+}
+
+.navigation-left-header {
+    display: flex;
+    flex: 2;
+    justify-content: center;
+}
+
+.navigation-left-links {
+    display: flex;
+    flex: 10;
+    }
+
+.navigation-right-links {
+    display: flex;
+    flex: 2;
+    justify-content: center;
+
+}
+
+
+
+.navigation-main-link {
+    margin-right: 3rem;
+
+}
+
+.navigation-link {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+.navigation-link:hover {
+    color: red;
+}
+
+.navigation-link:active {
+    color: rgb(35, 182, 35);
+}
