@@ -41,8 +41,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-size: 100% 130%;
-  background-repeat: no-repeat;
+  /* background-size: 100% 130%; */
+  /* background-repeat: no-repeat; */
   /* background-size: auto 170%; */
-  background-image: url("/piano.jpg"); 
+  /* background-image: url("/piano.jpg");  */
 }
