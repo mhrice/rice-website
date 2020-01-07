@@ -1,9 +1,8 @@
 .navigation-container {
     display: flex;
-    padding: 1rem;
     /* margin: 1rem 0 0 0; */
     /* background-color: #293038; */
-    /* height: 8%; */
+    height: 10vh;
 
 }
 
@@ -34,7 +33,7 @@
     text-decoration: none;
     color: white;
     font-size: 18px;
-    padding: 0.25rem;
+    padding: 1rem;
 
 }
 

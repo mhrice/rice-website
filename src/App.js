@@ -14,7 +14,7 @@ import Synthesis from './components/synthesis';
 // wrap the `spring` helper to use a bouncy config
 function bounce(val) {
   return spring(val, {
-    stiffness: 330,
+    stiffness: 200,
     damping: 22,
   });
 }
