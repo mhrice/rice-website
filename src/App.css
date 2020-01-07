@@ -50,3 +50,10 @@ div {
   outline: none;
   user-select: none;
 }
+.route-wrapper {
+  position: relative;
+}
+
+.route-wrapper>div {
+  position: absolute;
+}
