@@ -1,7 +1,53 @@
 .piano-container {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    
+    /* left: 25%; */
+    /* top: 0%; */
+    /* transform: translateX(-50%); */
+    z-index: 1;
+    /* height: 40%; */
+    /* width: 73.5%; */
+}
+
+.piano-key {
+    position: absolute;
+    padding: 1rem 0.25rem;
+    min-width: 2%;
     display: flex;
     justify-content: center;
-    /* border: 2px solid red; */
-    height: 40%;
-    width: 73.5%;
+    border: 1px solid grey;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: 0px 5px 1px rgba(148, 139, 139, 0.363);
+    cursor: pointer;
+}
+
+.piano-key:hover{
+    background-color: grey;
+}
+
+.piano-key:active {
+    background-color: gold;
+    box-shadow: none;
+    margin-top: 5px;
+}
+
+.white-key {
+    background-color: white;
+    color: white;
+    height: 10rem;
+    z-index: 0;
+}
+
+.black-key {
+    background-color: black;
+    color: black;
+    height: 5rem;
+    z-index: 1;
+}
+
+.piano-octave {
+    flex: 1;
+    display: flex;
 }

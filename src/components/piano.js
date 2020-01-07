@@ -1,72 +1,85 @@
-import React, { useState, useRef, useEffect } from "react"
-import * as THREE from "three"
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-import { ColladaLoader } from "three/examples/jsm/loaders/ColladaLoader"
-import { Canvas, extend, useThree, useRender } from "react-three-fiber"
-
+import React, { Component } from 'react';
 import "../styles/piano.css";
+import Tone from "tone";
 
-extend({ OrbitControls })
+import {midiToFreq} from "../utils";
 
-const SpaceShip = () => {
-  const [model, setModel] = useState()
+const START_KEY = 45;
+const END_KEY = 87;
+const START_PERCENT = 12.5;
+const NUM_KEYS = START_KEY - END_KEY;
+const keyNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const blackOrWhite = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0]
 
-  useEffect(() => {
-    new GLTFLoader().load("/scene.gltf", setModel)
-  })
 
-  return model ? <primitive object={model.scene} position={[-300, 20, 60]} rotation={[1.4, 0, 0]} scale={[1, 1, 1]}/> : null
-}
-
-const Piano2 = () => {
-  const [model, setModel] = useState()
-
-  useEffect(() => {
-    new ColladaLoader().load("/piano.dae", setModel)
-  })
-
-  return model ? <primitive object={model.scene} position={[-6.5, 0.3, 0]} rotation={[1.57, 0, 0]} scale={[0.02, 0.01, 0.01]} /> : null
-}
-
-const Controls = () => {
-  const orbitRef = useRef()
-  const { camera, gl } = useThree()
-
-//   useRender(() => {
-//     orbitRef.current.update()
-//   })
-
-  return (
-    <orbitControls
-      autoRotate
-      maxPolarAngle={Math.PI / 4}
-      minPolarAngle={Math.PI / 4}
-      args={[camera, gl.domElement]}
-      ref={orbitRef}
-    />
-  )
+function Key(props){
+    let position = props.position;
+    let className;
+    if(props.blackKey){
+        className = "piano-key black-key";
+        position -= 1.5
+    } else {
+        className = "piano-key white-key";
+    }
+    position +="%";
+    return (
+        <div 
+        className={className} 
+        style={{left: position}} 
+        onMouseDown={props.onMouseDown}
+        onMouseUp={props.onMouseUp}>
+        </div>
+    )
 }
 
 
-export default () => {
 
-  return (
-      <div className="piano-container">
-        <Canvas 
-          camera={{ position: [0, 0, 1.5]}}
-        >
-          {/* <ambientLight intensity={1} /> */}
-          {/* <spotLight position={[0, 100, 100]} intensity={3} penumbra={1} castShadow /> */}
-          <directionalLight position={[1, 0, 5]} intensity={0.8} />
+class Piano extends Component {
+    componentDidMount(){
+        Tone.context.lookAhead = 0;
+        this.synth = new Tone.Synth().toMaster();
 
-          {/* <fog attach="fog" args={["black", 10, 25]} /> */}
-          {/* <Controls /> */}
-          {/* <Box /> */}
-          {/* <Plane /> */}
-          {/* <SpaceShip /> */}
-          <Piano2/>
-        </Canvas>
-    </div>
-  )
+    }
+
+    handleMouseDown = (e, midiNum) =>{
+        this.synth.triggerAttack(midiToFreq(midiNum), "8n");
+        // console.log(midiNum)
+    }
+
+    handleMouseUp = (e) =>{
+        this.synth.triggerRelease();
+    }
+    createKeyboard = () =>{
+        let x = 0;
+        let keyboard = [];
+        let whiteKeyPosition = START_PERCENT;
+        for(let i = START_KEY; i < END_KEY; i++){
+            let keyName = keyNames[i % 12];
+            let blackKey = keyName.indexOf("#") !== -1;
+            keyboard.push(
+            <Key 
+            keyName={keyName} 
+            position={whiteKeyPosition} 
+            blackKey={blackKey} 
+            number={i} 
+            key={i} 
+            onMouseDown={e=>this.handleMouseDown(e, i)}
+            onMouseUp={this.handleMouseUp}
+            />
+            )
+            if(!blackKey){
+                x++;
+                whiteKeyPosition += 3;
+            }
+        }
+        return keyboard
+    }
+    render(){
+        return (
+            <div className="piano-container">
+                {this.createKeyboard()}
+            </div>
+        )
+    }
 }
+export default Piano;
