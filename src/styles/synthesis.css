@@ -1,0 +1,39 @@
+.synthesis-content {
+    height: 90vh;
+    width: 100vw;
+    background-color: white;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.synthesis-menu {
+    display: flex;
+    background-color: #616161;
+    border: 2px solid black;
+    border-radius: 8px;
+    /* justify-content: space-between; */
+    /* width: 80%; */
+
+}
+
+.synthesis-menu-item {
+    /* margin-left: 1rem; */
+    padding: 1rem 1.5rem;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+
+}
+
+.synthesis-menu-item:hover {
+    /* margin-left: 1rem; */
+    /* text-decoration: underline; */
+    background-color: #a0a0a0;
+}
+
+.synthesis-menu-item-active {
+    /* font-weight: bold; */
+    /* color: black; */
+    background-color: black;
+}

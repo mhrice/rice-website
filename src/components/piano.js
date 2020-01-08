@@ -21,6 +21,7 @@ function Key(props){
     } else {
         className = "piano-key white-key";
     }
+    
     position +="%";
     return (
         <div 
@@ -28,6 +29,7 @@ function Key(props){
         style={{left: position}} 
         onMouseDown={props.onMouseDown}
         onMouseUp={props.onMouseUp}>
+        {props.number === 60 && <div className="middle-c"></div>}    
         </div>
     )
 }
