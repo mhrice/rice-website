@@ -39,17 +39,25 @@ function Key(props){
 class Piano extends Component {
     componentDidMount(){
         Tone.context.lookAhead = 0;
-        this.synth = new Tone.Synth().toMaster();
+        this.synth = new Tone.PolySynth().toMaster();
+        this.allowed = true;
 
     }
 
     handleMouseDown = (e, midiNum) =>{
-        this.synth.triggerAttack(midiToFreq(midiNum), "8n");
+          if (e.repeat != undefined) {
+              this.allowed = !e.repeat;
+          }
+          if (!this.allowed) return;
+          this.allowed = false;
+        this.note = midiToFreq(midiNum)
+        this.synth.triggerAttack(midiToFreq(midiNum));
         // console.log(midiNum)
     }
 
     handleMouseUp = (e) =>{
-        this.synth.triggerRelease();
+        this.allowed = true;
+        this.synth.triggerRelease(this.note);
     }
     createKeyboard = () =>{
         let x = 0;
