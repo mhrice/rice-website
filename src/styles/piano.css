@@ -63,3 +63,11 @@
     background-color: #bebebe;
     z-index: 12;
 }
+
+.piano-sustain-button {
+    position: absolute;
+    top: -10%;
+    left: 12.5%;
+    z-index: 3;
+
+}

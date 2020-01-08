@@ -9,7 +9,6 @@ const END_KEY = 87;
 const START_PERCENT = 12.5;
 const NUM_KEYS = START_KEY - END_KEY;
 const keyNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-const blackOrWhite = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0]
 
 
 function Key(props){
@@ -27,8 +26,11 @@ function Key(props){
         <div 
         className={className} 
         style={{left: position}} 
-        onMouseDown={props.onMouseDown}
-        onMouseUp={props.onMouseUp}>
+        onPointerDown={props.onPointerDown}
+        onPointerOver={props.onPointerOver}
+        onPointerMove={props.onPointerMove}
+        onPointerUp={props.onPointerUp}
+        >
         {props.number === 60 && <div className="middle-c"></div>}    
         </div>
     )
@@ -41,24 +43,59 @@ class Piano extends Component {
         Tone.context.lookAhead = 0;
         this.synth = new Tone.PolySynth().toMaster();
         this.allowed = true;
+        this.PointerDown = false;
+        window.oncontextmenu = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        };
 
     }
 
-    handleMouseDown = (e, midiNum) =>{
-          if (e.repeat != undefined) {
-              this.allowed = !e.repeat;
-          }
-          if (!this.allowed) return;
-          this.allowed = false;
+    handlePointerDown = (e, midiNum) =>{
+        this.over = false;
+        console.log("DOWN")
+        if (e.repeat != undefined) {
+            this.allowed = !e.repeat;
+        }
+        if (!this.allowed) return;
+        this.allowed = false;
+        this.PointerDown = true;
         this.note = midiToFreq(midiNum)
         this.synth.triggerAttack(midiToFreq(midiNum));
-        // console.log(midiNum)
     }
 
-    handleMouseUp = (e) =>{
+    handlePointerMove = e => {
+        e.preventDefault();
+        this.over = false;
+        if(e.pointerType === "touch"){
+            this.synth.triggerRelease(this.note);
+            this.allowed = true;
+            this.PointerDown = false;
+        }
+
+    }
+
+    handlePointerOver = (e, midiNum) => {
+        console.log("OVER")
+        this.over = true;
+        if(this.PointerDown && this.note !== midiToFreq(midiNum)){
+            console.log(this.note)
+            this.synth.triggerRelease(this.note);
+            this.synth.triggerAttack(midiToFreq(midiNum));
+            this.note = midiToFreq(midiNum)
+        }
+    }
+
+    handlePointerUp = (e) =>{
+        this.over = false;
+        console.log("UP")
         this.allowed = true;
+        this.PointerDown = false;
         this.synth.triggerRelease(this.note);
     }
+
+
     createKeyboard = () =>{
         let x = 0;
         let keyboard = [];
@@ -73,8 +110,11 @@ class Piano extends Component {
             blackKey={blackKey} 
             number={i} 
             key={i} 
-            onMouseDown={e=>this.handleMouseDown(e, i)}
-            onMouseUp={this.handleMouseUp}
+            onPointerDown={e=>this.handlePointerDown(e, i)}
+            onPointerOver={e=>this.handlePointerOver(e, i)}
+            onPointerMove={this.handlePointerMove}
+            onPointerUp={this.handlePointerUp}
+
             />
             )
             if(!blackKey){
@@ -86,7 +126,8 @@ class Piano extends Component {
     }
     render(){
         return (
-            <div className="piano-container">
+            <div className="piano-container" onPointerLeave={this.handlePointerUp}>
+                {/* <button className="piano-sustain-button"> <i>Sustain </i>(shift) </button> */}
                 {this.createKeyboard()}
             </div>
         )
