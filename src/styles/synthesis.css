@@ -1,12 +1,3 @@
-.synthesis-content {
-    height: 90vh;
-    width: 100vw;
-    background-color: white;
-    color: white;
-    display: flex;
-    flex-direction: column;
-}
-
 .synthesis-menu {
     display: flex;
     background-color: #616161;
@@ -36,4 +27,27 @@
     /* font-weight: bold; */
     /* color: black; */
     background-color: black;
+}
+
+.synthesis-content {
+    height: 90vh;
+    width: 100vw;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.synthesis-content-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.synthesis-content-text {
+    margin: 1rem 3rem;
+    display: flex;
 }

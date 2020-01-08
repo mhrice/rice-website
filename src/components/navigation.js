@@ -20,7 +20,7 @@ class Navigation extends Component {
                 <NavLink to="/synthesis" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Synthesis Demos</NavLink>
             </div>
             <div className="navigation-right-links">
-                <NavLink to="/contact" className="navigation-link" activeStyle={{fontWeight: "bold"}}> Contact</NavLink>
+                <a href="mailto:mattricesound@gmail.com" target="_top" className="navigation-link contact-link" activeStyle={{fontWeight: "bold"}}> Contact</a>
             </div>
         </div>
         )

@@ -47,3 +47,28 @@
     text-decoration: none;
     /* color: rgb(35, 182, 35); */
 }
+
+.contact-link {
+    background-color: transparent;
+    border: 2px solid rgb(9, 160, 206);
+    width: 100px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.contact-link:hover {
+    background-color: rgb(9, 160, 206);
+    text-decoration: none;
+
+}
+
+.contact-link:active {
+    background-color: rgba(9, 160, 206, 0.527);
+    border: 2px solid rgba(9, 160, 206, 0.014);
+
+}

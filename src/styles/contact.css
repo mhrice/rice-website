@@ -1,0 +1,8 @@
+.contact-content {
+ height: 90vh;
+ width: 100vw;
+ background-color: white;
+ color: black;
+ display: flex;
+ flex-direction: column;
+}
