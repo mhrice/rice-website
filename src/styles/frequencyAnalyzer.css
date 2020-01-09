@@ -1,4 +1,31 @@
-#nexus-ui-multislider-2 {
+.frequency-analyser-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid grey;
+    border-radius: 22px;
+    background-color: rgb(228, 228, 228);
+
+
+}
+
+.frequency-analyser-canvas {
+    background-color: rgb(238, 238, 238);
+
+}
+
+.frequency-analyser-title {
+    font-size: 14px;
+    /* font-weight: bold; */
+}
+
+ #nexus-ui-multislider-2 {
+     /* margin: 0.5rem 0; */
+}
+
+ #nexus-ui-multislider-3 {
     pointer-events: none;
     cursor: default;
 }

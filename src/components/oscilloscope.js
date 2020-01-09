@@ -35,7 +35,6 @@ class Oscilloscope extends React.Component {
         this.ctx.moveTo(0, midpoint);
         let valuesPerPixel = FFTSIZE / WIDTH;
         let x = 0;
-        console.log(values)
         this.ctx.clearRect(0, 0, WIDTH, HEIGHT);
         for(let i = 0; i < values.length; i+=valuesPerPixel){
             let value = values[Math.round(i)]*midpoint+midpoint;
@@ -50,12 +49,15 @@ class Oscilloscope extends React.Component {
 
     render(){
     return (
+        <div className="oscilloscope-container">
+        <div className="oscilloscope-title">Waveform</div>
         <canvas
         width={WIDTH}
         height={HEIGHT}
         className="oscilloscope-canvas"
         ref={c=>{this.canvas = c}}
         />
+        </div>
     )
     }
 }

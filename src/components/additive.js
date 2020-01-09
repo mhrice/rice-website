@@ -1,7 +1,9 @@
 import React from 'react';
 import Tone from "tone";
-import { Multislider } from "react-nexusui";
+import { Multislider, Select } from "react-nexusui";
 import * as Nexus from "nexusui";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 
 import { convertToLog } from "../utils";
 import FrequencyAnalyser from "./frequencyAnalyzer";
@@ -14,7 +16,8 @@ class Additive extends React.Component{
         weights[0] = 1;
         this.state = {
             weights: weights,
-            playing: false
+            playing: false,
+            preset: 0
         }
     }
     componentDidMount(){
@@ -24,15 +27,61 @@ class Additive extends React.Component{
         // console.log(this.synth.partials)    
         this.synth.toMaster();
         this.forceUpdate();
+        this.setState({preset: 0})
     }
 
     handleWeightsChange = weights => {
         this.setState({weights: weights})
-        weights = weights.map(weight=>convertToLog(weight, 0, 1, 0.0001, 1));
+        // weights = weights.map(weight=>convertToLog(weight, 0, 1, 0.0001, 1));
         this.synth.oscillator.partials = weights;
-
+        this.setState({preset: 4});
     }
 
+    handlePresetChange = preset => {
+        let weights = new Array(32).fill(0);
+        let weightUpdate = true;
+        switch(preset.index){
+            case 0: 
+                // Sine
+                weights[0] = 1;
+                break
+            case 1:
+                // Square
+                for(let i = 0; i < weights.length; i++){
+                    if(i % 2 === 0){
+                        weights[i] = 1 / (i + 1);
+                    }
+                }
+                break;
+            case 2:
+                // Saw
+                for (let i = 0; i < weights.length; i++) {
+                        weights[i] = 1 / (i + 1);
+                }
+                break;
+            case 3:
+                // Triangle
+                for (let i = 0; i < weights.length; i++) {
+                    if (i % 2 === 0) {
+                        weights[i] = 1 / ((i+1)*(i+1));
+                    }
+                }
+                break;
+            case 4:
+                weightUpdate = false;
+                break;
+            default:
+                weights[0] = 1;
+                break;
+        }
+        this.setState({preset: preset.index});
+        if(weightUpdate){
+            this.synth.oscillator.partials = weights;
+            // weights = weights.map(weight => convertToLog(weight, 0, 1, 0.0001, 1));
+            this.setState({weights: weights});
+        }
+            
+    }
     playSynth = e =>{
         this.synth.triggerAttack(440);
         this.setState({playing: true});
@@ -49,25 +98,45 @@ class Additive extends React.Component{
             <>
                 <div className="synthesis-content-title">Additive</div>
                 <div className="synthesis-content-text">
-                    Additive Synth is Nothing.
-                    <div className="synthesis-example-container">
-                        {!this.state.playing ? 
-                            <button onClick={this.playSynth}>Play</button> :
-                            <button onClick={this.stopSynth}>Stop</button>                             
-                        }
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
+                    Additive synthesis is when you eat cake
 
+                </div>
+                <div className="synthesis-example-container">
+                    {!this.state.playing ? 
+                        <button onClick={this.playSynth}><FontAwesomeIcon icon={faPlay}/></button> :
+                        <button onClick={this.stopSynth}><FontAwesomeIcon icon={faStop}/></button>                             
+                    }
+                    <div className="synthesis-preset-container">
+                        <div className="synthesis-label">Presets</div>
+                        <Select 
+                        size={[300, 25]}
+                        className="synthesis-example-preset-menu"
+                        options = {["Sine", "Square", "Saw", "Triangle", "Custom"]}
+                        selectedIndex={this.state.preset}
+                        onChange = {this.handlePresetChange}
+                        />
+                    </div>
+                    <div className="synthesis-partials-container"> 
+                        <div className="synthesis-label">Partials</div>
                         <Multislider 
-                        size = {[200, 100]}
+                        size = {[664, 100]}
                         numberOfSliders = {32}
                         min={0}
                         max={1}
                         values={this.state.weights}
                         onChange = {this.handleWeightsChange}
                         />
-                        <div className="synthesis-example-analysis-container">
-                            <FrequencyAnalyser signal={this.synth}/>
-                            <Oscilloscope signal={this.synth}/>
-                        </div>
+                    </div>
+                    <div className="synthesis-example-analysis-container">
+                        <Oscilloscope signal={this.synth}/>
+                        <FrequencyAnalyser signal={this.synth}/>
                     </div>
                 </div>
             </>

@@ -1,10 +1,22 @@
+.synthesis-page {
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 90vh; 
+    overflow-y: scroll;
+
+}
+
 .synthesis-menu {
     display: flex;
+    box-sizing: border-box;
     background-color: #616161;
     border: 2px solid black;
     border-radius: 8px;
-    /* justify-content: space-between; */
-    /* width: 80%; */
+    width: 100%;
 
 }
 
@@ -30,12 +42,14 @@
 }
 
 .synthesis-content {
-    height: 90vh;
-    width: 100vw;
+    box-sizing: border-box;
     background-color: white;
     color: black;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
 }
 
 .synthesis-content-title {
@@ -48,11 +62,44 @@
 }
 
 .synthesis-content-text {
-    margin: 1rem 3rem;
     display: flex;
-    flex-direction: column;
+    width: 50%;
+    padding: 0.5rem;
 }
 
-.synthesis-example-analysis-container{
+.synthesis-example-container {
     display: flex;
+    flex-direction: column;
+    border-radius: 22px;
+    border: 2px solid grey;
+    justify-content: center;
+    padding: 1rem;
+    /* width: 100%; */
+
+}
+
+.synthesis-preset-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.synthesis-label {
+    font-size: 14px;
+    margin: 0.5rem 0;
+
+}
+
+
+
+.synthesis-example-analysis-container {
+    display: flex;
+    /* flex-grow: 0.25; */
+    margin-top: 0.5rem;
+    justify-content: space-between;
+}
+
+#nexus-ui-select-1 {
+    /* margin: 0.5rem 0!important; */
 }

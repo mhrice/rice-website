@@ -64,7 +64,7 @@ class Synthesis extends Component {
 
     render(){
         return (
-            <div className="synthesis-content">
+            <div className="synthesis-page">
                 <div className="synthesis-menu">
                     {menuItems.map((item, index)=>{
                         let className = "synthesis-menu-item";
