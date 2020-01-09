@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import "../styles/synthesis.css";
 import Additive from "./additive";
 import WhatIsSynthesis from "./whatIsSynthesis";
@@ -49,41 +49,29 @@ const menuItems = [
         component: <ComingSoon name="Machine Learning"/>
     },
 ]
-class Synthesis extends Component {
-    constructor(){
-        super();
-        this.state = {
-            currentItem: 1
-        }
-    }
 
-
-    handleLinkClick = i =>{
-        this.setState({currentItem: i});
-    }
-
-    render(){
-        return (
-            <div className="synthesis-page">
-                <div className="synthesis-menu">
-                    {menuItems.map((item, index)=>{
-                        let className = "synthesis-menu-item";
-                        if (item.name === menuItems[this.state.currentItem].name) {
-                            className +=" synthesis-menu-item-active";
-                        }
-                        return (
-                            <div className={className} onClick={e=>this.handleLinkClick(index)} key={item.name}>{item.name}</div>
-                        )
+function Synthesis(){
+    let [currentItem, setCurrentItem] = useState(0);
+    return (
+        <div className="synthesis-page">
+            <div className="synthesis-menu">
+                {menuItems.map((item, index)=>{
+                    let className = "synthesis-menu-item";
+                    if (item.name === menuItems[currentItem].name) {
+                        className +=" synthesis-menu-item-active";
                     }
-                    )}
+                    return (
+                        <div className={className} onClick={e=>setCurrentItem(index)} key={item.name}>{item.name}</div>
+                    )
+                }
+                )}
 
-                </div>
-                <div className="synthesis-content">
-                    {menuItems[this.state.currentItem].component}
-                </div>
             </div>
-        )
-    }
+            <div className="synthesis-content">
+                {menuItems[currentItem].component}
+            </div>
+        </div>
+    )
 }
 
 export default Synthesis;
