@@ -50,4 +50,9 @@
 .synthesis-content-text {
     margin: 1rem 3rem;
     display: flex;
+    flex-direction: column;
+}
+
+.synthesis-example-analysis-container{
+    display: flex;
 }

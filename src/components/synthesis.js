@@ -53,7 +53,7 @@ class Synthesis extends Component {
     constructor(){
         super();
         this.state = {
-            currentItem: 0
+            currentItem: 1
         }
     }
 
