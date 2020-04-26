@@ -77,6 +77,17 @@
     /* width: 100%; */
 
 }
+.synthesis-freq-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.synthesis-freq-number-container {
+    display: flex;
+    align-items: center;
+}
 
 .synthesis-preset-container {
     display: flex;

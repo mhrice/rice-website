@@ -1,6 +1,6 @@
 import React from 'react';
 import Tone from "tone";
-import { Multislider, Select } from "react-nexusui";
+import { Multislider, Select, Number } from "react-nexusui";
 import * as Nexus from "nexusui";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
@@ -17,17 +17,16 @@ class Additive extends React.Component{
         this.state = {
             weights: weights,
             playing: false,
-            preset: 0
+            preset: 0,
+            freq: 440
         }
     }
     componentDidMount(){
         this.synth = new Tone.Synth();
         
         this.synth.oscillator.partials = this.state.weights;
-        // console.log(this.synth.partials)    
         this.synth.toMaster();
-        this.forceUpdate();
-        this.setState({preset: 0})
+        this.setState({preset: 0});
     }
 
     handleWeightsChange = weights => {
@@ -82,8 +81,12 @@ class Additive extends React.Component{
         }
             
     }
+    handleFreqChange = val => {
+        this.setState({freq: val})
+        this.synth.frequency.value = val;
+    }
     playSynth = e =>{
-        this.synth.triggerAttack(440);
+        this.synth.triggerAttack(this.state.freq);
         this.setState({playing: true});
     }
 
@@ -113,10 +116,22 @@ class Additive extends React.Component{
                         <button onClick={this.playSynth}><FontAwesomeIcon icon={faPlay}/></button> :
                         <button onClick={this.stopSynth}><FontAwesomeIcon icon={faStop}/></button>                             
                     }
+                    <div className="synthesis-freq-container">
+                        <div className="synthesis-label">Frequency (Hz)</div>
+                            <div className="synthesis-freq-number-container">
+                            <Number 
+                            size={[50, 25]}
+                            min={20}
+                            max={4000}
+                            step={1}
+                            value={this.state.freq}
+                            onChange={this.handleFreqChange}/>
+                            </div>
+                        </div>
                     <div className="synthesis-preset-container">
                         <div className="synthesis-label">Presets</div>
                         <Select 
-                        size={[300, 25]}
+                        size={[75, 25]}
                         className="synthesis-example-preset-menu"
                         options = {["Sine", "Square", "Saw", "Triangle", "Custom"]}
                         selectedIndex={this.state.preset}

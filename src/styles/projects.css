@@ -1,0 +1,57 @@
+.projects-content {
+    display: flex;
+    /* grid-template-rows: 25% 100px auto; */
+    /* background-color: red; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("/background.webp");
+    background-repeat: no-repeat;
+    background-size: cover;   
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* background-color: blue; */
+    gap: 10px 10%;
+    width: 80%;
+    margin-top: 4%;
+    /* margin: 10%; */
+    /* padding: 0% 5%; */
+}
+
+.projects-title {
+    font-size: 3rem;
+    color: white;
+    margin-top: 1%;
+    /* width: 100%; */
+}
+
+.project-container {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: aliceblue;
+    /* padding: 5%; */
+}
+
+.project-container:hover{
+  box-shadow: -5px 0px 4px -7px rgba(0, 0.0, 0.16),
+  5px 0px 4px -7px rgba(0, 0.0, 0.23),
+  5px 5px 10px 5px rgba(0, 0, 0, 0.35);
+
+}
+
+.project-img {
+    height: 16rem;
+}
+
+.project-text {
+    padding: 2% 5%;
+}
+.project-title {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+}
+

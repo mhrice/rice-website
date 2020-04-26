@@ -43,7 +43,7 @@ class FrequencyAnalyser extends React.Component {
     render(){
     return (
         <div className="frequency-analyser-container">
-            <div className="frequency-analyser-title">Frequency</div>
+            <div className="frequency-analyser-title">Frequency Analyser</div>
         <Multislider
                 size = {[300, 100]}
                 numberOfSliders = {1024}

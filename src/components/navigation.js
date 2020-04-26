@@ -3,7 +3,26 @@ import "../styles/navigation.css";
 import { Link, NavLink } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 
+var firebase = require('../firebase');
+var storage = firebase.storage();
+
 class Navigation extends Component {
+    downloadResume = () =>{
+    var pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume_04-26-20.pdf");
+    pathReference.getDownloadURL().then((url)=>{
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+        var blob = xhr.response;
+        };
+        xhr.open('GET', url);
+        xhr.send();
+        window.open(url, '_blank');
+
+    }).catch((e)=>{
+        console.log(e)
+    });
+    }    
     render(){
         let backgroundColor;
         if(this.props.location.pathname === "/"){
@@ -18,9 +37,11 @@ class Navigation extends Component {
                 <NavLink to="/about" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>About</NavLink>
                 <NavLink to="/projects" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Projects</NavLink>
                 <NavLink to="/synthesis" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Synthesis Demos</NavLink>
+                <div className="navigation-main-link navigation-link" onClick={this.downloadResume} activeStyle={{fontWeight: "bold"}}>Resume</div>
+
             </div>
             <div className="navigation-right-links">
-                <a href="mailto:mattricesound@gmail.com" target="_top" className="navigation-link contact-link"> Contact</a>
+                <a href="mailto:mattricesound@gmail.com" target="_blank" className="navigation-link contact-link"> Contact</a>
             </div>
         </div>
         )
