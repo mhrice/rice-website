@@ -16,13 +16,13 @@
     /* background-color: blue; */
     gap: 10px 10%;
     width: 80%;
-    margin-top: 4%;
+    margin-top: 3%;
     /* margin: 10%; */
     /* padding: 0% 5%; */
 }
 
 .projects-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: white;
     margin-top: 1%;
     /* width: 100%; */
@@ -31,27 +31,64 @@
 .project-container {
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    /* cursor: pointer; */
     background-color: aliceblue;
+    position: relative;
     /* padding: 5%; */
 }
 
 .project-container:hover{
-  box-shadow: -5px 0px 4px -7px rgba(0, 0.0, 0.16),
+  /* box-shadow: -5px 0px 4px -7px rgba(0, 0.0, 0.16),
   5px 0px 4px -7px rgba(0, 0.0, 0.23),
-  5px 5px 10px 5px rgba(0, 0, 0, 0.35);
+  5px 5px 10px 5px rgba(0, 0, 0, 0.35); */
 
 }
 
 .project-img {
     height: 16rem;
+    z-index: 5;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.project-img:hover{
+    box-shadow: -5px 0px 4px -4px rgba(0, 0.0, 0.16),
+    5px 0px 4px -4px rgba(0, 0.0, 0.23),
+    5px 5px 10px 5px rgba(0, 0, 0, 0.35);
 }
 
 .project-text {
     padding: 2% 5%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
 }
 .project-title {
-    font-size: 2.25rem;
+    font-size: 2rem;
     margin-bottom: 0.5rem;
+}
+
+.project-description {
+    font-size: 14px;
+    flex: 1;
+}
+.project-date-and-github {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-date {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.project-github {
+    height: 20px;
+    width: 20px;
+    z-index: 10;
 }
 

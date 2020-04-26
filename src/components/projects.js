@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import "../styles/projects.css";
 import Black from "../resources/black.jpg";
+import Github from "../resources/GitHub-Mark-32px.png";
 import ProjectData from "../projectData"
-
 function Project(props){
    return (
        <div className="project-container">
-           <img src={props.picture} alt={props.title} className="project-img"></img>
+           <a href={props.link} target="_blank"><img src={props.picture} alt={props.title} className="project-img"></img></a>
            <div className="project-text">
              <div className="project-title">{props.title}</div>
              <div className="project-description">{props.description}</div>
-             <div className="project-date">{props.date}</div>
+             <div className="project-date-and-github">
+                <div className="project-date">{props.date}</div>
+                <a className="project-github" href={props.githubLink} target="_blank"><img src={Github} alt="github"/></a> 
+            </div>
             </div>
        </div>
    ) 
@@ -30,6 +33,8 @@ class Projects extends Component {
                         description={item.description}
                         date={item.date}
                         picture={item.picture}
+                        link={item.link}
+                        githubLink={item.githubLink}
                         />
                         )
                     })}
