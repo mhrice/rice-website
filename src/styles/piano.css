@@ -14,7 +14,7 @@
 .piano-key {
     position: absolute;
     padding: 1rem 0.25rem;
-    min-width: 2%;
+    width: 30px;
     display: flex;
     justify-content: center;
     border: 1px solid grey;

@@ -2,7 +2,8 @@
     display: flex;
     /* margin: 1rem 0 0 0; */
     /* background-color: #293038; */
-    height: 10vh;
+    margin-top: 1rem;
+    height: calc(10vh-1rem);
 
 }
 
@@ -60,6 +61,7 @@
     margin: 8px;
     cursor: pointer;
     color: white;
+    height: 1rem;
 }
 
 .contact-link:hover {

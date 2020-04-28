@@ -4,24 +4,24 @@ import Tone from "tone";
 
 import {midiToFreq} from "../utils";
 
-const START_KEY = 45;
-const END_KEY = 87;
-const START_PERCENT = 12.5;
-const NUM_KEYS = START_KEY - END_KEY;
+const START_PERCENT_OF_SCREEN = 0.2;
+const END_PERCENT_OF_SCREEN = 0.8;
 const keyNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const KEY_SIZE = 40;
+const MIDDLE_NOTE = 60; 
 
 
+    
 function Key(props){
     let position = props.position;
     let className;
     if(props.blackKey){
         className = "piano-key black-key";
-        position -= 1.5
+        position -= 20
     } else {
         className = "piano-key white-key";
     }
-    
-    position +="%";
+    position +="px";
     return (
         <div 
         className={className} 
@@ -39,6 +39,14 @@ function Key(props){
 
 
 class Piano extends Component {
+    constructor(){
+        super();
+        this.state = {
+            width: window.innerWidth,
+            startKey: 59,
+            endKey: 61
+        }
+    }
     componentDidMount(){
         Tone.context.lookAhead = 0;
         this.synth = new Tone.PolySynth().toMaster();
@@ -49,7 +57,12 @@ class Piano extends Component {
             event.stopPropagation();
             return false;
         };
+        this.calculateKeyPositions();
+        window.addEventListener("resize", this.calculateKeyPositions);
+    }
 
+    componentWillUnmount(){
+        window.removeEventListener("resize", this.calculateKeyPositions);
     }
 
     handlePointerDown = (e, midiNum) =>{
@@ -96,11 +109,60 @@ class Piano extends Component {
     }
 
 
+
+    calculateKeyPositions = () =>{
+        let width = window.innerWidth;
+        const START_PIXEL = START_PERCENT_OF_SCREEN * width;
+        const END_PIXEL = END_PERCENT_OF_SCREEN * width;
+        let totalNumKeys = 0;
+        let i = (END_PIXEL + START_PIXEL) / 2;
+        let currentNote = MIDDLE_NOTE;
+        // Left side
+        while (i >= START_PIXEL) {
+            let keyName = keyNames[currentNote % 12];
+            let blackKey = keyName.indexOf("#") !== -1;
+            if (!blackKey) {
+                i -= KEY_SIZE;
+            }
+            totalNumKeys++;
+            currentNote--;
+        }
+        let startKey = currentNote;
+        i = (END_PIXEL + START_PIXEL) / 2;
+        currentNote = MIDDLE_NOTE;
+        // Right side 
+        while (i <= END_PIXEL) {
+            let keyName = keyNames[currentNote % 12];
+            let blackKey = keyName.indexOf("#") !== -1;
+            if (!blackKey) {
+                i += KEY_SIZE;
+            }
+            totalNumKeys++;
+            currentNote++;
+        }
+        let endKey = currentNote;
+
+        this.setState({
+            startKey: startKey,
+            endKey: endKey,
+            width: width
+        })
+    }
     createKeyboard = () =>{
         let x = 0;
         let keyboard = [];
-        let whiteKeyPosition = START_PERCENT;
-        for(let i = START_KEY; i < END_KEY; i++){
+        // let whiteKeyPosition = START_PERCENT_OF_SCREEN/100;
+        let whiteKeyPosition = this.state.width * START_PERCENT_OF_SCREEN;
+        let {startKey, endKey} = this.state;
+        if (keyNames[startKey % 12].indexOf("#") !== -1){            
+            // Cannot start with Black Key
+            startKey --;
+        }
+        if (keyNames[(endKey - 1) % 12].indexOf("#") !== -1) {
+            // Cannot end with Black Key
+            endKey++;
+        }
+        for(let i = startKey; i < endKey; i++){
             let keyName = keyNames[i % 12];
             let blackKey = keyName.indexOf("#") !== -1;
             keyboard.push(
@@ -119,7 +181,9 @@ class Piano extends Component {
             )
             if(!blackKey){
                 x++;
-                whiteKeyPosition += 3;
+                // whiteKeyPosition += 3;
+                whiteKeyPosition += 40;
+                // whiteKeyPositionString = `${whiteKeyPosition * this.state.width}px`;
             }
         }
         return keyboard
