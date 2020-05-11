@@ -4,6 +4,13 @@ import "../styles/home.css";
 
 
 class Home extends Component {
+    componentDidMount(){
+        this.props.homeMounted(1);
+    }
+
+    componentWillUnmount(){
+        this.props.homeMounted(0);
+    }
     render(){
         return (
             <div className="home-container">

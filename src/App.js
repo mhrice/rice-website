@@ -15,7 +15,7 @@ import Synthesis from './components/synthesis';
 function bounce(val) {
   return spring(val, {
     stiffness: 200,
-    damping: 22,
+    damping: 30,
   });
 }
 
@@ -35,10 +35,29 @@ const transition = {
 };
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      atHome: true
+    }
+  }
+  homeMounted = atHome => {
+    // console.log("Hi", b)
+
+    this.setState({atHome: atHome});
+  }
+
   render(){
+    let className;
+    if(this.state.atHome){
+      className="app-container";
+    } else {
+      className="app-container-grey-background";
+    }
+
     return (
     <BrowserRouter>        
-      <div className="app-container">
+      <div className={className}>
         <Navigation/>
         <AnimatedSwitch
             atEnter={transition.atEnter}
@@ -50,8 +69,8 @@ class App extends Component {
           <Route path="/projects" component={Projects}/>
           <Route path="/contact" component={Contact}/>
           <Route path="/synthesis" component={Synthesis}/>
-          <Route path="/*" component={Home} />
-          </AnimatedSwitch>        
+          <Route path="/*" render={props=> <Home {...props} homeMounted={this.homeMounted}/>}/>
+          </AnimatedSwitch> 
       </div>
     </BrowserRouter>        
 

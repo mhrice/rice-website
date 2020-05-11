@@ -47,6 +47,14 @@
   background-size: cover;
 }
 
+.app-container-grey-background {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  height: 100vh;
+  background-color: #293038;
+}
+
 div {
   outline: none;
   user-select: none;
@@ -65,7 +73,20 @@ img {
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
+  /* width: 10px; */
+  /* background: transparent; */
+  display: none;
   /* make scrollbar transparent */
+}
+
+
+.test {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  height: 100vh;
+  width: 1%;
+  /* background-color: blue; */
+    transform: translateX(-50%);
+
 }

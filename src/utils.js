@@ -9,5 +9,18 @@ function convertToLog(value, originalMin, originalMax, newMin, newMax) {
     // console.log(y);
     return y;
 }
+function arrSum (arr) {
+    if (!Array.isArray(arr)) {
+        return 0;
+    }
+    return arr.reduce(function (a, b) {
+        return a + b
+    }, 0);
+}
 
-export {midiToFreq, convertToLog};
+function arrMax(arr){
+    return arr.reduce(function (a, b) {
+        return Math.max(a, b);
+    });
+}
+export {midiToFreq, convertToLog, arrSum, arrMax};

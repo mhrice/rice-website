@@ -10,7 +10,7 @@ const keyNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B
 const KEY_SIZE = 40;
 const MIDDLE_NOTE = 60; 
 
-
+const SOUND_SELECTIONS = ["SINE", "SQUARE", "TRIANGLE", "SAW", "CUSTOM"];
     
 function Key(props){
     let position = props.position;
@@ -44,7 +44,8 @@ class Piano extends Component {
         this.state = {
             width: window.innerWidth,
             startKey: 59,
-            endKey: 61
+            endKey: 61,
+            soundChoice: "SINE"
         }
     }
     componentDidMount(){
@@ -59,13 +60,17 @@ class Piano extends Component {
         };
         this.calculateKeyPositions();
         window.addEventListener("resize", this.calculateKeyPositions);
+        window.addEventListener("orientationchange", this.calculateKeyPositions);
     }
 
     componentWillUnmount(){
         window.removeEventListener("resize", this.calculateKeyPositions);
+        window.removeEventListener("orientationchange", this.calculateKeyPositions);
+
     }
 
     handlePointerDown = (e, midiNum) =>{
+        e.preventDefault();
         this.over = false;
         console.log("DOWN")
         if (e.repeat != undefined) {
@@ -87,9 +92,11 @@ class Piano extends Component {
             this.PointerDown = false;
         }
 
+
     }
 
     handlePointerOver = (e, midiNum) => {
+        e.preventDefault();
         console.log("OVER")
         this.over = true;
         if(this.PointerDown && this.note !== midiToFreq(midiNum)){
@@ -112,6 +119,7 @@ class Piano extends Component {
 
     calculateKeyPositions = () =>{
         let width = window.innerWidth;
+        console.log(width)
         const START_PIXEL = START_PERCENT_OF_SCREEN * width;
         const END_PIXEL = END_PERCENT_OF_SCREEN * width;
         let totalNumKeys = 0;
@@ -188,11 +196,46 @@ class Piano extends Component {
         }
         return keyboard
     }
+
+    handleOptionsChange = option =>{
+        this.setState({soundChoice: option})
+    }
+
+    renderSoundSelections = () =>{
+        console.log(this.state.soundChoice)
+        return (
+            SOUND_SELECTIONS.map((sound, i)=>{
+                let style;
+                if (this.state.soundChoice === sound){
+                    style={"backgroundColor": "rgba(127, 67, 37, 0.5)"};
+                } else {
+                    style={"backgroundColor": "#00010F"};
+                }
+               return (
+                <>
+                <div 
+                    style={style}
+                    onClick={e=>this.handleOptionsChange(sound)}
+                    key={i}
+                    className="piano-option"
+                ></div>
+                </>
+               )
+            })
+        )
+    }
+
+
     render(){
         return (
             <div className="piano-container" onPointerLeave={this.handlePointerUp}>
+                <div className="piano-options-container">
+                    {this.renderSoundSelections()}
+                </div>
+                <div className="piano-keyboard-container" onPointerLeave={this.handlePointerUp}>
                 {/* <button className="piano-sustain-button"> <i>Sustain </i>(shift) </button> */}
                 {this.createKeyboard()}
+                </div>
             </div>
         )
     }

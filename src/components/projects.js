@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "../styles/projects.css";
 import Black from "../resources/black.jpg";
-import Github from "../resources/GitHub-Mark-32px.png";
+import Github from "../resources/GitHub-Mark-Light-32px.png";
 import ProjectData from "../projectData"
 function Project(props){
    return (
@@ -38,6 +38,12 @@ class Projects extends Component {
                         />
                         )
                     })}
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
+                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
                     <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
 
                 </div>

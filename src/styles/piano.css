@@ -1,14 +1,45 @@
 .piano-container {
-    position: relative;
-    flex: 1;
+    flex: 1.5;
     width: 100%;
-    
-    /* left: 25%; */
-    /* top: 0%; */
-    /* transform: translateX(-50%); */
+    /* background-color: blue; */
+    margin-top: 5.5rem;
+    position: relative;
+
+}
+
+.piano-options-container {
+    display: flex;
+    position: absolute;
+    left: 20%;
+    bottom: 100%;
+    z-index: 22;
+    /* transform: translateX(-40%); */
+    /* padding: 1rem; */
+
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin-bottom: 0.75rem;
+    /* background-color: rgba(127, 67, 37, 0.555) */
+    /* width: 100%; */
+    /* background-color: green; */
+}
+
+
+.piano-option {
+    outline: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 0.5rem 0 0;
+}
+
+
+.piano-keyboard-container {
+    position: relative;
     z-index: 1;
-    /* height: 40%; */
-    /* width: 73.5%; */
+    flex: 1;
+
 }
 
 .piano-key {
@@ -21,6 +52,7 @@
     border-radius: 0px 0px 5px 5px;
     box-shadow: 0px 5px 1px rgba(148, 139, 139, 0.363);
     cursor: pointer;
+    touch-action: none;
 }
 
 .piano-key:hover{

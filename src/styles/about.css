@@ -1,8 +1,9 @@
 .about-content {
     height: 90vh;
     width: 100vw;
-    background-color: white;
-    color: black;
+    background-color: #293038;
+    /* background-color: #000C22; */
+    color: white;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -61,4 +62,12 @@ ul {
 .about-text-description {
     font-size: 1em;
 }
+
+.list-icon {
+    /* flex: 1; */
+    height: 2em;
+    /* width: 1em; */
+    /* margin-right: 1em */
+}
+
 

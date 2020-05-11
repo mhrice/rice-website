@@ -1,9 +1,8 @@
 .synthesis-page {
-    background-color: white;
-    color: black;
+    background-color: #293038;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* flex-direction: column; */
+    /* align-items: center; */
     width: 100vw;
     height: 90vh; 
     overflow-y: scroll;
@@ -12,33 +11,82 @@
 
 .synthesis-menu {
     display: flex;
+    flex-direction: column;
     box-sizing: border-box;
-    background-color: #616161;
-    border: 2px solid black;
-    border-radius: 8px;
-    width: 100%;
+    /* background-color: #616161; */
+    background-color: #293038;
+    /* border: 2px solid black; */
+    /* border-radius: 8px; */
+    /* width: 100%; */
+    z-index: 10;
+    position: absolute;
+    width: 70px;
+    height: 100%;
+    /* left: -200px; */
+    
+}
 
+@keyframes hover-width {
+  from {width: 250px;}
+  to {width: 20%;}
+}
+
+.synthesis-menu:hover {
+    width: 20%;
+    /* animation: hover-width 0.5s ease-in; */
 }
 
 .synthesis-menu-item {
     /* margin-left: 1rem; */
     padding: 1rem 1.5rem;
-    font-size: 14px;
-    color: rgb(255, 255, 255);
+    /* font-size: 14px; */
+    font-size: 1rem;
     cursor: pointer;
-
+    position: relative;
+    z-index: 15;
+    display: flex;
 }
 
 .synthesis-menu-item:hover {
-    /* margin-left: 1rem; */
-    /* text-decoration: underline; */
-    background-color: #a0a0a0;
+    background-color: #616161;
+}
+
+.synthesis-menu-arrow {
+position: absolute;
+right: 0px;
+top: 50%;
+transform: translate(0%, -50%);
+border-left: 0px solid transparent;
+border-right: 12px solid white;
+border-top: 12px solid transparent;
+border-bottom: 12px solid transparent;
+background-color: transparent;
+width: 0px;
+height: 0px;
+display: none;
+overflow-y: scroll;
+z-index: 25;
 }
 
 .synthesis-menu-item-active {
     /* font-weight: bold; */
-    /* color: black; */
-    background-color: black;
+    background-color: #616161;
+}
+
+.synthesis-menu-item-text {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 1rem;
+}
+
+.synthesis-menu-item-text:hover {
+    /* color: white!important; */
+    /* background-color: #616161; */
+}
+
+.synthesis-menu-item-icon {
+    stroke: white;
+    fill: white;
 }
 
 .synthesis-content {
@@ -48,15 +96,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    
+    width: calc(100% - 70px);
+    /* flex: 4; */
+    overflow-y: scroll;
+    height: 100%;
+    /* height: 90vh; */
+    position: absolute;
+    left: 70px;
+
 }
 
 .synthesis-content-title {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    font-size: 20px;
+    font-size: 66px;
     font-weight: bold;
 
 }
@@ -65,6 +119,7 @@
     display: flex;
     width: 50%;
     padding: 0.5rem;
+    /* font-size: 66px; */
 }
 
 .synthesis-example-container {
@@ -75,6 +130,8 @@
     justify-content: center;
     padding: 1rem;
     /* width: 100%; */
+    color: black;
+    background-color: white;
 
 }
 .synthesis-freq-container {
@@ -100,6 +157,15 @@
     font-size: 14px;
     margin: 0.5rem 0;
 
+}
+
+.synthesis-partials-container {
+
+}
+
+.synthesis-partials-values-container {
+    margin-top: 0.5rem;
+    display: flex;
 }
 
 

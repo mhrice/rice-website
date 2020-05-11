@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import "../styles/about.css";
-import Piano from "./piano";
 import Mixer from "../resources/mixer.svg";
 import DSP from "../resources/dsp.svg";
 import Code from "../resources/code.svg";
@@ -34,7 +33,7 @@ class About extends Component {
                         </div>                    
                     </div>
                     <div>I'm interested in <b>modern synthesis techniques</b>, <b>audio signal processing</b>, and <b>machine learning music applications.</b></div>
-                    <div>Currently, I'm a hardware engineer at Qualcomm, looking to enventually pursue a master's in music technology</div>
+                    <div>Currently, I'm a hardware engineer at Qualcomm, looking to eventually pursue a master's in music technology</div>
                 </div>
             </div>
         )

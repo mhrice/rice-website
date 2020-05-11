@@ -5,14 +5,16 @@ import * as Nexus from "nexusui";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 
-import { convertToLog } from "../utils";
+import { convertToLog, arrMax, arrSum } from "../utils";
 import FrequencyAnalyser from "./frequencyAnalyzer";
 import Oscilloscope from "./oscilloscope";
+
+const NUM_WEIGHTS = 32;
 
 class Additive extends React.Component{
     constructor(){
         super();
-        let weights = new Array(32).fill(0);
+        let weights = new Array(NUM_WEIGHTS).fill(0);
         weights[0] = 1;
         this.state = {
             weights: weights,
@@ -25,19 +27,32 @@ class Additive extends React.Component{
         this.synth = new Tone.Synth();
         
         this.synth.oscillator.partials = this.state.weights;
+        this.synth.volume.value = 0;
         this.synth.toMaster();
         this.setState({preset: 0});
     }
 
     handleWeightsChange = weights => {
-        this.setState({weights: weights})
-        // weights = weights.map(weight=>convertToLog(weight, 0, 1, 0.0001, 1));
+        let sum = arrSum(weights);
+        // let newGain;
+        // if (sum === 0) {
+        //     newGain = -Infinity;
+        // } else {
+        //     newGain = 2 * Math.log10(1 / sum);
+        //     // newGain = 0;
+        // }
+        this.setState({weights: weights, preset: 4});
+        weights = weights.map(weight =>{
+            return +convertToLog(weight, 0, 1, 0.001, 1).toFixed(2);
+        })
+        console.log(weights)
+        // this.synth.volume.exponentialRampToValueAtTime(newGain,this.synth.context.now() + 0.2);
         this.synth.oscillator.partials = weights;
-        this.setState({preset: 4});
+        // console.log(newGain);
     }
 
     handlePresetChange = preset => {
-        let weights = new Array(32).fill(0);
+        let weights = new Array(NUM_WEIGHTS).fill(0);
         let weightUpdate = true;
         switch(preset.index){
             case 0: 
@@ -69,14 +84,29 @@ class Additive extends React.Component{
             case 4:
                 weightUpdate = false;
                 break;
+            case 5:
+                for (let i = 0; i < weights.length; i++) {
+                    weights[i] = 1 ;
+                }
+                break;
             default:
                 weights[0] = 1;
                 break;
         }
         this.setState({preset: preset.index});
         if(weightUpdate){
+            let sum = arrSum(weights);
+            let newGain;
+            if(sum === 0){
+                newGain = -Infinity;
+            } else {
+                newGain = 2* Math.log10(1/sum);
+                // newGain = 0;
+            }
+
+            this.synth.volume.exponentialRampToValueAtTime(newGain,this.synth.context.now() + 0.2);
             this.synth.oscillator.partials = weights;
-            // weights = weights.map(weight => convertToLog(weight, 0, 1, 0.0001, 1));
+            console.log(newGain);
             this.setState({weights: weights});
         }
             
@@ -101,14 +131,10 @@ class Additive extends React.Component{
             <>
                 <div className="synthesis-content-title">Additive</div>
                 <div className="synthesis-content-text">
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
-                    Additive synthesis is when you eat cake
+                    {this.state.weights.map((weight)=>{
+                        return "Additive synthesis is when you eat cake"
+                    })}
+
 
                 </div>
                 <div className="synthesis-example-container">
@@ -133,7 +159,7 @@ class Additive extends React.Component{
                         <Select 
                         size={[75, 25]}
                         className="synthesis-example-preset-menu"
-                        options = {["Sine", "Square", "Saw", "Triangle", "Custom"]}
+                        options = {["Sine", "Square", "Saw", "Triangle", "Custom", "5"]}
                         selectedIndex={this.state.preset}
                         onChange = {this.handlePresetChange}
                         />
@@ -141,13 +167,27 @@ class Additive extends React.Component{
                     <div className="synthesis-partials-container"> 
                         <div className="synthesis-label">Partials</div>
                         <Multislider 
-                        size = {[664, 100]}
-                        numberOfSliders = {32}
+                        size = {[672, 100]}
+                        numberOfSliders = {NUM_WEIGHTS}
                         min={0}
                         max={1}
+                        candycane={NUM_WEIGHTS}
                         values={this.state.weights}
                         onChange = {this.handleWeightsChange}
                         />
+                        <div className="synthesis-partials-values-container">
+                        {this.state.weights.map(weight=>{
+                            return (
+                            <Number 
+                            size={[21, 25]}
+                            min={0}
+                            max={1}
+                            step={0.001}
+                            value={weight}
+                            />
+                            )
+                        })}
+                        </div>
                     </div>
                     <div className="synthesis-example-analysis-container">
                         <Oscilloscope signal={this.synth}/>
