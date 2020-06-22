@@ -1,0 +1,25 @@
+.xy-container {
+    /* background-color: grey; */
+    border: 3px solid #616161;
+    width: 175px;
+    /* height: 150px; */
+    cursor: grab;
+    /* color: rgb(32, 195, 245); */
+    /* flex: 1; */
+    height: 300px;
+    margin-right: 7%;
+    position: relative;
+}
+
+.sustain-button {
+    position: absolute;
+    bottom: -30px;
+    left: -3px;
+    border: 2px solid #616161;
+    padding: 2px;
+    font-size: 12px;
+    width: 173px;
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+}

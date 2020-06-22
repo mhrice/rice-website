@@ -1,10 +1,37 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import Tone from "tone";
 import { Multislider } from "react-nexusui";
-import { convertToLog, arrSumSquare, arrSum } from "../utils";
-import "../styles/frequencyAnalyzer.css";
+import { convertToLog } from "../utils";
+import * as d3 from "d3";
+import "../styles/d3Test.css";
 
-class FrequencyAnalyser extends React.Component {
+const dataset = [
+    [81.59, 39.14],
+    [79.14, 28.81],
+    [77.76, 24.41],
+    [79.51, 13.33],
+    [36.87, 12.88],
+    [16.61, 12.38],
+    [18.08, 32.88],
+    [63.97, 22.08],
+    [70.04, 16.46],
+    [57.82, 14.68],
+];
+
+const Circle = () =>{
+    return (
+        <svg>
+            <circle
+                cx="150"
+                cy="77"
+                r="40"
+            />
+
+        </svg>
+    )
+}
+
+class D3Test extends React.Component {
     constructor(){
         super();
         this.state = {
@@ -17,11 +44,6 @@ class FrequencyAnalyser extends React.Component {
         this.connected = false;
         this.startAnalysis();
 
-    }
-
-    getPower(){
-        // return this.state.values;
-        return arrSumSquare(this.state.values);
     }
 
     startAnalysis = ()=>{
@@ -40,8 +62,6 @@ class FrequencyAnalyser extends React.Component {
             newValues[i] = x;
             // newValues[i] = convertToLog(x, 0, 100, 0.001, 100);
         }
-
-        // console.log(Math.round(as))
         this.setState({values: newValues})
         requestAnimationFrame(this.startAnalysis);
 
@@ -50,18 +70,13 @@ class FrequencyAnalyser extends React.Component {
     render(){
     return (
         <div className="frequency-analyser-container">
-            <div className="frequency-analyser-title">Frequency Analyser</div>
-        <Multislider
-                size = {[300, 100]}
-                numberOfSliders = {1024}
-                min={0}
-                max={100}
-                values={this.state.values} 
-                mode="line"
-                className="frequency-analyser"
+            <div className="frequency-analyser-title">D3Test</div>
+            <div className="D3-container">
+                <Circle/>
 
-        />
+
+            </div>
         </div>
     )}
 }
-export default FrequencyAnalyser;
+export default D3Test;

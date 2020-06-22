@@ -1,0 +1,187 @@
+.additive-demo-container {
+    /* background-color: blue; */
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.weights-container {
+    display: flex;
+    margin-top: 2%;
+}
+
+.weight-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: 2px solid #616161; */
+    border-radius: 20px;
+    /* padding: 2%; */
+    flex-direction: column;
+    /* padding-bottom: 4%; */
+    /* align-content: stretch; */
+    /* height: 100%; */
+    /* cursor: pointer; */
+    position: relative;
+    width: 30px;
+    font-size: 14px;
+}
+
+.harmonic-controller {
+    display: flex;  
+    /* height: 300px; */
+    align-items: center;
+}
+
+.harmonic-title {
+    display: flex;
+    align-items: center;
+    margin-right: 2%;
+    /* padding: 5px 0px; */
+}
+
+.harmonic-input-container {
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+    /* padding: 2px; */
+    /* width: 100%; */
+}
+
+.harmonic-input {
+    background-color: transparent;
+    font-size: 20px;
+    color: #616161;
+    width: 50px;
+    text-align: center;
+    padding: 0px 2px;
+    font-family: -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+    border-top: 1px solid #616161;
+    border-bottom: 1px solid #616161;
+    border-left: 0px;
+    border-right: 0px;
+    height: 20px;
+    padding: 5%;
+}
+
+.harmonic-delete-add {
+    font-size: 14px;
+    cursor: pointer;
+    /* margin-top: 6%; */
+    padding: 5%;
+    /* margin: 2%;     */
+    border: 1px solid #616161;
+    height: 20px;
+    color:rgb(9, 160, 206);
+
+}
+
+.harmonic-input::-webkit-outer-spin-button,
+.harmonic-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.weight-container:hover .weight-delete {
+    display: block;
+}
+
+.weight-delete {
+    display: none;
+    position: absolute;
+    top: 0%;
+    right: 10%;
+    color: #EA5D5D;
+    cursor: pointer;
+}
+
+.weight-delete:hover {
+    color: red;
+}
+
+.add-weight {
+    align-self: center;
+    margin: 2%;
+    color: #616161;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+.weight-label {
+    /* margin-right: 2%; */
+    
+}
+
+.weight-slider-wrapper{
+  display: inline-block;
+  width: 20px;
+  height: 150px;
+  padding: 0;
+}
+
+.weight-slider {
+    /* flex: 1; */
+    /* width: 20px; */
+    margin: 0px;
+    /* height: 150px; */
+    stroke: red;
+    fill: purple;
+    background-color: transparent;
+    /* background: red!important; */
+    /* transform: rotate(-90deg); */
+    /* -webkit-appearance: slider-vertical; */
+    outline: none;
+    transform-origin: 75px 75px;
+    transform: rotate(-90deg);
+    border: 1.5px solid #616161;
+
+}
+
+
+input[type=range] {
+    -webkit-appearance: none;
+    /* Hides the slider so that custom slider can be made */
+    /* Specific width is required for Firefox. */
+    background: transparent;
+    /* Otherwise white in Chrome */
+}
+
+
+
+input[type=range]:focus {
+    outline: none;
+    /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid rgb(9, 160, 206);
+    height: calc(100% - 1px);
+    width: 4px;
+    /* border-radius: 50%; */
+    background: #ffffff;
+    cursor: pointer;
+    background-color: rgb(9, 160, 206);
+    /* margin-top: 1.2%; */
+
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 20px;
+    width: 150px;
+    cursor: pointer;
+    /* background: #3071a9; */
+    /* transform: rotate(-90deg); */
+}

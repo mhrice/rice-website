@@ -1,0 +1,22 @@
+.analysis-graph-container {
+    /* flex: 3; */
+    background-color: transparent;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    /* width: 100%; */
+    flex: 1;
+    height: 333px;
+    font-size: 20px;
+}
+
+.waveform-canvas {
+    position: absolute;
+    z-index: 1;
+}
+
+.frequency-canvas {
+    position: absolute;
+    z-index: 2;
+}

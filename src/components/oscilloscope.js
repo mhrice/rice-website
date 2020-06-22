@@ -16,6 +16,7 @@ class Oscilloscope extends React.Component {
     
     componentDidMount(){
         this.analyser = new Tone.Waveform(FFTSIZE);
+        console.log(this.analyser)
         this.connected = false;
         this.ctx = this.canvas.getContext("2d");
         this.ctx.strokeStyle = "#22BBBB";
