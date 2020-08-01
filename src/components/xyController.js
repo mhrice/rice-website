@@ -1,6 +1,7 @@
 import React from 'react';
 
 import "../styles/xy.css"
+import { getFreq } from "../utils";
 
 class XYController extends React.Component {
     constructor(){
@@ -8,6 +9,7 @@ class XYController extends React.Component {
         this.state = {
             x: 0,
             y: 150,
+            freq: 0,
             fill: "none",
             sustain: false
 
@@ -29,7 +31,8 @@ class XYController extends React.Component {
         let y = e.clientY - rect.top; //y position within the element.
         this.setState({x:x, y: y, fill: "rgb(9, 160, 206)"});
         this.props.onPointerDown(x / rect.width, y / rect.height);
-
+        let freq = getFreq((1 - y / rect.height), 50, 8000);
+        this.setState({ x: x, y: y, freq: freq});
     }
 
     onPointerMove = e =>{
@@ -42,7 +45,8 @@ class XYController extends React.Component {
             let y = e.clientY - rect.top; //y position within the element.
             // let x = e.clientX;
             // let y = e.clientY;
-            this.setState({ x: x, y: y});
+            let freq = getFreq((1 - y / rect.height), 50, 8000);
+            this.setState({ x: x, y: y, freq: freq});
             this.props.onPointerMove(x / rect.width, y / rect.height);
         }
     }
@@ -88,6 +92,8 @@ class XYController extends React.Component {
                     <circle cx={this.state.x} cy={this.state.y} r="7" fill={this.state.fill} stroke="rgb(9, 160, 206)" strokeWidth={3}/>
                     <text x={this.props.width - 15} y="75" fontFamily="sans-serif" fontSize="12px" fill="rgba(9, 160, 206, 0.5)" transform={transformString}>Frequency</text>
                     <text x="20" y={this.props.height - 10} fontFamily="sans-serif" fontSize="12px" fill="rgba(9, 160, 206, 0.5)">Amplitude</text>
+                    <text x={this.props.width - 50} y={this.props.height - 10} fontFamily="sans-serif" fontSize="10px" fill="rgba(0, 0, 0, 0.5)">{this.state.freq + " Hz"}</text>
+
                 </svg>
                 <div className="sustain-button" onClick={this.handleSustainToggle} style={{"backgroundColor": this.state.sustain ? "#616161":"transparent", color:this.state.sustain ? "white":"#616161"}}>Sustain</div>
             </div>

@@ -1,32 +1,50 @@
 import React from 'react';
-import Tone from "tone";
-import { Multislider, Select, Number } from "react-nexusui";
-import * as Nexus from "nexusui";
+import * as Tone from "tone"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faChevronLeft, faChevronRight, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { convertToLog, arrMax, arrSum, getFreq, getGain } from "../utils";
-import FrequencyAnalyser from "./frequencyAnalyzer";
-import Oscilloscope from "./oscilloscope";
-import D3Test from "./d3Test";
 import DemoContainer from './demoContainer';
 
 import "../styles/additive.css"
 
 const MAX_WEIGHTS = 32;
+const presets = ["Sine", "Square", "Saw", "Triangle", "Random", "Mystery"]
 
 function AdditiveDemo(props){
     return (
         <div className="additive-demo-container">
-            Presets
-            <div className="harmonic-controller">
-                <div className="harmonic-title">Harmonics</div> 
-                <div className="harmonic-input-container">
-                    <FontAwesomeIcon className="harmonic-delete-add" icon={faMinus} onClick={()=>{props.deleteWeight()}}/>
-                    {/* <div className="harmonic-delete-add">-</div> */}
-                    <input className="harmonic-input" type="number" value={props.weightInput} onChange={props.setNumWeights} onKeyUp={props.setNumWeights} />
-                    <FontAwesomeIcon className="harmonic-delete-add" icon={faPlus} onClick={()=>{props.addWeight()}}/>
-                    {/* <div className="harmonic-delete-add">+</div> */}
+            <div className="harmonic-controller-container">
+                <div className="harmonic-number-container">
+                    <div className="harmonic-title">Harmonics</div> 
+                    <div className="harmonic-input-container">
+                        <FontAwesomeIcon className="harmonic-delete-add" icon={faMinus} onClick={()=>{props.deleteWeight()}}/>
+                        {/* <div className="harmonic-delete-add">-</div> */}
+                        <input className="harmonic-input" type="number" value={props.weightInput} onChange={props.setNumWeights} onKeyUp={props.setNumWeights} />
+                        <FontAwesomeIcon className="harmonic-delete-add" icon={faPlus} onClick={()=>{props.addWeight()}}/>
+                        {/* <div className="harmonic-delete-add">+</div> */}
 
+                    </div>
+                </div>
+                <div className="harmonic-presets-container">
+                    <div className="harmonic-preset-title">Presets</div>
+                    <div className="harmonic-presets-list">
+                        {presets.map(preset=>{
+                            let presetBorder = "2px solid transparent";
+                            if(props.preset === preset){
+                                presetBorder = "2px solid rgb(9, 160, 206)";
+                            }
+                          return (
+                            <div
+                                className="harmonic-preset" 
+                                key={preset} 
+                                onClick={()=>props.handlePresetChange(preset)} 
+                                style={{"border": presetBorder, "padding": "1px 3px"}}
+                            >
+                                {preset}
+                            </div>
+                          )
+                        })}
+                    </div>
                 </div>
 
             </div>
@@ -60,7 +78,7 @@ class Additive extends React.Component{
         this.state = {
             weights: weights,
             playing: false,
-            preset: 0,
+            preset: "Sine",
             weightInput: 1
         }
         this.analyserRef = React.createRef();
@@ -71,7 +89,7 @@ class Additive extends React.Component{
         this.synth.oscillator.partials = this.state.weights;
         this.synth.volume.value = 0;
         this.synth.toMaster();
-        this.setState({preset: 0});
+        this.forceUpdate();
     }
 
     handleWeightsChange = weights => {
@@ -79,24 +97,24 @@ class Additive extends React.Component{
         let sum = arrSum(weights) - max;
         let dist = Math.abs(Math.sqrt(Math.sqrt(sum)) - 0.5);
         let newGain = Math.log2(dist) * 2;
-        this.synth.volume.exponentialRampToValueAtTime(newGain, this.synth.context.now() + 0.2);
+        // this.synth.volume.exponentialRampToValueAtTime(newGain, this.synth.context.now() + 0.2);
         this.setState({
             weights: weights,
-            preset: 4
+            preset: "Custom"
         });
         this.synth.oscillator.partials = weights;
     }
 
     handlePresetChange = preset => {
-        // let weights = new Array(NUM_WEIGHTS).fill(0);
-        let weights = [1];
+        let weights = new Array(MAX_WEIGHTS).fill(0);
+        // let weights = [1];
         let weightUpdate = true;
-        switch(preset.index){
-            case 0: 
+        switch(preset){
+            case "Sine": 
                 // Sine
-                weights[0] = 1;
+                weights = [1];
                 break
-            case 1:
+            case "Square":
                 // Square
                 for(let i = 0; i < weights.length; i++){
                     if(i % 2 === 0){
@@ -104,13 +122,13 @@ class Additive extends React.Component{
                     }
                 }
                 break;
-            case 2:
+            case "Saw":
                 // Saw
                 for (let i = 0; i < weights.length; i++) {
                         weights[i] = 1 / (i + 1);
                 }
                 break;
-            case 3:
+            case "Triangle":
                 // Triangle
                 for (let i = 0; i < weights.length; i++) {
                     if (i % 2 === 0) {
@@ -118,26 +136,28 @@ class Additive extends React.Component{
                     }
                 }
                 break;
-            case 4:
-                weightUpdate = false;
-                break;
-            case 5:
-                for (let i = 0; i < weights.length; i++) {
-                    weights[i] = 1 ;
+            
+            case "Random":
+                // Random, max of 0.8
+                weights[0] = 1;
+                for (let i = 1; i < weights.length; i++) {
+                    weights[i] = Math.random()*0.8;
                 }
                 break;
             default:
                 weights[0] = 1;
                 break;
         }
-        this.setState({preset: preset.index});
+        this.setState({preset: preset});
         if(weightUpdate){
             let max = arrMax(weights);
             let sum = arrSum(weights) - max;
             let dist = Math.abs(Math.sqrt(Math.sqrt(sum)) - 1);
             let newGain = Math.log2(dist) * 2;
-            this.synth.volume.exponentialRampToValueAtTime(newGain,this.synth.context.now() + 0.2);
-            this.setState({weights: weights});
+            // let oldGain = this.synth.volume.value;
+            // console.log(newGain, oldGain)
+            // this.synth.volume.exponentialRampToValueAtTime(newGain,this.synth.context.now() + 0.2);
+            this.setState({weights: weights, weightInput: weights.length});
             this.synth.oscillator.partials = weights;
         }
             
@@ -225,7 +245,7 @@ class Additive extends React.Component{
     }
 
     onXYPointerDown = (x, y) => {
-        let freq = getFreq((1 - y), 50, 5000);
+        let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);
         this.synth.triggerAttack(freq);
         this.synth.volume.value = volume;
@@ -234,7 +254,7 @@ class Additive extends React.Component{
 
     onXYPointerMove = (x, y) => {
         if(this.playing){
-            let freq = getFreq((1 - y), 50, 5000);
+            let freq = getFreq((1 - y), 50, 8000);
             let volume = getGain((1 - x), 0, -30);
             this.synth.frequency.value = freq;
             this.synth.volume.value = volume;
@@ -252,6 +272,8 @@ class Additive extends React.Component{
         this.sustain = !this.sustain;
         this.synth.triggerRelease();
         this.playing = false;
+        this.sustainFreq = this.synth.frequency.value;
+        this.sustainVol = this.synth.volume.value;
     }
 
     render(){
@@ -265,7 +287,7 @@ class Additive extends React.Component{
                     <br/><br/>
                     They are usually integer multiples of the original frequency - which is called the fundamental frequency. 
                     For example, if 440 Hz (A4) was the fundamental, you would have harmonics at 880 Hz, 1320 Hz, and so on. 
-                    Pianos and guitars sound different because the relative amplitudes or <i>weights</i> of their harmonics are different.
+                    Pianos and guitars sound different because the relative amplitudes or <b>weights</b> of their harmonics are different.
                     Try adding harmonics and changing the sliders below to see this in action. 
                      
                 </div>
@@ -283,69 +305,11 @@ class Additive extends React.Component{
                         deleteWeight={this.deleteWeight} 
                         setNumWeights={this.setNumWeights} 
                         weightInput={this.state.weightInput}
+                        preset={this.state.preset}
+                        handlePresetChange={this.handlePresetChange}
                     />
                 </DemoContainer>
-                {/* <D3Test/> */}
-                {/*
-                <div className="synthesis-example-container">
-                    {!this.state.playing ? 
-                        <button onClick={this.playSynth}><FontAwesomeIcon icon={faPlay}/></button> :
-                        <button onClick={this.stopSynth}><FontAwesomeIcon icon={faStop}/></button>                             
-                    }
-                    <div className="synthesis-freq-container">
-                        <div className="synthesis-label">Frequency (Hz)</div>
-                            <div className="synthesis-freq-number-container">
-                            <Number 
-                            size={[50, 25]}
-                            min={20}
-                            max={4000}
-                            step={1}
-                            value={this.state.freq}
-                            onChange={this.handleFreqChange}/>
-                            </div>
-                        </div>
-                    <div className="synthesis-preset-container">
-                        <div className="synthesis-label">Presets</div>
-                        <Select 
-                        size={[75, 25]}
-                        className="synthesis-example-preset-menu"
-                        options = {["Sine", "Square", "Saw", "Triangle", "Custom", "5"]}
-                        selectedIndex={this.state.preset}
-                        onChange = {this.handlePresetChange}
-                        />
-                    </div>
-                    <div className="synthesis-partials-container"> 
-                        <div className="synthesis-label">Partials</div>
-                        <Multislider 
-                        size = {[672, 100]}
-                        numberOfSliders = {NUM_WEIGHTS}
-                        min={0}
-                        max={1}
-                        candycane={NUM_WEIGHTS}
-                        values={this.state.weights}
-                        onChange = {this.handleWeightsChange}
-                        />
-                        <div className="synthesis-partials-values-container">
-                        {this.state.weights.map((weight, index)=>{
-                            return (
-                            <Number 
-                            size={[21, 25]}
-                            min={0}
-                            max={1}
-                            step={0.001}
-                            value={weight}
-                            key = {index}
-                            />
-                            )
-                        })}
-                        </div>
-                    </div>
-                    <div className="synthesis-example-analysis-container">
-                        <Oscilloscope signal={this.synth}/>
-                        <FrequencyAnalyser signal={this.synth} ref={this.analyserRef}/>
-                    </div>
-                </div>
-                    */}
+                
             </>
         )
     }

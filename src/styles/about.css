@@ -10,9 +10,37 @@
     align-items: center;
 }
 
-.about-paragraph-container {
+.about-content-container {
     display: flex;
+    /* justify-content: space-around; */
+    align-self: flex-start;
+    width: 100%;
+    margin-top: 5%;
+    /* margin: 0% 10%; */
+
+}
+
+.about-photo-container {
+    flex: 1;
+    /* background-color: blue; */
+    /* padding-left: 10%; */
+    display: flex;
+    justify-content: center;
     
+}
+
+.about-photo {
+    height: 350px;
+    width: 325px;
+}
+
+.about-paragraph-container {
+    flex:1;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    padding-right: 10%;
+    height: 100%;
 }
 
 ul {

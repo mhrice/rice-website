@@ -29,14 +29,14 @@ class DemoContainer extends React.Component {
     }
 
     onXYPointerDown = (x, y) => {
-        let freq = getFreq((1 - y), 50, 5000);
+        let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);
         this.analysisGraphRef.current.startTrigger(freq, volume);
         this.props.onXYPointerDown(x, y);
     }
 
     onXYPointerMove = (x, y) =>{
-        let freq = getFreq((1 - y), 50, 5000);
+        let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);
         this.analysisGraphRef.current.startTrigger(freq, volume);
         this.props.onXYPointerMove(x, y);

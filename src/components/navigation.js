@@ -25,14 +25,16 @@ class Navigation extends Component {
     }    
     render(){
         let backgroundColor;
+        let homeLinkName = "Matthew Rice";
         if(this.props.location.pathname === "/"){
             backgroundColor = "transparent";
+            homeLinkName = "Logo";
         } else {
             backgroundColor = "#293038";
         }
         return (
         <div className="navigation-container" style={{backgroundColor: backgroundColor}}>
-            <NavLink to="/" className="navigation-left-header navigation-link" activeStyle={{fontWeight: "bold"}}>Home</NavLink>
+            <NavLink to="/" className="navigation-left-header navigation-link" activeStyle={{fontWeight: "bold"}}>{homeLinkName}</NavLink>
             <div className="navigation-left-links">
                 <NavLink to="/about" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>About</NavLink>
                 <NavLink to="/projects" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Projects</NavLink>

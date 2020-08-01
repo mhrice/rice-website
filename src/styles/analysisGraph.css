@@ -20,3 +20,17 @@
     position: absolute;
     z-index: 2;
 }
+.waveform-title {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+    font-size: 0.75rem;
+}
+
+.frequency-title {
+    position: absolute;
+    left: 0%;
+    top: 50%;    
+    font-size: 0.75rem;
+
+}

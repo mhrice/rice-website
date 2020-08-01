@@ -1,5 +1,5 @@
 import React from 'react';
-import Tone from "tone";
+import * as Tone from "tone"
 import "../styles/oscilloscope.css";
 
 const HEIGHT = 100;

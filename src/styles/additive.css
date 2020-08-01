@@ -7,36 +7,90 @@
 
 .weights-container {
     display: flex;
-    margin-top: 2%;
+    margin-top: 3%;
+    overflow-x: auto;
+    /* padding-left: 70px; */
+    /* width: 100%; */
+    /* border: 2px solid black; */
+    /* width: 800px; */
+}
+
+.weights-container::-webkit-scrollbar {
+    display: block;
+    overflow: auto;
+    height: 2em;
+    width: 5px;
+    height: 8px;
+    background-color: #aaa;
+
+}
+
+.weights-container::-webkit-scrollbar-thumb {
+    background: #000;
 }
 
 .weight-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    /* border: 2px solid #616161; */
-    border-radius: 20px;
-    /* padding: 2%; */
+    /* border-radius: 20px; */
     flex-direction: column;
-    /* padding-bottom: 4%; */
-    /* align-content: stretch; */
-    /* height: 100%; */
-    /* cursor: pointer; */
-    position: relative;
-    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
     font-size: 14px;
+    position: relative;
 }
 
-.harmonic-controller {
+.harmonic-controller-container {
     display: flex;  
-    /* height: 300px; */
     align-items: center;
+    justify-content: space-between;
+    /* overflow-x: scroll; */
+}
+
+.harmonic-number-container {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    margin-right: 5%;
+    flex-direction: column;
+}
+
+.harmonic-presets-container {
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    flex-basis: 50px;
+
+}
+
+.harmonic-presets-list {
+    display: flex;
+    /* margin-top: 1%; */
+    
+
+}
+
+.harmonic-preset-title {
+    border: 0px 2px solid #EEEEEE;
+    margin-bottom: 8px;
+}
+
+.harmonic-preset {
+    padding: 1% 3%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    /* box-sizing: border-box; */
+    /* margin-right: 2%;  */
 }
 
 .harmonic-title {
     display: flex;
     align-items: center;
     margin-right: 2%;
+    margin-bottom: 8px;
     /* padding: 5px 0px; */
 }
 
@@ -46,15 +100,21 @@
     align-items: center;
     /* padding: 2px; */
     /* width: 100%; */
+    width: 120px;
+    /* margin-top: 1%; */
+    /* height: 30px; */
+
 }
 
 .harmonic-input {
     background-color: transparent;
-    font-size: 20px;
+    font-size: 18px;
     color: #616161;
-    width: 50px;
+    flex: 1;
+    /* width: default!important; */
+    width: 0px;
     text-align: center;
-    padding: 0px 2px;
+    padding: 1px 2px!important;
     font-family: -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -70,19 +130,23 @@
     border-bottom: 1px solid #616161;
     border-left: 0px;
     border-right: 0px;
-    height: 20px;
-    padding: 5%;
+    height: 23px;
+    padding: 3%;
 }
 
 .harmonic-delete-add {
     font-size: 14px;
     cursor: pointer;
     /* margin-top: 6%; */
-    padding: 5%;
+    padding: 3%;
     /* margin: 2%;     */
     border: 1px solid #616161;
-    height: 20px;
+    height: 17px;
     color:rgb(9, 160, 206);
+    padding: 1px 2px!important;
+    height: 23px;
+
+    /* width: 25px!important; */
 
 }
 
@@ -132,7 +196,7 @@
 
 .weight-slider {
     /* flex: 1; */
-    /* width: 20px; */
+    width: 140px;
     margin: 0px;
     /* height: 150px; */
     stroke: red;
@@ -145,7 +209,8 @@
     transform-origin: 75px 75px;
     transform: rotate(-90deg);
     border: 1.5px solid #616161;
-
+    /* height: 20px; */
+    position: absolute;
 }
 
 
@@ -168,7 +233,8 @@ input[type=range]:focus {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: 1px solid rgb(9, 160, 206);
-    height: calc(100% - 1px);
+    height: calc(100% + 0px);
+    /* margin-top: 1px; */
     width: 4px;
     /* border-radius: 50%; */
     background: #ffffff;

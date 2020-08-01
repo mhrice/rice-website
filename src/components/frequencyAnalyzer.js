@@ -1,5 +1,5 @@
 import React from 'react';
-import Tone from "tone";
+import * as Tone from "tone"
 import { Multislider } from "react-nexusui";
 import { convertToLog, arrSumSquare, arrSum } from "../utils";
 import "../styles/frequencyAnalyzer.css";

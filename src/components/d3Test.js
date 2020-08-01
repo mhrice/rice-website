@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react';
-import Tone from "tone";
+import * as Tone from "tone"
 import { Multislider } from "react-nexusui";
 import { convertToLog } from "../utils";
 import * as d3 from "d3";

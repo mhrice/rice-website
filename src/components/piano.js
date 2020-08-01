@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../styles/piano.css";
-import Tone from "tone";
+import * as Tone from "tone";
 
 import {midiToFreq} from "../utils";
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Tone from "tone";
+import * as Tone from "tone"
 import { convertToLog, arrSumSquare, arrSum, dbToLinear } from "../utils";
 
 import "../styles/analysisGraph.css"
@@ -14,7 +14,8 @@ class AnalysisGraph extends React.Component {
             freqValues: new Array(FFTSIZE).fill(0),
             width: 0,
             trigger: false,
-            plotZero: false
+            plotZero: false,
+            words: "Analysis"
         }
         this.analysisGraphContainerRef = React.createRef()
     }
@@ -22,31 +23,42 @@ class AnalysisGraph extends React.Component {
    componentDidMount() {
        let width = this.analysisGraphContainerRef.current.getBoundingClientRect().width;
        this.setState({width: width});
-       this.analyser = new Tone.Waveform(FFTSIZE);
-       this.connected = false;
+       this.waveformAnalyser = new Tone.Waveform(FFTSIZE);
+    //    this.frequencyAnalyser = new Tone.FFT(2048);
+      this.frequencyAnalyser = new Tone.Analyser('fft', 2048);
+    //    console.log(Tone.getContext().sampleRate);
+    //    console.log(this.frequencyAnalyser._analyser._analysers[0].frequencyBinCount)
+    //    this.frequencyAnalyser.normalRange = true;
+    //    console.log(this.frequencyAnalyser.normalRange)
+       this.waveformConnected = false;
+       this.frequencyConnected = false;
        this.waveformCtx = this.waveform.getContext("2d");
+       this.frequencyCtx = this.frequencyAnalysis.getContext("2d");
        this.startWaveformAnalysis();
-
+       this.startFrequencyAnalysis()
+       window.addEventListener("resize", this.resize);
    }
 
+
+
    startWaveformAnalysis = () =>{
-        if (!this.connected && this.props.signal !== undefined) {
-            this.props.signal.connect(this.analyser);
-            this.connected = true;
-            this.firstLoad = true;
+       if (!this.waveformConnected && this.props.signal !== undefined) {
+           this.props.signal.connect(this.waveformAnalyser);
+           this.waveformConnected = true;
+           this.firstLoad = true;
         }
         // Waveform
-        let newValues = new Array(FFTSIZE).fill(0);
-        let values = this.analyser.getValue();
-        let midpoint = this.props.height / 2;
+        let values = this.waveformAnalyser.getValue();
+        let midpoint = this.props.height / 2 - this.props.height * 0.2;
         this.waveformCtx.beginPath();
         this.waveformCtx.moveTo(0, midpoint);
         let valuesPerPixel = FFTSIZE / this.state.width;
         let x = 0;
         let max = 0;
         let min = Infinity;
+        let height = this.props.height/1.5;
         for (let i = 0; i < values.length; i += valuesPerPixel) {
-            let value = values[Math.round(i)] * midpoint + midpoint;
+            let value = values[Math.round(i)] * height + midpoint;
             this.waveformCtx.lineTo(x, value)
             x++;
             if(value > max){
@@ -80,9 +92,6 @@ class AnalysisGraph extends React.Component {
                     this.waveformCtx.stroke();
                 }
             }
-            this.setState({
-                values: newValues
-            });
 
             if(this.firstLoad){
                 this.waveformCtx.stroke();
@@ -93,13 +102,43 @@ class AnalysisGraph extends React.Component {
 
         requestAnimationFrame(this.startWaveformAnalysis);
 
-
    }
+
+   startFrequencyAnalysis = () =>{
+       if (!this.frequencyConnected && this.props.signal !== undefined) {
+           this.props.signal.connect(this.frequencyAnalyser);
+           this.frequencyConnected = true;
+           this.firstLoad = true;
+       }
+       let values = this.frequencyAnalyser.getValue();
+ 
+       this.frequencyCtx.beginPath();
+       this.frequencyCtx.strokeStyle = "#22BBBB";
+       this.frequencyCtx.clearRect(0, 0, this.state.width, this.props.height);
+       this.frequencyCtx.moveTo(0, this.props.height);
+       this.frequencyCtx.lineTo(this.state.width, this.props.height);
+        var barWidth = this.state.width / 512;
+        for (var i = 0, len = values.length; i < len; i++) {
+            let value = values[Math.round(i)];
+            if (value < -100) value = -100;
+            if (value > -30) value = -30;
+            value = (value + 20) / 80 + 1;
+            var x = this.state.width * (i / len);
+            var y = value * this.props.height/2.5;
+            this.frequencyCtx.fillStyle = `rgba(9, 160, 206, ${value})`;
+            this.frequencyCtx.fillRect(x, this.props.height - y, barWidth, y);
+        }
+
+       this.setState({freqValues: values});
+       this.frequencyCtx.stroke();
+       requestAnimationFrame(this.startFrequencyAnalysis);
+       
+    }
 
    startTrigger = (freq, gain) => {
        if(freq === 0 && gain === 0){
             this.setState({trigger: false, plotZero: true});
-            let midpoint = this.props.height / 2;
+            let midpoint = this.props.height / 2 - this.props.height * 0.2;
             this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
             this.waveformCtx.beginPath();
             this.waveformCtx.moveTo(0, midpoint);
@@ -109,14 +148,32 @@ class AnalysisGraph extends React.Component {
             let volume = dbToLinear(gain);
             this.setState({triggerFreq: freq, triggerVolume: volume, trigger: false, plotZero: false});
        }
+    //    console.log(this.state.freqValues.map(value=>(value < -50) ? 0:value))
    }
+
+   resize = () =>{
+//    console.log(this.analysisGraphContainerRef.current)
+    let width;
+    if (this.analysisGraphContainerRef.current === null){
+        width = this.state.width;
+    } else {
+        width = this.analysisGraphContainerRef.current.getBoundingClientRect().width;
+    }
+    this.setState({width:width});
+    let midpoint = this.props.height / 2 - this.props.height * 0.2;
+    this.waveformCtx.moveTo(0, midpoint);
+    this.waveformCtx.lineTo(this.state.width, midpoint);
+    this.waveformCtx.stroke();
+   }
+
 
     render(){
         return (
             <div className="analysis-graph-container" ref={this.analysisGraphContainerRef}>
-                Analysis
+                <div className="waveform-title">Time</div>
                 <canvas className="waveform-canvas" width={this.state.width} height={this.props.height} ref={c=>{this.waveform = c}}/>
-                <canvas className="frequency-canvas" width={this.state.width} height={this.props.height} ref={c=>{this.frequencyAnalyser = c}}/>
+                <div className="frequency-title">Frequency</div>
+                <canvas className="frequency-canvas" width={this.state.width} height={this.props.height} ref={c=>{this.frequencyAnalysis = c}}/>
             </div>
         )
 
