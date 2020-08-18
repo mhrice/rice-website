@@ -29,10 +29,11 @@ class XYController extends React.Component {
         let rect = this.svgRef.current.getBoundingClientRect();
         let x = e.clientX - rect.left; //x position within the element.
         let y = e.clientY - rect.top; //y position within the element.
-        this.setState({x:x, y: y, fill: "rgb(9, 160, 206)"});
-        this.props.onPointerDown(x / rect.width, y / rect.height);
         let freq = getFreq((1 - y / rect.height), 50, 8000);
-        this.setState({ x: x, y: y, freq: freq});
+        this.setState({x:x, y: y, fill: "rgb(9, 160, 206)", freq: freq});
+        this.props.onPointerDown(x / rect.width, y / rect.height);
+        document.addEventListener("pointerup", this.onPointerUp)
+
     }
 
     onPointerMove = e =>{
@@ -61,11 +62,12 @@ class XYController extends React.Component {
         } else {
             this.isSustaining = true;
         }
+        document.removeEventListener("pointerup", this.onPointerUp)
     }
 
-    onPointerOut = e => {
-        this.onPointerUp(e);
-    }
+    // onPointerOut = e => {
+    //     this.onPointerUp(e);
+    // }
 
     handleSustainToggle = (e) =>{
         this.setState({sustain: !this.state.sustain, fill: "none"});

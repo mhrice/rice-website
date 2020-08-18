@@ -54,6 +54,10 @@ class DemoContainer extends React.Component {
         this.analysisGraphRef.current.startTrigger(0, 0);
     }
 
+    resetSignal = () =>{
+        this.analysisGraphRef.current.resetSignal();
+    }
+
     render(){
         return (
             <div className="demo-container">

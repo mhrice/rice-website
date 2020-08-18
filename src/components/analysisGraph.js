@@ -57,8 +57,14 @@ class AnalysisGraph extends React.Component {
         let max = 0;
         let min = Infinity;
         let height = this.props.height/1.5;
+        let minAllowedValue = 20;
+        let maxAllowedValue = this.props.height/2 + 10;
+
         for (let i = 0; i < values.length; i += valuesPerPixel) {
             let value = values[Math.round(i)] * height + midpoint;
+            if(value < minAllowedValue) value = minAllowedValue;
+            if(value > maxAllowedValue) value = maxAllowedValue;
+
             this.waveformCtx.lineTo(x, value)
             x++;
             if(value > max){
@@ -98,7 +104,9 @@ class AnalysisGraph extends React.Component {
                 this.firstLoad = false;
             }
         }
-    
+        if(this.props.signal === undefined || this.props.signal === null){
+            this.waveformConnected = false;
+        }
 
         requestAnimationFrame(this.startWaveformAnalysis);
 
@@ -131,6 +139,7 @@ class AnalysisGraph extends React.Component {
 
        this.setState({freqValues: values});
        this.frequencyCtx.stroke();
+
        requestAnimationFrame(this.startFrequencyAnalysis);
        
     }
@@ -148,7 +157,13 @@ class AnalysisGraph extends React.Component {
             let volume = dbToLinear(gain);
             this.setState({triggerFreq: freq, triggerVolume: volume, trigger: false, plotZero: false});
        }
+
     //    console.log(this.state.freqValues.map(value=>(value < -50) ? 0:value))
+   }
+
+   resetSignal = () =>{
+        this.frequencyConnected = false;
+        this.waveformConnected = false;
    }
 
    resize = () =>{

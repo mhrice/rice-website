@@ -2,6 +2,8 @@ import React, { Component, useState } from 'react';
 import "../styles/synthesis.css";
 import Additive from "./additive";
 import Subtractive from "./subtractive";
+import Envelopes from "./envelopes";
+
 
 import WhatIsSynthesis from "./whatIsSynthesis";
 
@@ -43,7 +45,7 @@ const menuItems = [
     },
     {
         name: "Envelopes",
-        component: <ComingSoon name="Envelopes"/>,
+        component: <Envelopes/>,
         icon: <ADSR className="synthesis-menu-item-icon" width={20} height={20}/>
     },    
     {
@@ -79,7 +81,7 @@ const menuItems = [
 ]
 
 function Synthesis(){
-    let [currentItem, setCurrentItem] = useState(2);
+    let [currentItem, setCurrentItem] = useState(3);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">
