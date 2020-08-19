@@ -7,8 +7,8 @@ import {faCaretLeft, faCaretRight, faArrowsAltH, faArrowsAltV } from '@fortaweso
 
 import "../styles/envelopes.css"
 
-const envelopePresets = ["Default", "Pluck", "Swell", "Pad", "Mystery"]
-const wavePresets = ["Sawtooth", "Square", "Triangle", "Noise"]
+const envelopePresets = ["Default", "Pluck", "Pad", "Fortepiano", "Swell Up/Down"]
+const wavePresets = ["Sine", "Square", "Sawtooth", "Triangle"]
 const TOP_ENVELOPE_POSITION = 15;
 
 function EnvelopesDemo(props) {
@@ -177,6 +177,7 @@ class Envelopes extends React.Component {
             waveSelection: "Sawtooth",
             envelopePreset: "Default",
             envelopeWidth: 1,
+            envelopeheight: 1,
             envelopeCursorFills: {attack: "transparent", decay: "transparent", sustain: "transparent", release: "transparent"},
             envelopePositions: {attack: 0, decay: 0, sustain: 0, release: 0},
         }
@@ -190,10 +191,11 @@ class Envelopes extends React.Component {
         let startingAttackPosition = 0.2 * rect.width;
         let startingDecayPosition = 0.4 * rect.width;
         let startingSustainLevel = 0.5  * rect.height;
-        let startingReleasePosition = 0.95 * rect.width;
+        let startingReleasePosition = 0.9 * rect.width;
 
         this.setState({
             envelopeWidth: rect.width,
+            envelopeHeight: rect.height,
             envelopePositions: {
                 attack: startingAttackPosition, 
                 decay: startingDecayPosition, 
@@ -204,10 +206,10 @@ class Envelopes extends React.Component {
         this.synth.toDestination();
         this.synth.oscillator.type = "sawtooth";
         this.synth.volume.value = 0;
-        this.synth.envelope.attack = 0.1;
-        this.synth.envelope.decay = 0.4;
+        this.synth.envelope.attack = 0.2;
+        this.synth.envelope.decay = 0.2;
         this.synth.envelope.sustain = 0.5;
-        this.synth.envelope.release = 0.6
+        this.synth.envelope.release = 1;
         // console.log(this.synth.envelope)
         this.activeEnvelope = "";
 
@@ -248,34 +250,62 @@ class Envelopes extends React.Component {
         if(newWave < wavePresets.length && newWave > -1){
             let newSelection = wavePresets[newWave];
             this.setState({waveSelection: newSelection});
-            
-            let prevFreq;
-            prevFreq = this.synth.frequency.value;
-            this.synth.triggerRelease();
-            
-            let prevVolume = this.synth.volume.value;
-            this.synth.dispose();
-            this.synth = new Tone.Synth();
             this.synth.oscillator.type = newSelection.toLowerCase();
-            this.synth.connect(this.envelope);
-            if(this.sustain){
-                this.synth.triggerAttack(prevFreq)
-                this.synth.volume.value = 0;
-                this.synth.volume.rampTo(prevVolume, 4);
-            }
-            this.demoContainRef.current.resetSignal();
         }
     }
 
     handleEnvelopePresetChange = envelopePreset =>{
+        let attack, decay, sustain, release;
         switch(envelopePreset){
             case "Default": 
-                break
-            case "Clicky": 
-                break
-            default: let x = 4;
+                attack = 0.2;
+                decay = 0.2;
+                sustain = 0.5;
+                release = 0.5;
+            break
+            case "Pluck":
+                attack = 0.01;
+                decay = 0.1;
+                sustain = 0.2;
+                release = 0.2;
+            break
+            case "Pad":
+                attack = 0.67;
+                decay = 0.1;
+                sustain = 0.8;
+                release = 0.8;
+            break
+            case "Fortepiano":
+                attack = 0.01;
+                decay = 0.2;
+                sustain = 0.05;
+                release = 1;
+            break
+            case "Swell Up/Down":
+                attack = 0.25;
+                decay = 0.5;
+                sustain = 0.1;
+                release = 0.2;
+            break
+            default: 
+                attack = 0.2;
+                decay = 0.2;
+                sustain = 0.5;
+                release = 0.5;
         }
-        this.setState({})
+        this.synth.envelope.attack = attack;
+        this.synth.envelope.decay = decay;
+        this.synth.envelope.sustain = sustain;
+        this.synth.envelope.release = convertToLog(release, 0.01, 1, 0.1, 10);
+        let sustainEnd = 0.8 * this.state.envelopeWidth;
+
+        let newEnvelopePositions = {
+            attack: attack * this.state.envelopeWidth,
+            decay: (decay + attack) * this.state.envelopeWidth,
+            sustain: (1 - sustain) * this.state.envelopeHeight,
+            release: (this.state.envelopeWidth - sustainEnd) * release + sustainEnd
+        }
+        this.setState({envelopePositions: newEnvelopePositions, envelopePreset: envelopePreset});
     }
 
 
@@ -303,7 +333,8 @@ class Envelopes extends React.Component {
             envelopeCursorFills: {
                 ...prevState.envelopeCursorFills,
                 [activeEnvelope]: "rgb(9, 160, 206)"
-            }
+            },
+            envelopePreset: "None"
         })); 
 
         document.addEventListener("pointerup", this.onEnvelopePointerUp)
@@ -334,24 +365,25 @@ class Envelopes extends React.Component {
                 let newAttack = (1 - (sustainEnd - newPosition) / sustainEnd);
                 let decayRange = sustainEnd - newPosition;
                 let newDecay = (this.state.envelopePositions.decay - newPosition) / decayRange; //decay
-                this.synth.envelope.attack = newAttack;
-                this.synth.envelope.decay = newDecay;
+                this.synth.envelope.attack = Math.max(newAttack, 0.01);
+                this.synth.envelope.decay = Math.max(newDecay, 0.01);
 
             }
             else if(this.activeEnvelope === "decay"){
                 let newAttack = (1 - (sustainEnd - this.state.envelopePositions.attack) / sustainEnd);
                 let decayRange = sustainEnd - this.state.envelopePositions.attack;
                 let newDecay = (newPosition - this.state.envelopePositions.attack) / decayRange; //decay
-                this.synth.envelope.attack = newAttack;
-                this.synth.envelope.decay = newDecay;
+                this.synth.envelope.attack = Math.max(newAttack, 0.01);
+                this.synth.envelope.decay = Math.max(newDecay, 0.01);
 
             }
             else if(this.activeEnvelope === "sustain"){
-                this.synth.envelope.sustain = 1.1 - (newPosition / rect.height);
+                this.synth.envelope.sustain = Math.max(1.1 - (newPosition / rect.height), 0);
             }
             else {
                 let releaseRange = this.state.envelopeWidth - sustainEnd;
-                this.synth.envelope.release = (newPosition - sustainEnd) / releaseRange;
+                let newRelease = Math.max(0, (newPosition - sustainEnd) / releaseRange);
+                this.synth.envelope.release = convertToLog(newRelease, 0.01, 1, 0.1, 10);;
             }
 
 
@@ -410,7 +442,17 @@ class Envelopes extends React.Component {
             <>
                 <div className="synthesis-content-title">Envelopes</div>
                 <div className="synthesis-content-text">
-                Doesn't just have to be for volume. You can set up envelopes to control other parameters like fundamental frequency or filter cutoffs!
+                If you've ever played an instrument before, you know that two qualities that make a big impact on your timbre is your articulation and sustain. 
+                One way we can simulate this is with a volume <b>envelope</b>. A volume envelope controls how the sound's volume changes over time, and 
+                is a great way to add variety and contrast to your sounds.
+                <br/><br/>
+                A standard envelope has 4 parameters: attack, decay, sustain, and release. <b className="attack-text">Attack</b> controls the time between when a note is started and it reaches its full volume. 
+                <b className="decay-text"> Decay</b> controls the time between when the sound reaches its loudest point until it reaches its sustain level. 
+                <b className="sustain-text"> Sustain</b>, unlike the other parameters which are time-based, is a <b>level</b> where the sound stays in its normal, sustained position. 
+                <b className="release-text"> Release</b> controls the time from when the note is released until the note's volume reaches 0. 
+                <br/><br/>
+                Envelopes can be pretty confusing if you've never seen one before. Try out some of the examples below to get a good feel on how envelopes can affect the volume of a sound.
+                Also, envelopes, don't just have to be for volume. You can set up envelopes to control other parameters like the fundamental frequency or filter cutoffs!
                 </div>
                 <DemoContainer 
                     onXYPointerDown={this.onXYPointerDown} 

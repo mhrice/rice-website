@@ -123,3 +123,19 @@
 .sustain-graph-label {
     color: rgba(238, 238, 238, 0.5);
 }
+
+.attack-text {
+    color: rgb(147, 33, 76);
+}
+
+.decay-text {
+    color: rgb(109, 234, 166);
+}
+
+.sustain-text {
+    color: rgb(242, 187, 60);
+}
+
+.release-text {
+    color: rgb(132, 61, 183);
+}
