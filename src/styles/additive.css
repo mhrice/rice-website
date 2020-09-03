@@ -61,6 +61,8 @@
     flex-direction: column;
     height: 60px;
     flex-basis: 50px;
+    align-self: flex-start;
+
 
 }
 
@@ -214,7 +216,7 @@
 }
 
 
-input[type=range] {
+.weight-slider {
     -webkit-appearance: none;
     /* Hides the slider so that custom slider can be made */
     /* Specific width is required for Firefox. */
@@ -222,32 +224,24 @@ input[type=range] {
     /* Otherwise white in Chrome */
 }
 
-
-
-input[type=range]:focus {
+.weight-slider:focus {
     outline: none;
     /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-
-input[type=range]::-webkit-slider-thumb {
+.weight-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: 1px solid rgb(9, 160, 206);
     height: calc(100% + 0px);
-    /* margin-top: 1px; */
     width: 4px;
-    /* border-radius: 50%; */
     background: #ffffff;
     cursor: pointer;
     background-color: rgb(9, 160, 206);
-    /* margin-top: 1.2%; */
 
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+.weight-slider::-webkit-slider-runnable-track {
     height: 20px;
     width: 150px;
     cursor: pointer;
-    /* background: #3071a9; */
-    /* transform: rotate(-90deg); */
 }

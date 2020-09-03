@@ -115,7 +115,7 @@ function SubtractiveDemo(props){
                         let percentage = (1 / (filterDBs.length + 1)) * (index + 1)
                         let offset = 3;
                         return (
-                            <text x="5" y={props.filterHeight * percentage - offset} fontFamily="sans-serif" fontSize="10px" fill="rgba(238, 238, 238, 0.5)">{db}</text>
+                            <text x="5" y={props.filterHeight * percentage - offset} fontFamily="sans-serif" fontSize="10px" fill="rgba(238, 238, 238, 0.5)" key={db}>{db}</text>
                         )
 
                     })}
@@ -124,10 +124,10 @@ function SubtractiveDemo(props){
                         let path = `M ${props.filterWidth * percentage} 0 V ${props.filterHeight}`
                         let offset = 3;
                         return (
-                            <>
+                            <React.Fragment key={freq}>
                                 <text x={props.filterWidth * percentage + offset} y="10" fontFamily="sans-serif" fontSize="10px" fill="rgba(238, 238, 238, 0.5)">{freq}</text>
                                 <path d={path} stroke="rgba(238, 238, 238, 0.5)"/>
-                            </>
+                            </React.Fragment>
                         )
 
                     })}                    
@@ -162,7 +162,7 @@ class Subtractive extends React.Component {
         this.noise = false;
 
 
-        this.filter = new Tone.Filter(1000, "lowpass").toMaster();
+        this.filter = new Tone.Filter(1000, "lowpass").toDestination();
         this.synth.connect(this.filter);
 
     }   

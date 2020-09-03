@@ -18,6 +18,8 @@
     /* height: 60px; */
     /* margin-right: 5%; */
     flex-direction: column;
+    align-self: flex-start;
+
 }
 
 .wave-selection-title {
@@ -84,19 +86,6 @@
     min-width: 500px;
 }
 
-.envelopes-graph-presets-container {
-    /* position: absolute; */
-    /* bottom: 7%; */
-    /* left: 5%; */
-    display: flex;
-}
-
-.graph-preset {
-    font-size: 0.75rem;
-    /* color: white; */
-    box-sizing: border-box;
-}
-
 .envelope-zone-container {
     position: relative;
     width: 100%;
@@ -114,10 +103,6 @@
     flex-direction: column;
     align-items: center;
     z-index: 10;
-}
-
-.graph-label {
-    /* transform: translateX(-50%); */
 }
 
 .sustain-graph-label {

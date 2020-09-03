@@ -8,7 +8,7 @@ import DemoContainer from './demoContainer';
 import "../styles/additive.css"
 
 const MAX_WEIGHTS = 32;
-const presets = ["Sine", "Square", "Saw", "Triangle", "Random", "Mystery"]
+const presets = ["Sine", "Square", "Sawtooth", "Triangle", "Random", "Mystery"]
 
 function AdditiveDemo(props){
     return (
@@ -88,7 +88,7 @@ class Additive extends React.Component{
         
         this.synth.oscillator.partials = this.state.weights;
         this.synth.volume.value = 0;
-        this.synth.toMaster();
+        this.synth.toDestination();
         this.forceUpdate();
     }
 
@@ -122,8 +122,8 @@ class Additive extends React.Component{
                     }
                 }
                 break;
-            case "Saw":
-                // Saw
+            case "Sawtooth":
+                // Sawtooth
                 for (let i = 0; i < weights.length; i++) {
                         weights[i] = 1 / (i + 1);
                 }

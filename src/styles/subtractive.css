@@ -18,6 +18,8 @@
     /* height: 60px; */
     /* margin-right: 5%; */
     flex-direction: column;
+    align-self: flex-start;
+
 }
 
 .wave-selection-title {
@@ -78,6 +80,8 @@
     /* bottom: 7%; */
     /* left: 5%; */
     display: flex;
+    align-self: flex-start;
+
 }
 
 .filter-preset {

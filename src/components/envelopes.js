@@ -100,13 +100,13 @@ function EnvelopesDemo(props) {
                                 cursorPosition = (props.envelopePositions.decay + sustainEnd) / 2;
                             }
                             return (
-                                <>
+                                <React.Fragment key={label}>
                                     <path d={envelopeAttributes[label].path} fill="transparent" stroke={envelopeAttributes[label].stroke} strokeWidth={5}></path>
                                     <path d={envelopeAttributes[label].zoneDivider} stroke="rgba(238, 238, 238, 0.75)" strokeDasharray="5,5"/>
                                     <rect x={envelopeAttributes[label].rectStart} y="0" width={envelopeAttributes[label].rectWidth} height={props.envelopeHeight} fill={envelopeAttributes[label].stroke} opacity="0.2" stroke="transparent"/>
                                     <circle cx={cursorPosition} cy={envelopeAttributes[label].cursorY} r="7" fill={props.envelopeCursorFills[label]} stroke="rgb(9, 160, 206)" strokeWidth={3}/>
 
-                                </>
+                                </React.Fragment>
                             )
 
                         })}
@@ -124,9 +124,9 @@ function EnvelopesDemo(props) {
 
                     let adjustedSustainPosition = props.envelopeHeight - props.envelopePositions.sustain;
                     return (
-                        <div className="graph-label-container" style={{"left": envelopeAttributes[label].rectStart, "width": envelopeAttributes[label].rectWidth}}>
+                        <div className="graph-label-container" style={{"left": envelopeAttributes[label].rectStart, "width": envelopeAttributes[label].rectWidth}} key={label}>
                             {label !== "sustain" ? 
-                                <>
+                                <React.Fragment key={label}>
                                     <svg width={envelopeAttributes[label].rectWidth + 10} height={10}>
                                         <defs>  
                                             <marker id={`start-arrow-${label}`} markerWidth="10" markerHeight="7" 
@@ -141,7 +141,7 @@ function EnvelopesDemo(props) {
                                             <line x1="10" y1="5" x2={lineWidth} y2="5" stroke="rgb(41, 48, 56)" strokeWidth="1" markerStart={`url(#start-arrow-${label})`} markerEnd={`url(#end-arrow-${label})`}/>
                                     </svg>       
                                     <div className="graph-label"> {label.charAt(0).toUpperCase() + label.slice(1)}</div>
-                                </>
+                                </React.Fragment>
 
                             :
                                 <>
@@ -452,7 +452,7 @@ class Envelopes extends React.Component {
                 <b className="release-text"> Release</b> controls the time from when the note is released until the note's volume reaches 0. 
                 <br/><br/>
                 Envelopes can be pretty confusing if you've never seen one before. Try out some of the examples below to get a good feel on how envelopes can affect the volume of a sound.
-                Also, envelopes, don't just have to be for volume. You can set up envelopes to control other parameters like the fundamental frequency or filter cutoffs!
+                Also, envelopes don't just have to be for volume. You can set up envelopes to control other parameters like the fundamental frequency or filter cutoffs!
                 </div>
                 <DemoContainer 
                     onXYPointerDown={this.onXYPointerDown} 

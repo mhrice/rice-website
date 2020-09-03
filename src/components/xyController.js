@@ -22,6 +22,9 @@ class XYController extends React.Component {
 
     }
 
+    componentWillUnmount(){
+        document.removeEventListener("pointerup", this.onPointerUp)
+    }
 
     onPointerDown = e =>{
         e.preventDefault();
@@ -97,7 +100,7 @@ class XYController extends React.Component {
                     <text x={this.props.width - 50} y={this.props.height - 10} fontFamily="sans-serif" fontSize="10px" fill="rgba(0, 0, 0, 0.5)">{this.state.freq + " Hz"}</text>
 
                 </svg>
-                <div className="sustain-button" onClick={this.handleSustainToggle} style={{"backgroundColor": this.state.sustain ? "#616161":"transparent", color:this.state.sustain ? "white":"#616161"}}>Sustain</div>
+                <div className="sustain-button" onClick={this.handleSustainToggle} style={{"backgroundColor": this.state.sustain ? "#616161":"transparent", color:this.state.sustain ? "#EEEEEE":"#616161"}}>Sustain</div>
             </div>
         )
 

@@ -1,0 +1,112 @@
+.modulation-demo-container {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    min-width: 550px;
+
+}
+
+.modulation-sound-selection-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 2%;
+}
+
+.modulation-presets-container {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+
+}
+
+.modulation-sound-selection-switch-container {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.modulation-switch-container {
+    font-size: 1rem;
+    padding: 5px 10px;
+    display: flex;
+    color: #EEEEEE;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.modulation-sliders-container {
+    display: grid;
+    grid-template-columns: 75px 1fr 75px;
+    grid-template-rows: 1rem auto 1rem auto;
+    height: 150px;
+    width: 100%;
+    margin-top: 3%;
+    justify-items: center;
+    align-items: center;
+    border: 1.5px solid #616161;
+    padding: 10px;
+}
+
+
+
+.modulation-frequency-ratio-lock-container {
+    background-color: #616161;
+    border: 2px solid #616161;
+    font-size: 0.8rem;
+    color: #EEEEEE;
+    padding: 3px;
+    cursor: pointer;
+}
+
+
+.modulation-number {
+    grid-column-start: 3;
+}
+
+.modulation-title {
+    grid-column: 1 / span 3;
+    font-size: 1rem;
+}
+
+.modulation-slider {
+     -webkit-appearance: none;
+    /* Hides the slider so that custom slider can be made */
+    /* Specific width is required for Firefox. */
+    background: transparent;
+    /* Otherwise white in Chrome */
+    grid-column-start: 2;
+    cursor: pointer;
+    width: 80%;
+    margin: 0px;
+    stroke: red;
+    fill: purple;
+    background-color: transparent;
+    outline: none;
+    border: 1.5px solid #616161;
+    height: 15px;
+
+}
+
+.modulation-slider:focus {
+    outline: none;
+    /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+.modulation-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid rgb(9, 160, 206);
+    height: calc(100% + 0px);
+    width: 4px;
+    background: #ffffff;
+    cursor: pointer;
+    background-color: rgb(9, 160, 206); 
+
+}
+
+.modulation-slider::-webkit-slider-runnable-track {
+    height: 20px;
+    width: 150px;
+    cursor: pointer;
+}
