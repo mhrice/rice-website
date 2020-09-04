@@ -92,6 +92,10 @@ class Additive extends React.Component{
         this.forceUpdate();
     }
 
+    componentWillUnmount() {
+        this.synth.triggerRelease();
+    }
+
     handleWeightsChange = weights => {
         let max = arrMax(weights);
         let sum = arrSum(weights) - max;

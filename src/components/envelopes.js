@@ -215,6 +215,10 @@ class Envelopes extends React.Component {
 
     }   
 
+    componentWillUnmount() {
+        this.synth.triggerRelease();
+    }
+
     onXYPointerDown = (x, y) =>{
         let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);

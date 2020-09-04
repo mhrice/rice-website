@@ -7,7 +7,7 @@ import {faCaretLeft, faCaretRight, faArrowsAltH, faArrowsAltV } from '@fortaweso
 
 import "../styles/modulation.css"
 
-const modulationPresets = ["Vibrato", "Tremolo", "Pad", "Fortepiano", "Swell Up/Down"]
+const modulationPresets = ["Tremolo", "Vibrato", "Bass", "Bell", "Mystery"]
 
 function ModulationDemo(props) {
     let modulationTypeBackground = props.modulationType === "am" ? "#93204C" : "#773AA6";
@@ -68,7 +68,7 @@ class Modulation extends React.Component {
         super();
         this.state = {
             waveSelection: "Sawtooth",
-            modulationPreset: "Default",
+            modulationPreset: "",
             modulationType: "am",
             modulationFrequency: 1,
             modulationDepth: 20,
@@ -80,12 +80,17 @@ class Modulation extends React.Component {
     componentDidMount(){
         this.synth = new Tone.Synth();
         this.synth.toDestination();
-        this.synth.oscillator.type = "sawtooth";
+        this.synth.oscillator.type = "sine";
         this.modulator = new Tone.Synth();
-        this.synth.volume.value = 0;
-        this.modulator.volume.value = 0;
+        this.synth.volume.value = -Infinity;
+        this.modulator.volume.value = -Infinity;
         this.modulator.connect(this.synth.volume);
+        this.modulator.triggerAttack(1);
     }   
+
+    componentWillUnmount(){
+        this.synth.triggerRelease();
+    }
 
     onXYPointerDown = (x, y) =>{
         let freq = getFreq((1 - y), 50, 8000);
@@ -93,6 +98,28 @@ class Modulation extends React.Component {
         this.synth.volume.value = volume;
         this.synth.triggerAttack(freq);
         this.playing = true;
+
+        let newModulatorFreq = this.state.modulationFrequency;
+        if (newModulatorFreq !== ("0.5")) {
+            newModulatorFreq = Math.round(newModulatorFreq)
+        }
+        let relativeModulatorFreq = newModulatorFreq;
+        if (this.state.modulationRatioLock) {
+            relativeModulatorFreq *= this.synth.frequency.value;
+        }
+        this.modulator.frequency.value = relativeModulatorFreq;
+
+        
+        if (this.state.modulationType === "am") {
+            // 20 log10 (x) = -20
+            // 10^val/20 
+            let newModulatorVolume = 20 * Math.log10((this.state.modulationDepth / 100) * Math.pow(10, this.synth.volume.value / 20));
+            this.modulator.volume.value = newModulatorVolume;
+        } else {
+            // Map between 0 and 5
+            this.modulator.volume.value = 20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq);
+        }
+        this.forceUpdate()
     }
 
     onXYPointerMove = (x, y) =>{
@@ -101,6 +128,25 @@ class Modulation extends React.Component {
             let volume = getGain((1 - x), 0, -30);
             this.synth.frequency.value = freq;
             this.synth.volume.value = volume;
+
+            let newModulatorFreq = this.state.modulationFrequency;
+            if (newModulatorFreq !== ("0.5")) {
+                newModulatorFreq = Math.round(newModulatorFreq)
+            }
+            let relativeModulatorFreq = newModulatorFreq;
+            if (this.state.modulationRatioLock) {
+                relativeModulatorFreq *= this.synth.frequency.value;
+            }
+            this.modulator.frequency.value = relativeModulatorFreq;
+            if (this.state.modulationType === "am") {
+                // 20 log10 (x) = -20
+                // 10^val/20 
+                let newModulatorVolume = 20 * Math.log10((this.state.modulationDepth / 100) * Math.pow(10, this.synth.volume.value / 20));
+                this.modulator.volume.value = newModulatorVolume;
+            } else {
+                // Map between 0 and 5
+                this.modulator.volume.value = 20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq);
+            }
         }
     }
 
@@ -120,87 +166,160 @@ class Modulation extends React.Component {
 
 
     handleModulationPresetChange = modulationPreset =>{
-        let attack, decay, sustain, release;
+        let modulationType, modulationFrequency, modulationDepth, modulationRatioLock;
         switch(modulationPreset){
-            case "Default": 
-                attack = 0.2;
-                decay = 0.2;
-                sustain = 0.5;
-                release = 0.5;
+            case "Tremolo": 
+                modulationType = "am";
+                modulationFrequency = 4;
+                modulationDepth = 90;
+                modulationRatioLock = false;
             break
-            case "Pluck":
-                attack = 0.01;
-                decay = 0.1;
-                sustain = 0.2;
-                release = 0.2;
+            case "Vibrato":
+                modulationType = "fm";
+                modulationFrequency = 6;
+                modulationDepth = 60;
+                modulationRatioLock = false;
             break
-            case "Pad":
-                attack = 0.67;
-                decay = 0.1;
-                sustain = 0.8;
-                release = 0.8;
+            case "Bass":
+                modulationType = "am";
+                modulationFrequency = 3;
+                modulationDepth = 38;            
+                modulationRatioLock = true;
             break
-            case "Fortepiano":
-                attack = 0.01;
-                decay = 0.2;
-                sustain = 0.05;
-                release = 1;
+            case "Bell":
+                modulationType = "fm";
+                modulationFrequency = 16;
+                modulationDepth = 40;
+                modulationRatioLock = true;
             break
             case "Swell Up/Down":
-                attack = 0.25;
-                decay = 0.5;
-                sustain = 0.1;
-                release = 0.2;
             break
             default: 
-                attack = 0.2;
-                decay = 0.2;
-                sustain = 0.5;
-                release = 0.5;
         }
-        this.synth.modulation.attack = attack;
-        this.synth.modulation.decay = decay;
-        this.synth.modulation.sustain = sustain;
-        this.synth.modulation.release = convertToLog(release, 0.01, 1, 0.1, 10);
-        let sustainEnd = 0.8 * this.state.modulationWidth;
 
-        let newModulationPositions = {
-            attack: attack * this.state.modulationWidth,
-            decay: (decay + attack) * this.state.modulationWidth,
-            sustain: (1 - sustain) * this.state.modulationHeight,
-            release: (this.state.modulationWidth - sustainEnd) * release + sustainEnd
+        if (modulationType !== this.state.modulationType){
+            if (modulationType === "fm") {
+                this.modulator.disconnect(this.synth.volume);
+                setTimeout(() => {
+                    this.modulator.connect(this.synth.frequency);
+                }, 200)
+            } else {
+                this.modulator.disconnect(this.synth.frequency);
+                setTimeout(() => {
+                    this.modulator.connect(this.synth.volume);
+                }, 200)
+            }
         }
-        this.setState({modulationPositions: newModulationPositions, modulationPreset: modulationPreset});
+        let newModulatorFreq = modulationFrequency;
+        if (newModulatorFreq !== ("0.5")) {
+            newModulatorFreq = Math.round(newModulatorFreq)
+        }
+        let relativeModulatorFreq = newModulatorFreq;
+        if (this.state.modulationRatioLock) {
+            relativeModulatorFreq *= this.synth.frequency.value;
+        }
+        this.modulator.frequency.value = relativeModulatorFreq;
+
+        if (modulationType === "am") {
+            // 20 log10 (x) = -20
+            // 10^val/20 
+            let newModulatorVolume = 20 * Math.log10((modulationDepth / 100) * Math.pow(10, this.synth.volume.value / 20));
+            this.modulator.volume.value = newModulatorVolume;
+        } else {
+            // Map between 0 and 5
+            this.modulator.volume.value = 20 * Math.log10((modulationDepth / 100) * 10 * relativeModulatorFreq);
+        }
+
+        this.setState({
+            modulationType: modulationType, 
+            modulationFrequency: modulationFrequency, 
+            modulationDepth: modulationDepth, 
+            modulationRatioLock: modulationRatioLock,
+            modulationPreset: modulationPreset})
+
     }
-
+    
     handleModulationTypeChange = () =>{
-        this.setState({modulationType: (this.state.modulationType === "am") ? "fm": "am"})
+        this.modulator.volume.value = -Infinity;
+
+        if(this.state.modulationType === "am"){
+            this.modulator.disconnect(this.synth.volume);
+            this.modulator.triggerAttack(this.modulator.frequency.value)
+            let relativeModulatorFreq = this.modulator.frequency.value;
+            if (this.state.modulationRatioLock) {
+                relativeModulatorFreq *= this.synth.frequency.value;
+            }
+            this.modulator.volume.setValueAtTime(20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq, Tone.now() + 0.2));
+            setTimeout(() => {
+                this.modulator.connect(this.synth.frequency);
+            }, 200)
+        } else {
+            this.modulator.disconnect(this.synth.frequency);
+            let newModulatorVolume = 20 * Math.log10((this.state.modulationDepth / 100) * Math.pow(10, this.synth.volume.value / 20))
+            this.modulator.volume.setValueAtTime(newModulatorVolume, Tone.now() + 0.2);
+            setTimeout(()=>{
+                this.modulator.connect(this.synth.volume);
+            }, 200)
+        }
+           
+        this.setState({modulationType: (this.state.modulationType === "am") ? "fm": "am", modulationPreset: ""});
+
     }
 
-    handleModulationLockChange = () => this.setState({modulationRatioLock: !this.state.modulationRatioLock})
+    handleModulationLockChange = () => {
+        let newModulatorFreq = this.state.modulationFrequency;
+        if (newModulatorFreq !== ("0.5")) {
+            newModulatorFreq = Math.round(newModulatorFreq)
+        }
+        let relativeModulatorFreq = newModulatorFreq;
+        if (!this.state.modulationRatioLock) {
+            relativeModulatorFreq *= this.synth.frequency.value;
+        }
+        this.modulator.frequency.value = relativeModulatorFreq;
+
+        if(this.state.modulationType === "fm"){
+            this.modulator.volume.value = 20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq);
+        }
+        this.setState({modulationRatioLock: !this.state.modulationRatioLock, modulationPreset: ""})
+    }
 
     handleModulationChange = (e, modulationChange) =>{
         if(modulationChange === "frequency"){
-            let newFreq = e.target.value;
-            if(newFreq !== ("0.5") ){
-                newFreq = Math.round(newFreq)
+            let newModulatorFreq = e.target.value;
+            if(newModulatorFreq !== ("0.5") ){
+                newModulatorFreq = Math.round(newModulatorFreq)
             } 
-
-            this.setState({modulationFrequency: newFreq })
+            let relativeModulatorFreq = newModulatorFreq;
+            if(this.state.modulationRatioLock){
+                relativeModulatorFreq *= this.synth.frequency.value;
+            }
+            this.modulator.frequency.value = relativeModulatorFreq;
+            this.setState({modulationFrequency: newModulatorFreq })
+            if(this.state.modulationType === "fm"){
+                this.modulator.volume.value = 20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq);
+            }
             
         } else {
+            // Depth change
+            if(this.state.modulationType === "am"){
+                // 20 log10 (x) = -20
+                // 10^val/20 
+                let newModulatorVolume = 20 * Math.log10((e.target.value / 100) * Math.pow(10, this.synth.volume.value / 20));
+                this.modulator.volume.value = newModulatorVolume; 
+            } else {
+                // Map between 0 and 5
+                this.modulator.volume.value = 20 * Math.log10((e.target.value / 100) * 10 * this.modulator.frequency.value);
+            }
             this.setState({modulationDepth: e.target.value })
 
         }
+        this.setState({modulationPreset: ""})
     }
 
-
     render(){
-        
-        
         return (
             <>
-                <div className="synthesis-content-title">Modulation Synthesis</div>
+                <div className="synthesis-content-title">Modulation</div>
                 <div className="synthesis-content-text">
                     Modulation Text
                 </div>
@@ -210,6 +329,7 @@ class Modulation extends React.Component {
                     onXYPointerUp={this.onXYPointerUp}
                     handleSustainToggle={this.handleSustainToggle}
                     signal={this.synth}
+                    trigger={false}
                     ref={this.demoContainRef}
                 >
                     <ModulationDemo
@@ -217,9 +337,11 @@ class Modulation extends React.Component {
                         modulationFrequency={this.state.modulationFrequency}
                         modulationDepth={this.state.modulationDepth}
                         modulationRatioLock={this.state.modulationRatioLock}
+                        modulationPreset={this.state.modulationPreset}
                         handleModulationTypeChange = {this.handleModulationTypeChange}
                         handleModulationLockChange = {this.handleModulationLockChange}
                         handleModulationChange = {this.handleModulationChange}
+                        handleModulationPresetChange = {this.handleModulationPresetChange}
                     />
                 </DemoContainer>            
             </>

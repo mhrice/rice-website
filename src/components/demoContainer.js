@@ -31,27 +31,35 @@ class DemoContainer extends React.Component {
     onXYPointerDown = (x, y) => {
         let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);
-        this.analysisGraphRef.current.startTrigger(freq, volume);
+        if(this.props.trigger){
+            this.analysisGraphRef.current.startTrigger(freq, volume);
+        }
         this.props.onXYPointerDown(x, y);
     }
 
     onXYPointerMove = (x, y) =>{
         let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);
-        this.analysisGraphRef.current.startTrigger(freq, volume);
+        if (this.props.trigger) {
+            this.analysisGraphRef.current.startTrigger(freq, volume);
+        }
         this.props.onXYPointerMove(x, y);
 
     }
 
     onXYPointerUp = () => {
-        this.analysisGraphRef.current.startTrigger(0, 0);
+        if (this.props.trigger) {
+            this.analysisGraphRef.current.startTrigger(0, 0);
+        }
         this.props.onXYPointerUp();
 
     }
 
     handleSustainToggle = () => {
         this.props.handleSustainToggle();
-        this.analysisGraphRef.current.startTrigger(0, 0);
+        if(this.props.trigger){
+            this.analysisGraphRef.current.startTrigger(0, 0);
+        }
     }
 
     resetSignal = () =>{
@@ -71,7 +79,7 @@ class DemoContainer extends React.Component {
                         onPointerUp={this.onXYPointerUp}
                         handleSustainToggle={this.handleSustainToggle}
                         />
-                    <AnalysisGraph height = {300} signal={this.props.signal} ref={this.analysisGraphRef}/>
+                    <AnalysisGraph height = {300} signal={this.props.signal} ref={this.analysisGraphRef} trigger={this.props.trigger}/>
                 </div>
             </div>
 
@@ -79,4 +87,7 @@ class DemoContainer extends React.Component {
     }
 }
 
+DemoContainer.defaultProps = {
+    trigger: true
+}
 export default DemoContainer;

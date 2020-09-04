@@ -167,6 +167,14 @@ class Subtractive extends React.Component {
 
     }   
 
+    componentWillUnmount() {
+        if (this.noise) {
+            this.synth.stop();
+        } else{
+            this.synth.triggerRelease();
+        }
+    }
+
     onXYPointerDown = (x, y) =>{
         let freq = getFreq((1 - y), 50, 8000);
         let volume = getGain((1 - x), 0, -30);

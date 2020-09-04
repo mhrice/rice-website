@@ -24,12 +24,7 @@ class AnalysisGraph extends React.Component {
        let width = this.analysisGraphContainerRef.current.getBoundingClientRect().width;
        this.setState({width: width});
        this.waveformAnalyser = new Tone.Waveform(FFTSIZE);
-    //    this.frequencyAnalyser = new Tone.FFT(2048);
-      this.frequencyAnalyser = new Tone.Analyser('fft', 2048);
-    //    console.log(Tone.getContext().sampleRate);
-    //    console.log(this.frequencyAnalyser._analyser._analysers[0].frequencyBinCount)
-    //    this.frequencyAnalyser.normalRange = true;
-    //    console.log(this.frequencyAnalyser.normalRange)
+       this.frequencyAnalyser = new Tone.Analyser('fft', 2048);
        this.waveformConnected = false;
        this.frequencyConnected = false;
        this.waveformCtx = this.waveform.getContext("2d");
@@ -64,7 +59,7 @@ class AnalysisGraph extends React.Component {
         let height = this.props.height/1.5;
         let minAllowedValue = 20;
         let maxAllowedValue = this.props.height/2 + 10;
-
+        
         for (let i = 0; i < values.length; i += valuesPerPixel) {
             let value = values[Math.round(i)] * height + midpoint;
             if(value < minAllowedValue) value = minAllowedValue;
@@ -81,33 +76,39 @@ class AnalysisGraph extends React.Component {
         }
 
         // Peak triggering
-        if(!this.state.plotZero){
-            let peak = max - min;
-            if (peak > this.state.triggerVolume * 100){
-                if(!this.state.trigger){
-                    if(this.numPlots < PLOTSPERTRIGGER){
-                        this.numPlots++;                    
-                    } else {
-                        this.numPlots = 0;
-                        this.setState({trigger: true});
+        if(this.props.trigger){
+            if(!this.state.plotZero){
+                let peak = max - min;
+                if (peak > this.state.triggerVolume * 100){
+                    if(!this.state.trigger){
+                        if(this.numPlots < PLOTSPERTRIGGER){
+                            this.numPlots++;                    
+                        } else {
+                            this.numPlots = 0;
+                            this.setState({trigger: true});
+                        }
+                        this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
+
+                        this.waveformCtx.stroke();
                     }
-                    this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
+                }
+                if(peak < this.state.triggerVolume * 100) {
+                    if(this.state.trigger){
+                        this.setState({trigger: false});
+                        this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
+                        this.waveformCtx.stroke();
+                    }
+                }
 
+                if(this.firstLoad){
                     this.waveformCtx.stroke();
+                    this.firstLoad = false;
                 }
             }
-            if(peak < this.state.triggerVolume * 100) {
-                if(this.state.trigger){
-                    this.setState({trigger: false});
-                    this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
-                    this.waveformCtx.stroke();
-                }
-            }
+        } else {
+            this.waveformCtx.clearRect(0, 0, this.state.width, this.props.height);
+            this.waveformCtx.stroke();
 
-            if(this.firstLoad){
-                this.waveformCtx.stroke();
-                this.firstLoad = false;
-            }
         }
         if(this.props.signal === undefined || this.props.signal === null){
             this.waveformConnected = false;
