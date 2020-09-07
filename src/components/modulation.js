@@ -197,7 +197,6 @@ class Modulation extends React.Component {
             default: 
         }
 
-        if (modulationType !== this.state.modulationType){
             if (modulationType === "fm") {
                 this.modulator.disconnect(this.synth.volume);
                 setTimeout(() => {
@@ -209,13 +208,12 @@ class Modulation extends React.Component {
                     this.modulator.connect(this.synth.volume);
                 }, 200)
             }
-        }
         let newModulatorFreq = modulationFrequency;
         if (newModulatorFreq !== ("0.5")) {
             newModulatorFreq = Math.round(newModulatorFreq)
         }
         let relativeModulatorFreq = newModulatorFreq;
-        if (this.state.modulationRatioLock) {
+        if (modulationRatioLock) {
             relativeModulatorFreq *= this.synth.frequency.value;
         }
         this.modulator.frequency.value = relativeModulatorFreq;

@@ -63,6 +63,9 @@ ul {
 
 .about-list-row {
     display: flex;
+    /* height: 3rem; */
+    margin: 0.9rem 0;
+    
 }
 
 

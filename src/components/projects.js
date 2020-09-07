@@ -23,7 +23,7 @@ class Projects extends Component {
     render(){
         return (
             <div className="projects-content">
-                <div className="projects-title">Projects</div>
+                <div className="projects-title">My Work</div>
                 <div className="projects-container">
                     {ProjectData.map(item=>{
                         return (

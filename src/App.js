@@ -9,6 +9,7 @@ import About from './components/about';
 import Contact from './components/contact';
 import Projects from './components/projects';
 import Synthesis from './components/synthesis';
+import Music from "./components/music";
 
 
 // wrap the `spring` helper to use a bouncy config
@@ -66,9 +67,10 @@ class App extends Component {
             className="route-wrapper"
           >
           <Route path="/about" component={About}/>
-          <Route path="/projects" component={Projects}/>
+          <Route path="/work" component={Projects}/>
           <Route path="/contact" component={Contact}/>
           <Route path="/synthesis" component={Synthesis}/>
+          <Route path="/music" component={Music}/>
           <Route path="/*" render={props=> <Home {...props} homeMounted={this.homeMounted}/>}/>
           </AnimatedSwitch> 
       </div>

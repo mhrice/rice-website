@@ -37,8 +37,10 @@ class Navigation extends Component {
             <NavLink to="/" className="navigation-left-header navigation-link" activeStyle={{fontWeight: "bold"}}>{homeLinkName}</NavLink>
             <div className="navigation-left-links">
                 <NavLink to="/about" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>About</NavLink>
-                <NavLink to="/projects" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Projects</NavLink>
+                <NavLink to="/work" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Work</NavLink>
                 <NavLink to="/synthesis" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Synthesis Demos</NavLink>
+                <NavLink to="/music" className="navigation-main-link navigation-link" activeStyle={{fontWeight: "bold"}}>Music</NavLink>
+
                 <div className="navigation-main-link navigation-link" onClick={this.downloadResume} activeStyle={{fontWeight: "bold"}}>Resume</div>
 
             </div>
