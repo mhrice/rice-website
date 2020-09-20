@@ -18,6 +18,9 @@ class XYController extends React.Component {
     }
     componentDidMount(){
         this.down = false
+        if(this.props.setForSynthIntro){
+            this.setState({x: 100, y: 171, freq: 440});
+        }
 
 
     }

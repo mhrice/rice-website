@@ -4,8 +4,6 @@ import Additive from "./additive";
 import Subtractive from "./subtractive";
 import Envelopes from "./envelopes";
 import Modulation from "./modulation";
-
-
 import WhatIsSynthesis from "./whatIsSynthesis";
 
 import { ReactComponent as Technology } from '../resources/technology.svg';
@@ -14,7 +12,7 @@ import { ReactComponent as Filter } from '../resources/filter.svg';
 import { ReactComponent as ADSR } from '../resources/adsr.svg';
 import { ReactComponent as Delay } from '../resources/delay.svg';
 import { ReactComponent as Sampling } from '../resources/sampling.svg';
-import { ReactComponent as Modulation_IMG } from '../resources/modulation.svg';
+import { ReactComponent as ModulationImg } from '../resources/modulation.svg';
 
 
 
@@ -52,7 +50,7 @@ const menuItems = [
     {
         name: "Modulation",
         component: <Modulation/>,
-        icon: <Modulation_IMG className="synthesis-menu-item-icon" width={20} height={20}/>
+        icon: <ModulationImg className="synthesis-menu-item-icon" width={20} height={20}/>
     },
     {
         name: "Delay",
@@ -82,7 +80,7 @@ const menuItems = [
 ]
 
 function Synthesis(){
-    let [currentItem, setCurrentItem] = useState(4);
+    let [currentItem, setCurrentItem] = useState(0);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">

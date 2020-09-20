@@ -34,7 +34,7 @@ let ProjectData = [
         
     },
     {
-        title: "Yawn Generator",
+        title: "Yawn Generator VST",
         description: "This audio synthesis VST plugin uses concepts from additive synthesis, physical modeling, and filtering to achieve a synthetic yawn sound. \
         By pressing a desired note on the piano keyboard, the synth will generate a yawn sound centered at that note, before dropping in frequency like a typical yawn does. \
         The algorithm uses time-variant additive synthesis + noise for the base sound, with filtering, envelopes, panning, and a touch of reverb to make it sound more authentic. \

@@ -67,8 +67,15 @@ class DemoContainer extends React.Component {
     }
 
     render(){
+        let demoStyle;
+        if (this.props.disabled){
+            demoStyle = {
+                "cursor": "notAllowed",
+                "pointerEvents": "none"
+            }
+        }
         return (
-            <div className="demo-container">
+            <div className="demo-container" style={demoStyle}>
                 {this.props.children}
                 <div className="demo-graphs" ref={this.demoRef}>
                     <XYController 
@@ -78,6 +85,7 @@ class DemoContainer extends React.Component {
                         onPointerMove={this.onXYPointerMove} 
                         onPointerUp={this.onXYPointerUp}
                         handleSustainToggle={this.handleSustainToggle}
+                        setForSynthIntro={this.props.disabled}
                         />
                     <AnalysisGraph height = {300} signal={this.props.signal} ref={this.analysisGraphRef} trigger={this.props.trigger}/>
                 </div>

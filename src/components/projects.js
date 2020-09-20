@@ -24,6 +24,7 @@ class Projects extends Component {
         return (
             <div className="projects-content">
                 <div className="projects-title">My Work</div>
+                <hr width="90%"/>
                 <div className="projects-container">
                     {ProjectData.map(item=>{
                         return (
@@ -38,11 +39,6 @@ class Projects extends Component {
                         />
                         )
                     })}
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
                     <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
                     <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
 

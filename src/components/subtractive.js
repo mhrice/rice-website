@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import "../styles/subtractive.css"
-import { max } from 'd3';
 
+const HIT_RADIUS = 15;
 const filterPresets = ["Low-Pass", "High-Pass", "Band-Pass", "All-Pass", "Comb", "Mystery"]
 const filterDBs = ["30 dB", "20 dB", "10 dB", "0 dB", "-10 dB", "-20 dB", "-30 dB"]
 const filterFreqs = ["50 Hz", "143 Hz", "385 Hz", "1 kHz", "2.7 kHz", "7.4 kHz"]
@@ -22,42 +22,47 @@ function SubtractiveDemo(props){
     // let filterDashedPath1;
     // let filterDashedPath2;
     let filterDarkPolygon;
-    let filterDarkPolygon1;
     let filterDarkPolygon2;
-    let handlePosition = props.filterCutoffPosition;
-    let handlePosition2;
+    let handlePositions = props.filterCutoffPositions;
+    let comb_filter_path = `M 0 ${midpoint} H ${props.filterWidth / 8 - 5}     L ${props.filterWidth / 8} ${props.filterHeight}     L ${props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${2 * props.filterWidth / 8 - 5} L ${2 * props.filterWidth / 8} ${props.filterHeight} L ${2 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${3 * props.filterWidth / 8 - 5} L ${3 * props.filterWidth / 8} ${props.filterHeight} L ${3 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${4 * props.filterWidth / 8 - 5} L ${4 * props.filterWidth / 8} ${props.filterHeight} L ${4 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${5 * props.filterWidth / 8 - 5} L ${5 * props.filterWidth / 8} ${props.filterHeight} L ${5 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${6 * props.filterWidth / 8 - 5} L ${6 * props.filterWidth / 8} ${props.filterHeight} L ${6 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${7 * props.filterWidth / 8 - 5} L ${7 * props.filterWidth / 8} ${props.filterHeight} L ${7 * props.filterWidth / 8 + 5} ${midpoint} 
+                                            H ${props.filterWidth}`;
     switch(props.filterPreset){
         case "All-Pass": 
             filterPath = `M 0 ${midpoint} H ${props.filterWidth}`
             filterDashedPath = `M 0 0`;
             filterDarkPolygon = `0 0`;
-            // filterDarkPolygon = `${props.filterCutoffPosition}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
+            // filterDarkPolygon = `${props.filterCutoffPositions[0]}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
             break;
         case "Low-Pass":
-            filterFadePoint = props.filterCutoffPosition + 0.3 * props.filterWidth;
-            filterPath = `M 0 ${midpoint} L ${props.filterCutoffPosition} ${midpoint} L ${filterFadePoint} ${props.filterHeight}`
-            filterDashedPath = `M ${props.filterCutoffPosition} ${midpoint} H ${props.filterWidth}`
-            filterDarkPolygon = `${props.filterCutoffPosition}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
+            filterFadePoint = props.filterCutoffPositions[0] + 0.3 * props.filterWidth;
+            filterPath = `M 0 ${midpoint} L ${props.filterCutoffPositions[0]} ${midpoint} L ${filterFadePoint} ${props.filterHeight}`
+            filterDashedPath = `M ${props.filterCutoffPositions[0]} ${midpoint} H ${props.filterWidth}`
+            filterDarkPolygon = `${props.filterCutoffPositions[0]}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
             break;
         case "High-Pass":
-            filterFadePoint = props.filterCutoffPosition - 0.3 * props.filterWidth;
-            filterPath = `M ${props.filterWidth} ${midpoint} L ${props.filterCutoffPosition} ${midpoint} L ${filterFadePoint} ${props.filterHeight}`
+            filterFadePoint = props.filterCutoffPositions[0] - 0.3 * props.filterWidth;
+            filterPath = `M ${props.filterWidth} ${midpoint} L ${props.filterCutoffPositions[0]} ${midpoint} L ${filterFadePoint} ${props.filterHeight}`
             filterDashedPath = `M 0 ${midpoint} H ${props.filterWidth}`
-            filterDarkPolygon = `0, ${midpoint}, ${props.filterCutoffPosition}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, 0, ${props.filterHeight}`
+            filterDarkPolygon = `0, ${midpoint}, ${props.filterCutoffPositions[0]}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, 0, ${props.filterHeight}`
             break
         case "Band-Pass":
-            filterFadePoint1 = props.filterCutoffPosition1 - 0.3 * props.filterWidth;
-            filterFadePoint2 = props.filterCutoffPosition2 + 0.3 * props.filterWidth;
-            filterPath = `M ${filterFadePoint1}, ${props.filterHeight} L ${props.filterCutoffPosition1} ${midpoint} L ${props.filterCutoffPosition2} ${midpoint} L ${filterFadePoint2} ${props.filterHeight}`
+            filterFadePoint1 = props.filterCutoffPositions[0] - 0.3 * props.filterWidth;
+            filterFadePoint2 = props.filterCutoffPositions[1] + 0.3 * props.filterWidth;
+            filterPath = `M ${filterFadePoint1}, ${props.filterHeight} L ${props.filterCutoffPositions[0]} ${midpoint} L ${props.filterCutoffPositions[1]} ${midpoint} L ${filterFadePoint2} ${props.filterHeight}`
             filterDashedPath = `M 0 ${midpoint} H ${props.filterWidth}`
             // filterDashedPath2 = `M 0 ${midpoint} H ${props.filterWidth}`
-            filterDarkPolygon = `0, ${midpoint}, ${props.filterCutoffPosition1}, ${midpoint}, ${filterFadePoint1}, ${props.filterHeight}, 0, ${props.filterHeight}`
-            filterDarkPolygon2 = `${props.filterCutoffPosition2}, ${midpoint}, ${filterFadePoint2}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
-            handlePosition = props.filterCutoffPosition1;
-            handlePosition2 = props.filterCutoffPosition2;
-
-            // filterDarkPolygon2 = `0, ${midpoint}, ${props.filterCutoffPosition}, ${midpoint}, ${filterFadePoint}, ${props.filterHeight}, 0, ${props.filterHeight}`
-            break                
+            filterDarkPolygon = `0, ${midpoint}, ${props.filterCutoffPositions[0]}, ${midpoint}, ${filterFadePoint1}, ${props.filterHeight}, 0, ${props.filterHeight}`
+            filterDarkPolygon2 = `${props.filterCutoffPositions[1]}, ${midpoint}, ${filterFadePoint2}, ${props.filterHeight}, ${props.filterWidth}, ${props.filterHeight}, ${props.filterWidth}, ${midpoint}`
+            break   
+        case "Comb":
+            filterPath = comb_filter_path;
+            break
         default:
             filterPath = "";
     }
@@ -77,7 +82,7 @@ function SubtractiveDemo(props){
                     </div>
                 </div>
                 <div className="subtractive-presets-container">
-                    <div className="harmonic-preset-title">Filter Presets</div>
+                    <div className="harmonic-preset-title">Filter Types</div>
                     <div className="harmonic-presets-list">
                         {filterPresets.map(preset=>{
                             let presetBorder = "2px solid transparent";
@@ -108,8 +113,11 @@ function SubtractiveDemo(props){
                     <path d={filterDashedPath} fill="transparent" stroke="rgb(238, 238, 238)" strokeWidth={1} strokeDasharray="5,5"></path>
                     <polygon points={filterDarkPolygon} fill="rgb(9, 160, 206, 0.4)" stroke="transparent"/>
                     {props.filterPreset === "Band-Pass" && <polygon points={filterDarkPolygon2} fill="rgb(9, 160, 206, 0.4)" stroke="transparent"/>}
-                    <circle cx={handlePosition} cy={midpoint} r="7" fill={props.filterCursorFill} stroke="rgb(9, 160, 206)" strokeWidth={3}/>
-                    {props.filterPreset === "Band-Pass" && <circle cx={handlePosition2} cy={midpoint} r="7" fill={props.filterCursorFill} stroke="rgb(9, 160, 206)" strokeWidth={3}/>}
+                    {handlePositions.map((position, index) =>{
+                        return (
+                            <circle cx={position} cy={midpoint} r="7" fill={props.filterCursorFills[index]} stroke="rgb(9, 160, 206)" strokeWidth={3} key={position}/>
+                        )
+                    })}
 
                     {filterDBs.map((db, index)=>{
                         let percentage = (1 / (filterDBs.length + 1)) * (index + 1)
@@ -145,8 +153,9 @@ class Subtractive extends React.Component {
             waveSelection: "Sawtooth",
             filterPreset: "Low-Pass",
             filterWidth: 1,
-            filterCursorFill: "none",
-            filterCutoffPosition: 0
+            filterCursorFills: ["none", "none"],
+            filterCutoffPositions: [1],
+            activeCutoff: -1
         }
         this.filterRef = React.createRef();
         this.demoContainRef = React.createRef();
@@ -155,15 +164,18 @@ class Subtractive extends React.Component {
     componentDidMount(){
         this.synth = new Tone.Synth();
         let rect = this.filterRef.current.getBoundingClientRect();
-        this.setState({filterWidth: rect.width, filterCutoffPosition: rect.width * (4/7)});
+        this.setState({filterWidth: rect.width, filterCutoffPositions: [rect.width * (4/7)]});
 
         this.synth.oscillator.type = "sawtooth"
         this.synth.volume.value = 0;
         this.noise = false;
 
-
-        this.filter = new Tone.Filter(1000, "lowpass").toDestination();
+        this.filter = new Tone.Filter(1000, "lowpass");
         this.synth.connect(this.filter);
+        this.volume = new Tone.Volume(); // To not break analysis code
+        this.volume.volume.value = 0;
+        this.volume.toDestination();
+        this.filter.connect(this.volume);
 
     }   
 
@@ -268,40 +280,49 @@ class Subtractive extends React.Component {
     }
 
     handleFilterPresetChange = filterPreset =>{
-        let startingCutoff;
-        let startingCutoff1;
-        let startingCutoff2;
+        let startingCutoffs;
         let filterType;
         let filterFreq;
         switch(filterPreset){
             case "All-Pass": 
-                startingCutoff = this.state.filterWidth + 200;
-                filterType = "allpass"
+                startingCutoffs = [this.state.filterWidth + 200];
+                filterType = "allpass";
                 break
             case "Low-Pass": 
-                startingCutoff = this.state.filterWidth * (4/7);
+                startingCutoffs = [this.state.filterWidth * (4/7)];
                 filterFreq = 1000;
-                filterType = "lowpass"
+                filterType = "lowpass";
                 break
             case "High-Pass": 
-                startingCutoff = this.state.filterWidth * (4/7);
-                filterType = "highpass"
+                startingCutoffs = [this.state.filterWidth * (4/7)];
+                filterType = "highpass";
                 filterFreq = 1000;
                 break
             case "Band-Pass":
-                startingCutoff1 = this.state.filterWidth * (2/7)
-                startingCutoff2 = this.state.filterWidth * (5/7)
-                filterType = "bandpass"
+                startingCutoffs = [this.state.filterWidth * (2/7), this.state.filterWidth * (5/7)];
+                filterType = "bandpass";
                 let filterFreq1 = 143;
                 let filterFreq2 = 2700;
                 filterFreq = (filterFreq1 + filterFreq2)/2;
-
                 break
-            default: startingCutoff = 0;
+            case "Comb":
+                startingCutoffs = [this.state.filterWidth + 200];
+                filterType = "comb";
+                break
+            default: startingCutoffs = [];
         }
-        this.filter.type = filterType;
-        this.filter.frequency.rampTo(filterFreq, 0.1);
-        this.setState({filterPreset: filterPreset, filterCutoffPosition: startingCutoff, filterCutoffPosition1: startingCutoff1, filterCutoffPosition2: startingCutoff2})
+        this.synth.disconnect(this.filter);
+        if(filterType === "comb"){
+            this.filter = new Tone.FeedbackCombFilter({delayTime: 0.01});
+            // this.filter.delayTime = 0.01;
+        } else {
+            this.filter = new Tone.Filter();
+            this.filter.type = filterType;
+            this.filter.frequency.rampTo(filterFreq, 0.1);
+        }
+        this.synth.connect(this.filter);
+        this.filter.connect(this.volume);
+        this.setState({filterPreset: filterPreset, filterCutoffPositions: startingCutoffs})
     }
 
 
@@ -310,30 +331,57 @@ class Subtractive extends React.Component {
         let rect = this.filterRef.current.getBoundingClientRect();
         let x = e.clientX - rect.left; //x position within the element.
         // let y = e.clientY - rect.top; //y position within the element.
-        let filterFreq = getFreq((x / rect.width), 20, 20000);
-        this.setState({filterCutoffPosition: x, filterCursorFill: "rgb(9, 160, 206)"}); 
-        this.filter.frequency.rampTo(filterFreq, 0.1);
-        // this.filter.frequency = filterFreq
-        this.filterPointerDown = true;
-        document.addEventListener("pointerup", this.onPointerUp)
+        let activeCutoff;
+        let foundCutoff = false;
+        this.state.filterCutoffPositions.forEach((position, index) => {
+            if(Math.abs(position - x) < HIT_RADIUS){
+                activeCutoff = index;
+                foundCutoff = true;
+            }
+        });
+
+        if(foundCutoff){
+            let filterFreq = getFreq((x / rect.width), 20, 20000);
+            let newFilterCutoffs = [...this.state.filterCutoffPositions];
+            let newFilterFills = [...this.state.filterCursorFills];
+            newFilterCutoffs[activeCutoff] = x;
+            newFilterFills[activeCutoff] = "rgb(9, 160, 206)";
+            this.setState({filterCutoffPositions: newFilterCutoffs, filterCursorFills: newFilterFills, activeCutoff: activeCutoff}); 
+            if(this.state.filterPreset === "Band-Pass"){
+                let filterFreq2 = getFreq((newFilterCutoffs[Number(!activeCutoff)] / rect.width), 20, 20000);
+                filterFreq = Math.pow((filterFreq2 * filterFreq), 0.5);
+            }
+            this.filter.frequency.rampTo(filterFreq, 0.1);
+            document.addEventListener("pointerup", this.onFilterPointerUp)
+        }
+        
 
     }
 
     onFilterPointerMove = (e) => {
         e.preventDefault();
-        if(this.filterPointerDown){
+        if(this.state.activeCutoff !== -1){
+            // console.log(this.filter.frequency.value)
             let rect = this.filterRef.current.getBoundingClientRect();
             let x = e.clientX - rect.left; //x position within the element.
             let filterFreq = getFreq((x/rect.width), 20, 20000);
+            let newFilterCutoffs = [...this.state.filterCutoffPositions];
+            newFilterCutoffs[this.state.activeCutoff] = x;
+            if (this.state.filterPreset === "Band-Pass") {
+                let filterFreq2 = getFreq((newFilterCutoffs[Number(!this.state.activeCutoff)] / rect.width), 20, 20000);
+                filterFreq = Math.pow((filterFreq2 * filterFreq), 0.5);
+                if(newFilterCutoffs[0] >= newFilterCutoffs[1]){
+                    return;
+                }
+            }
             this.filter.frequency.rampTo(filterFreq, 0.1);
-            this.setState({filterCutoffPosition: x});
+            this.setState({filterCutoffPositions: newFilterCutoffs});
         }
     }
 
     onFilterPointerUp = (e) => {
         e.preventDefault();
-        this.filterPointerDown = false;
-        this.setState({filterCursorFill: "none"});
+        this.setState({filterCursorFills: ["none", "none"], activeCutoff: -1});
         document.removeEventListener("pointerup", this.onFilterPointerUp)
 
     }
@@ -364,7 +412,7 @@ class Subtractive extends React.Component {
                     onXYPointerMove={this.onXYPointerMove} 
                     onXYPointerUp={this.onXYPointerUp}
                     handleSustainToggle={this.handleSustainToggle}
-                    signal={this.filter}
+                    signal={this.volume}
                     ref={this.demoContainRef}
                 >
                     <SubtractiveDemo
@@ -373,10 +421,8 @@ class Subtractive extends React.Component {
                     filterPreset={this.state.filterPreset}
                     filterWidth={this.state.filterWidth}
                     filterHeight={150}
-                    filterCutoffPosition={this.state.filterCutoffPosition}
-                    filterCutoffPosition1={this.state.filterCutoffPosition1}
-                    filterCutoffPosition2={this.state.filterCutoffPosition2}
-                    filterCursorFill={this.state.filterCursorFill}
+                    filterCutoffPositions={this.state.filterCutoffPositions}
+                    filterCursorFills={this.state.filterCursorFills}
                     onFilterPointerDown={this.onFilterPointerDown}
                     onFilterPointerMove={this.onFilterPointerMove}
                     onFilterPointerUp={this.onFilterPointerUp}
