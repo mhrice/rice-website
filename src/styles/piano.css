@@ -59,11 +59,11 @@
     background-color: grey;
 }
 
-.piano-key:active {
+/* .piano-key:active {
     background-color: gold;
     box-shadow: none;
     margin-top: 5px;
-}
+} */
 
 .white-key {
     position: absolute;

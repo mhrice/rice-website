@@ -10,7 +10,53 @@ const keyNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B
 const KEY_SIZE = 40;
 const MIDDLE_NOTE = 60; 
 
-const SOUND_SELECTIONS = ["SINE", "SQUARE", "TRIANGLE", "SAW", "CUSTOM"];
+const SOUND_SELECTIONS = [
+    {
+        name: "preset1",
+        synth: Tone.Synth,
+        options: {
+            envelope: {
+                attack: 0.01
+            }
+        }
+    },
+    {
+        name: "preset2",
+        synth: Tone.Synth,
+        options: {
+            oscillator: {
+                type: "custom",
+                partials: [1, 0.12, 0.19, 0, 0.48, 0.21, 0.24, 0.52, 0, 0, 0.38, 0.23, 0.17, 0.12, 0.25, 0, 0, 0.06, 0.06, 0.06, 0.09, 0.10, 0, 0.1, 0.02, 0, 0.03]
+            },
+            envelope: {
+                attack: 0.01
+            }
+        }
+    },
+    {
+        name: "preset3",
+        synth: Tone.FMSynth,
+        options: {
+            envelope: {
+                attack: 0.01
+            },
+            harmonicity: 1,
+            modulationIndex: 30,
+            modulationEnvelope: {
+                attack: 0.1
+            }
+        }
+    },
+    {
+        name: "preset4",
+        synth: Tone.DuoSynth,
+        options: {
+            envelope: {
+                attack: 0.01,
+            },
+        }
+    }
+];
     
 function Key(props){
     let position = props.position;
@@ -21,15 +67,26 @@ function Key(props){
     } else {
         className = "piano-key white-key";
     }
-    position +="px";
+    position += "px";
+    let style = {left: position};
+    if (props.isCurrentNote){
+        style = {
+            left: position,
+            backgroundColor: "gold",
+            boxShadow: "none",
+            marginTop: "5px"
+
+        }
+    }
     return (
         <div 
         className={className} 
-        style={{left: position}} 
+        style={style} 
         onPointerDown={props.onPointerDown}
         onPointerOver={props.onPointerOver}
         onPointerMove={props.onPointerMove}
         onPointerUp={props.onPointerUp}
+
         >
         {props.number === 60 && <div className="middle-c"></div>}    
         </div>
@@ -45,12 +102,12 @@ class Piano extends Component {
             width: window.innerWidth,
             startKey: 59,
             endKey: 61,
-            soundChoice: "SINE"
+            soundChoice: "preset1"
         }
     }
     componentDidMount(){
         Tone.context.lookAhead = 0;
-        this.synth = new Tone.PolySynth().toMaster();
+        this.synth = new Tone.PolySynth().toDestination();
         this.allowed = true;
         this.PointerDown = false;
         window.oncontextmenu = function (event) {
@@ -72,8 +129,7 @@ class Piano extends Component {
     handlePointerDown = (e, midiNum) =>{
         e.preventDefault();
         this.over = false;
-        console.log("DOWN")
-        if (e.repeat != undefined) {
+        if (e.repeat !== undefined) {
             this.allowed = !e.repeat;
         }
         if (!this.allowed) return;
@@ -81,6 +137,7 @@ class Piano extends Component {
         this.PointerDown = true;
         this.note = midiToFreq(midiNum)
         this.synth.triggerAttack(midiToFreq(midiNum));
+        this.setState({currentNote: midiNum})
     }
 
     handlePointerMove = e => {
@@ -97,29 +154,28 @@ class Piano extends Component {
 
     handlePointerOver = (e, midiNum) => {
         e.preventDefault();
-        console.log("OVER")
         this.over = true;
         if(this.PointerDown && this.note !== midiToFreq(midiNum)){
-            console.log(this.note)
             this.synth.triggerRelease(this.note);
             this.synth.triggerAttack(midiToFreq(midiNum));
-            this.note = midiToFreq(midiNum)
+            this.note = midiToFreq(midiNum);
+            this.setState({currentNote: midiNum});
+
         }
     }
 
     handlePointerUp = (e) =>{
         this.over = false;
-        console.log("UP")
         this.allowed = true;
         this.PointerDown = false;
         this.synth.triggerRelease(this.note);
+        this.setState({currentNote: -1})
     }
 
 
 
     calculateKeyPositions = () =>{
         let width = window.innerWidth;
-        console.log(width)
         const START_PIXEL = START_PERCENT_OF_SCREEN * width;
         const END_PIXEL = END_PERCENT_OF_SCREEN * width;
         let totalNumKeys = 0;
@@ -184,7 +240,7 @@ class Piano extends Component {
             onPointerOver={e=>this.handlePointerOver(e, i)}
             onPointerMove={this.handlePointerMove}
             onPointerUp={this.handlePointerUp}
-
+            isCurrentNote={this.state.currentNote === i}
             />
             )
             if(!blackKey){
@@ -198,28 +254,41 @@ class Piano extends Component {
     }
 
     handleOptionsChange = option =>{
-        this.setState({soundChoice: option})
+        this.setState({soundChoice: option.name});
+        this.synth.dispose();
+        // console.log(option.synth)
+        this.synth = new Tone.PolySynth({voice: option.synth}).toDestination();
+
+
+        this.synth.set(option.options);
+        // this.synth.set({
+        //     oscillator: {
+        //         type: "custom",
+        //         partials: [1, 0.2, 0.2]
+        //     }
+        // })
+        // console.log(this.synth)
+        // console.log(this.synth._voices)
     }
 
     renderSoundSelections = () =>{
-        console.log(this.state.soundChoice)
         return (
             SOUND_SELECTIONS.map((sound, i)=>{
                 let style;
-                if (this.state.soundChoice === sound){
+                if (this.state.soundChoice === sound.name){
                     style={"backgroundColor": "rgba(127, 67, 37, 0.5)"};
                 } else {
                     style={"backgroundColor": "#00010F"};
                 }
                return (
-                <>
+                <React.Fragment>
                 <div 
                     style={style}
                     onClick={e=>this.handleOptionsChange(sound)}
                     key={i}
                     className="piano-option"
                 ></div>
-                </>
+                </React.Fragment>
                )
             })
         )

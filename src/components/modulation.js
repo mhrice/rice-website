@@ -192,7 +192,11 @@ class Modulation extends React.Component {
                 modulationDepth = 40;
                 modulationRatioLock = true;
             break
-            case "Swell Up/Down":
+            case "Mystery":
+                modulationType = "fm";
+                modulationFrequency = 5;
+                modulationDepth = 34;
+                modulationRatioLock = true;
             break
             default: 
         }

@@ -148,6 +148,11 @@ class Additive extends React.Component{
                     weights[i] = Math.random()*0.8;
                 }
                 break;
+            
+            case "Mystery":
+                weights = [1, 0.12, 0.19, 0, 0.48, 0.21, 0.24, 0.52, 0, 0, 0.38, 0.23, 0.17, 0.12, 0.25, 0, 0, 0.06, 0.06, 0.06, 0.09, 0.10, 0, 0.1, 0.02, 0, 0.03];
+                break
+                
             default:
                 weights[0] = 1;
                 break;

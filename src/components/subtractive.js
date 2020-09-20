@@ -8,7 +8,7 @@ import {faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import "../styles/subtractive.css"
 
 const HIT_RADIUS = 15;
-const filterPresets = ["Low-Pass", "High-Pass", "Band-Pass", "All-Pass", "Comb", "Mystery"]
+const filterPresets = ["Low-Pass", "High-Pass", "Band-Pass", "All-Pass", "Comb"]
 const filterDBs = ["30 dB", "20 dB", "10 dB", "0 dB", "-10 dB", "-20 dB", "-30 dB"]
 const filterFreqs = ["50 Hz", "143 Hz", "385 Hz", "1 kHz", "2.7 kHz", "7.4 kHz"]
 const wavePresets = ["Sawtooth", "Square", "Triangle", "Noise"]
