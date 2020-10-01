@@ -35,7 +35,7 @@ class About extends Component {
                                 </div>
                             </div>                    
                         </div>
-                        <div>My work focuses on merging the creative with the technical, looking to explore new avenues of musical creation and analysis to provide better tools to musicians, producers, composers and audio tech enthusiasts. I'm specifically interested in <b>modern synthesis techniques</b>, <b>audio signal processing</b>, and <b>machine learning music applications.</b></div>
+                        <div>My work focuses on merging the <b>creative</b> with the <b>technical</b>, looking to explore new avenues of musical creation and analysis to provide better tools to musicians, producers, composers and audio tech enthusiasts. I'm specifically interested in <b>modern synthesis techniques</b>, <b>audio signal processing</b>, and <b>machine learning music applications.</b></div>
                         <br/>
                         <div>Currently, I'm a hardware engineer at Qualcomm, looking to eventually pursue a master's in music technology before beginning my music software career</div>
                     </div>

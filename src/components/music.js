@@ -32,14 +32,14 @@ class Music extends Component {
                             {production.map(item=><li className="music-list-item" key={item.name}><a href={item.link} className="music-list-link">{item.name}</a></li>)}
                         </ul>
                     </div>
-                    <hr height={1} style={{"marginBlockStart": "0"}}/>
+                    <hr className="music-content-divider"/>
                     <div className="music-mixing-container">
                         <div className="music-category-title">Recording/Mixing</div>
                         <ul className="music-list">
                             {mixing.map(item=><li className="music-list-item" key={item.name}>{item.name}{item.link}</li>)}
                         </ul>                    
                     </div>
-                    <hr height={1} style={{"marginBlockStart": "0"}}/>
+                    <hr className="music-content-divider"/>
                     <div className="music-other-container">
                         <div className="music-services-container">
                             <div className="music-category-title">Services</div>

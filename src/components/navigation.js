@@ -3,6 +3,8 @@ import "../styles/navigation.css";
 import { Link, NavLink } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 
+import { ReactComponent as Logo } from "../resources/Logo.svg";
+
 var firebase = require('../firebase');
 var storage = firebase.storage();
 
@@ -28,7 +30,7 @@ class Navigation extends Component {
         let homeLinkName = "Matthew Rice";
         if(this.props.location.pathname === "/"){
             backgroundColor = "transparent";
-            homeLinkName = "Logo";
+            homeLinkName = <Logo className="navigation-logo" width={60} height={60}/>
         } else {
             backgroundColor = "#293038";
         }

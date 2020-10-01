@@ -281,7 +281,7 @@ class Piano extends Component {
                     style={"backgroundColor": "#00010F"};
                 }
                return (
-                <React.Fragment>
+                <React.Fragment key={i}>
                 <div 
                     style={style}
                     onClick={e=>this.handleOptionsChange(sound)}

@@ -19,8 +19,7 @@
     /* justify-content: flex-start; */
     /* align-items: flex-start; */
     font-size: 30px!important;
-    margin-left: 2%;
-    margin-top: -11px;
+    margin-left: 3%;
     height: 10vh;
     /* line-height: 3rem!important; */
     /* padding: 1rem 0.25rem; */
@@ -106,4 +105,8 @@
     background-color: rgba(9, 160, 206, 0.527);
     border: 2px solid rgba(9, 160, 206, 0.014);
 
+}
+
+.navigation-logo {
+    /* padding: 10px; */
 }
