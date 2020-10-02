@@ -1,5 +1,5 @@
 .about-content {
-    height: 90vh;
+    /* height: 90vh; */
     width: 100vw;
     background-color: #293038;
     /* background-color: #000C22; */
@@ -8,6 +8,7 @@
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
+    min-height: 90vh;
 }
 
 .about-content-container {

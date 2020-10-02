@@ -63,8 +63,8 @@ const menuItems = [
         icon: <Sampling className="synthesis-menu-item-icon" width={20} height={20}/>
     }//,
     // {
-    //     name: "LFOs",
-    //     component: <ComingSoon name="LFOs"/>,
+    //     name: "Wavetable Synthesis",
+    //     component: <ComingSoon name="Wavetable Synthesis"/>,
     //     icon: <Technology className="synthesis-menu-item-icon" width={20} height={20}/>
     // },    
     // {
@@ -80,7 +80,7 @@ const menuItems = [
 ]
 
 function Synthesis(){
-    let [currentItem, setCurrentItem] = useState(0);
+    let [currentItem, setCurrentItem] = useState(4);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">

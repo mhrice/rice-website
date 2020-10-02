@@ -118,6 +118,7 @@ class Modulation extends React.Component {
         } else {
             // Map between 0 and 5
             this.modulator.volume.value = 20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq);
+            console.log(20 * Math.log10((this.state.modulationDepth / 100) * 10 * relativeModulatorFreq));
         }
         this.forceUpdate()
     }
@@ -246,8 +247,11 @@ class Modulation extends React.Component {
 
         if(this.state.modulationType === "am"){
             this.modulator.disconnect(this.synth.volume);
-            this.modulator.triggerAttack(this.modulator.frequency.value)
-            let relativeModulatorFreq = this.modulator.frequency.value;
+            let newModulatorFreq = this.state.modulationFrequency;
+            if (newModulatorFreq !== ("0.5")) {
+                newModulatorFreq = Math.round(newModulatorFreq)
+            }
+            let relativeModulatorFreq = newModulatorFreq;
             if (this.state.modulationRatioLock) {
                 relativeModulatorFreq *= this.synth.frequency.value;
             }

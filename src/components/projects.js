@@ -39,8 +39,6 @@ class Projects extends Component {
                         />
                         )
                     })}
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
-                    <Project title="Test" picture ={Black} description="This is a description" date={1991}/>
 
                 </div>
             </div>
