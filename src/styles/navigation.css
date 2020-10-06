@@ -11,6 +11,7 @@
     /* Firefox, other Gecko */
     box-sizing: border-box;
     align-items: center;
+    position: relative;
 }
 
 .navigation-left-header {
@@ -107,6 +108,42 @@
 
 }
 
-.navigation-logo {
-    /* padding: 10px; */
+.mobile-nav-container {
+    position: absolute;
+    right: 2%;
+    top: 25%;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.mobile-nav-menu {
+    /* margin: 1%; */
+    align-self: flex-end;
+}
+
+.mobile-nav-link {
+    text-decoration: none;
+    /* color: white; */
+    font-size: 0.7rem;
+    padding: 0.25rem;
+    cursor: pointer;
+
+}
+
+.mobile-nav-link:hover {
+    /* background-color: grey; */
+    text-decoration: underline;
+    /* color: red; */
+}
+
+.mobile-nav-link:active {
+    text-decoration: none;
+    /* color: rgb(35, 182, 35); */
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    background-color: #EEEEEE;
 }

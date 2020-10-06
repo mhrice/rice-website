@@ -12,6 +12,13 @@ import Synthesis from './components/synthesis';
 import Music from "./components/music";
 
 
+function NotFoundPage(props){
+
+  return (
+    <div className="not-found-page">No Content Here</div>
+  )
+}
+
 // wrap the `spring` helper to use a bouncy config
 function bounce(val) {
   return spring(val, {
@@ -71,7 +78,8 @@ class App extends Component {
           <Route path="/contact" component={Contact}/>
           <Route path="/synthesis" component={Synthesis}/>
           <Route path="/music" component={Music}/>
-          <Route path="/*" render={props=> <Home {...props} homeMounted={this.homeMounted}/>}/>
+          <Route exact path="/" render={props=> <Home {...props} homeMounted={this.homeMounted}/>}/>
+          <Route path = "/*" component={NotFoundPage} />
           </AnimatedSwitch> 
       </div>
     </BrowserRouter>        
