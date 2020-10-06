@@ -30,7 +30,7 @@ class Music extends Component {
         return (
             <div className="music-container">
                 <div className="music-title">Music</div>
-                <hr width="90%"/>
+                <hr className="music-hr" width="90%"/>
                 <div className="music-content-container">
                     <div className="music-production-container">
                         <div className="music-category-title">Production</div>

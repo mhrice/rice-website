@@ -79,12 +79,14 @@ const menuItems = [
     // },
 ]
 
+
+
 function Synthesis(){
     let [currentItem, setCurrentItem] = useState(0);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">
-            <div className="synthesis-menu" onMouseOver={e=>setHover(1)} onMouseOut={e=>setHover(0)}>
+            <div className="synthesis-menu" onMouseOver={e=>setHover(1)} onMouseOut={e=>setHover(0)} onTouchStart={e=>setHover(0)}>
                 {menuItems.map((item, index)=>{
                     let className = "synthesis-menu-item";
                     let textColor = "rgba(255, 255, 255, 0.7)";

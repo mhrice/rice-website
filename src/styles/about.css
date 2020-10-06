@@ -34,15 +34,29 @@
     height: 350px;
     width: 325px;
 }
+@media (max-width: 400px) {
+    .about-photo {
+    height: 150px;
+    }
+}
+
 
 .about-paragraph-container {
     flex:1;
     /* display: flex; */
     /* flex-direction: column; */
     /* align-items: center; */
-    padding-right: 10%;
+    /* padding-right: 10%; */
+    margin: 0% 5%;
     height: 100%;
 }
+
+/* @media (max-width: 400px) {
+    .about-paragraph-container {
+    padding-right: 0%;
+    }
+} */
+
 
 ul {
     list-style: none;

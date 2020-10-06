@@ -4,7 +4,9 @@
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    overflow-x: scroll;
     background-color: #293038;
     /* height: 100vh; */
 }
@@ -12,6 +14,16 @@
     font-size: 2.5rem;  
     margin-top: 1%;
     margin-bottom: 1%;
+}
+
+@media (max-width: 800px) {
+    .music-title {
+        align-self: flex-start;
+        margin-left: 2%;
+    }
+    .music-hr {
+        display: none;
+    }
 }
 
 .music-content-container {

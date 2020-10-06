@@ -111,7 +111,7 @@ z-index: 25;
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    font-size: 66px;
+    font-size: 4rem;
     font-weight: bold;
 
 }
@@ -120,8 +120,14 @@ z-index: 25;
     display: block;
     width: 50%;
     padding: 0.5rem;
-    font-size: 22px;
+    font-size: 1.3rem;
     line-height: 1.8;
+}
+
+@media (max-width: 1000px) {
+    .synthesis-content-text {
+        width: 80%;
+    }
 }
 
 .synthesis-example-container {
@@ -156,7 +162,7 @@ z-index: 25;
 }
 
 .synthesis-label {
-    font-size: 14px;
+    font-size: 1rem;
     margin: 0.5rem 0;
 
 }

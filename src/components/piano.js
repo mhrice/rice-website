@@ -175,7 +175,7 @@ class Piano extends Component {
 
 
     calculateKeyPositions = () =>{
-        let width = window.innerWidth;
+        let width = window.screen.width;
         const START_PIXEL = START_PERCENT_OF_SCREEN * width;
         const END_PIXEL = END_PERCENT_OF_SCREEN * width;
         let i = (END_PIXEL + START_PIXEL) / 2;

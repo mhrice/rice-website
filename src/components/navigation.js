@@ -56,10 +56,13 @@ class Navigation extends Component {
 
     componentDidMount(){
         window.addEventListener("resize", this.setState({mobileNavClicked: false}))
+        window.addEventListener("orientationchange", this.calculateKeyPositions);
+        
     }
-
+    
     componentWillUnmount(){
         window.removeEventListener("resize", this.setState({mobileNavClicked: false}))
+        window.removeEventListener("orientationchange", this.calculateKeyPositions);
 
     }
 
