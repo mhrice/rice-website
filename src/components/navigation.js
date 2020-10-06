@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import "../styles/navigation.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
 
 import { ReactComponent as Logo } from "../resources/Logo.svg";
 
-var firebase = require('../firebase');
-var storage = firebase.storage();
+let firebase = require('../firebase');
+let storage = firebase.storage();
 
 class Navigation extends Component {
     downloadResume = () =>{
-    var pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume_04-26-20.pdf");
+    let pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume_04-26-20.pdf");
     pathReference.getDownloadURL().then((url)=>{
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.responseType = 'blob';
         xhr.onload = function(event) {
-        var blob = xhr.response;
         };
         xhr.open('GET', url);
         xhr.send();
@@ -47,7 +46,7 @@ class Navigation extends Component {
 
             </div>
             <div className="navigation-right-links">
-                <a href="mailto:mattricesound@gmail.com" target="_blank" className="navigation-link contact-link"> Contact</a>
+                <a href="mailto:mattricesound@gmail.com" target="_blank" rel="noopener noreferrer" className="navigation-link contact-link"> Contact</a>
             </div>
         </div>
         )

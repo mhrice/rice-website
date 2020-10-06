@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Tone from "tone"
-import { convertToLog, arrSumSquare, arrSum, dbToLinear } from "../utils";
+import { dbToLinear } from "../utils";
 
 import "../styles/analysisGraph.css"
 
@@ -21,6 +21,7 @@ class AnalysisGraph extends React.Component {
     }
 
    componentDidMount() {
+       this.requestId = Array(2); // Need to store request animation ids to cancel later
        let width = this.analysisGraphContainerRef.current.getBoundingClientRect().width;
        this.setState({width: width});
        this.waveformAnalyser = new Tone.Waveform(FFTSIZE);
@@ -31,11 +32,13 @@ class AnalysisGraph extends React.Component {
        this.frequencyCtx = this.frequencyAnalysis.getContext("2d");
        this.startWaveformAnalysis();
        this.startFrequencyAnalysis()
-       window.addEventListener("resize", this.resize);
+       window.addEventListener("resize", this.resize, false);
    }
 
    componentWillUnmount(){
-       window.removeEventListener("resize", this.resize);
+       window.removeEventListener("resize", this.resize, false);
+       window.cancelAnimationFrame(this.requestId[0]);
+       window.cancelAnimationFrame(this.requestId[1]);
 
    }
 
@@ -114,7 +117,7 @@ class AnalysisGraph extends React.Component {
             this.waveformConnected = false;
         }
 
-        requestAnimationFrame(this.startWaveformAnalysis);
+        this.requestId[0] = requestAnimationFrame(this.startWaveformAnalysis);
 
    }
 
@@ -146,7 +149,7 @@ class AnalysisGraph extends React.Component {
        this.setState({freqValues: values});
        this.frequencyCtx.stroke();
 
-       requestAnimationFrame(this.startFrequencyAnalysis);
+       this.requestId[1] = requestAnimationFrame(this.startFrequencyAnalysis);
        
     }
 
@@ -164,7 +167,6 @@ class AnalysisGraph extends React.Component {
             this.setState({triggerFreq: freq, triggerVolume: volume, trigger: false, plotZero: false});
        }
 
-    //    console.log(this.state.freqValues.map(value=>(value < -50) ? 0:value))
    }
 
    resetSignal = () =>{
@@ -173,7 +175,6 @@ class AnalysisGraph extends React.Component {
    }
 
    resize = () =>{
-//    console.log(this.analysisGraphContainerRef.current)
     let width;
     if (this.analysisGraphContainerRef.current === null){
         width = this.state.width;

@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Tone from "tone"
-import { convertToLog, arrMax, arrSum, getFreq, getGain } from "../utils";
+import { convertToLog, getFreq, getGain } from "../utils";
 import DemoContainer from './demoContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCaretLeft, faCaretRight, faArrowsAltH, faArrowsAltV } from '@fortawesome/free-solid-svg-icons';
+import {faCaretLeft, faCaretRight,  } from '@fortawesome/free-solid-svg-icons';
 
 import "../styles/envelopes.css"
 

@@ -110,3 +110,11 @@
     width: 150px;
     cursor: pointer;
 }
+
+.modulation-amplitude-text {
+    color: rgb(147, 33, 76);
+}
+
+.modulation-frequency-text {
+    color: rgb(132, 61, 183);
+}

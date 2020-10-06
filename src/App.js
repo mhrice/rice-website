@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navigation from "./components/navigation";
-import { BrowserRouter, Switch, Route} from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
 import { spring, AnimatedSwitch } from 'react-router-transition';
 
 import Home from './components/home';

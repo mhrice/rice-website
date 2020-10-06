@@ -178,7 +178,6 @@ class Piano extends Component {
         let width = window.innerWidth;
         const START_PIXEL = START_PERCENT_OF_SCREEN * width;
         const END_PIXEL = END_PERCENT_OF_SCREEN * width;
-        let totalNumKeys = 0;
         let i = (END_PIXEL + START_PIXEL) / 2;
         let currentNote = MIDDLE_NOTE;
         // Left side
@@ -188,7 +187,6 @@ class Piano extends Component {
             if (!blackKey) {
                 i -= KEY_SIZE;
             }
-            totalNumKeys++;
             currentNote--;
         }
         let startKey = currentNote;
@@ -201,7 +199,6 @@ class Piano extends Component {
             if (!blackKey) {
                 i += KEY_SIZE;
             }
-            totalNumKeys++;
             currentNote++;
         }
         let endKey = currentNote;
@@ -213,9 +210,7 @@ class Piano extends Component {
         })
     }
     createKeyboard = () =>{
-        let x = 0;
         let keyboard = [];
-        // let whiteKeyPosition = START_PERCENT_OF_SCREEN/100;
         let whiteKeyPosition = this.state.width * START_PERCENT_OF_SCREEN;
         let {startKey, endKey} = this.state;
         if (keyNames[startKey % 12].indexOf("#") !== -1){            
@@ -244,10 +239,7 @@ class Piano extends Component {
             />
             )
             if(!blackKey){
-                x++;
-                // whiteKeyPosition += 3;
                 whiteKeyPosition += 40;
-                // whiteKeyPositionString = `${whiteKeyPosition * this.state.width}px`;
             }
         }
         return keyboard

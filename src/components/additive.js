@@ -2,7 +2,7 @@ import React from 'react';
 import * as Tone from "tone"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { convertToLog, arrMax, arrSum, getFreq, getGain } from "../utils";
+import { arrMax, arrSum, getFreq, getGain } from "../utils";
 import DemoContainer from './demoContainer';
 
 import "../styles/additive.css"
@@ -97,10 +97,10 @@ class Additive extends React.Component{
     }
 
     handleWeightsChange = weights => {
-        let max = arrMax(weights);
-        let sum = arrSum(weights) - max;
-        let dist = Math.abs(Math.sqrt(Math.sqrt(sum)) - 0.5);
-        let newGain = Math.log2(dist) * 2;
+        // let max = arrMax(weights);
+        // let sum = arrSum(weights) - max;
+        // let dist = Math.abs(Math.sqrt(Math.sqrt(sum)) - 0.5);
+        // let newGain = Math.log2(dist) * 2;
         // this.synth.volume.exponentialRampToValueAtTime(newGain, this.synth.context.now() + 0.2);
         this.setState({
             weights: weights,

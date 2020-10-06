@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import "../styles/synthesis.css";
 import Additive from "./additive";
 import Subtractive from "./subtractive";
@@ -80,7 +80,7 @@ const menuItems = [
 ]
 
 function Synthesis(){
-    let [currentItem, setCurrentItem] = useState(4);
+    let [currentItem, setCurrentItem] = useState(0);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">

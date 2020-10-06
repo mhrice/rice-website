@@ -1,5 +1,4 @@
 import React from 'react';
-import Tone from "tone";
 
 import XYController from "./xyController";
 import AnalysisGraph from "./analysisGraph";

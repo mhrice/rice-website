@@ -6,13 +6,13 @@ import ProjectData from "../projectData"
 function Project(props){
    return (
        <div className="project-container">
-           <a href={props.link} target="_blank"><img src={props.picture} alt={props.title} className="project-img"></img></a>
+           <a href={props.link} target="_blank" rel="noopener noreferrer"><img src={props.picture} alt={props.title} className="project-img"></img></a>
            <div className="project-text">
              <div className="project-title">{props.title}</div>
              <div className="project-description">{props.description}</div>
              <div className="project-date-and-github">
                 <div className="project-date">{props.date}</div>
-                <a className="project-github" href={props.githubLink} target="_blank"><img src={Github} alt="github"/></a> 
+                <a className="project-github" href={props.githubLink} target="_blank" rel="noopener noreferrer"><img src={Github} alt="github"/></a> 
             </div>
             </div>
        </div>

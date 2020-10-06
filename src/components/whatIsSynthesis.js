@@ -8,7 +8,6 @@ function WhatIsSynthesis(){
     let synth = new Tone.Synth();
     synth.triggerAttack(440);
     synth.volume.value = -10;
-    // synth.oscillator.type = "t"
     return (
         <>
             <div className="synthesis-content-title">What Is Synthesis?</div>

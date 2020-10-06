@@ -1,9 +1,7 @@
 import React from 'react';
 import * as Tone from "tone"
-import { convertToLog, arrMax, arrSum, getFreq, getGain } from "../utils";
+import { getFreq, getGain } from "../utils";
 import DemoContainer from './demoContainer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faCaretLeft, faCaretRight, faArrowsAltH, faArrowsAltV } from '@fortawesome/free-solid-svg-icons';
 
 import "../styles/modulation.css"
 
@@ -327,7 +325,23 @@ class Modulation extends React.Component {
             <>
                 <div className="synthesis-content-title">Modulation</div>
                 <div className="synthesis-content-text">
-                    Modulation Text
+                    Modulation is just a fancy word for change. For example, moving your mouse back and forth across the screen could be called mouse position modulation.
+                    In synthesis, two important use cases for modulation are <b className="modulation-amplitude-text">Amplitude Modulation</b> and 
+                    <b className="modulation-frequency-text"> Frequency Modulation</b>, which is the same process your radio uses to divide stations.
+                    <br/><br/>
+                    Modulation requires two signals: a carrier, the normal, unmodulated sound, and a modulator, the signal that changes some parameter of the carrier over time.
+                    The carrier itself is usually a sine wave. In the mouse position modulation example, the carrier would be the mouse picture on the screen, and the modulator 
+                    would be your hand which acts as a wave that changes the x and y coordinates of the mouse picture on the screen. 
+                    In modulation, there are two main parameters: modulation frequency and modulation depth. 
+                    Modulation frequency is simply the frequency of the moduating signal and changing this frequency changes how quickly the parameter being modulated moves.
+                    Modulation depth controls the volume ratio of the modulator to the carrier and thus how much modulation is present in the final output. 
+                    <br/><br/>
+                    In amplitude modulation, the volume of the carrier is changed. At a small frequency (5 hz) this produces a <b>tremolo</b> effect. 
+                    At a higher frequency, the modulation becomes so quick that it starts to produces <b>sidebands</b> of other frequencies, which depend on the
+                    ratio between the modulator frequency and the carrier frequency.
+                    In frequency modulation, the frequency of the carrier is changed. At a small frequency this produces a <b>vibrato</b> effect. 
+                    At a higher frequency, the modulation produces a ton of sidebands, again based on the modulation frequency/carrier frequency ratio
+                    and can be used as a simple replacement to additive synthesis!                    
                 </div>
                 <DemoContainer 
                     onXYPointerDown={this.onXYPointerDown} 
