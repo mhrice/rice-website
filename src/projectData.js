@@ -8,7 +8,8 @@ let ProjectData = [
     {
         title:"Interactive Spectrogram",
         description: "An insanely interactive live-input web spectrogram with complex sound synthesis built in. Includes\
-        features like multi-touch drawable synthesis (for touch screen devices), reverb, delay, and FM. Supports midi input and filter-based synthesis",
+        features like multi-touch drawable synthesis (for touch screen devices), reverb, delay, and FM. Supports midi input and filter-based synthesis. \
+        This project is part of ",
         date: "September 2019",
         picture: SpectrogramPic,
         link: "https://spectrogram.sciencemusic.org/",
@@ -17,7 +18,8 @@ let ProjectData = [
     {
         title: "Interactive Signal Generator",
         description: "A web audio signal generator that displays time-domain information of a user-selected wave shape. \
-        Users can draw to change frequency and amplitude of the sound. Supports multi-touch input to display summation of waveforms. ",
+        Users can draw to change frequency and amplitude of the sound. Supports multi-touch input to display summation of waveforms. \
+        This project is part of ",
         date: "June 2019",
         picture: SignalGeneratorPic,
         link: "https://signalgenerator.sciencemusic.org/",
@@ -36,9 +38,9 @@ let ProjectData = [
     },
     {
         title: "AI Jam 2",
-        description: "Final Project for Machine Learning and the Arts course. Live jam session with machine learning music models based on Google's AI Jam. \
+        description: "Final project for Machine Learning and the Arts course. Live jam session with machine learning music models based on Google's AI Jam. \
         Uses pre-trained Magenta drum-rnn and melody-rnn models to generate accompaniment for user-created baselines and melodies.\
-        Note: For full functionality, download and run locally with npm and use a midi controller",
+        Note: For full functionality, download and run locally with npm and use a midi controller.",
         date: "June 2019",
         picture: AIJamPic,
         link: "https://mhrice.github.io/Ai-Jam-2/",

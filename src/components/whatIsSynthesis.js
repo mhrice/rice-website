@@ -39,6 +39,7 @@ function WhatIsSynthesis(){
                 the manipulation of the demo-specific controls.
                 The analysis section contains two graphs: 1) A time-domain graph which shows how the sound is represented as changing position over time and 
                 2) A frequency-domain graph which shows the frequency content of the signal with the x-axis set to logarithmic frequency (20-20khz), and the y-axis showing amplitude of the frequencies
+                </div>
                 <DemoContainer 
                     onXYPointerDown={()=>{return}} 
                     onXYPointerMove={()=>{return}}
@@ -46,9 +47,9 @@ function WhatIsSynthesis(){
                     handleSustainToggle={()=>{return}}
                     trigger={false}
                     disabled={true}
-                    signal={synth}
-                />
-            </div>
+                    signal={synth}>
+                Demo Example (click a link the sidebar to try it!) 
+                </DemoContainer>
         </>
     )
 }

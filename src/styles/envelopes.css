@@ -1,6 +1,6 @@
 .envelopes-demo-container {
     /* background-color: blue; */
-    font-size: 20px;
+    font-size: 1.3rem;
     display: flex;
     flex-direction: column;
 }

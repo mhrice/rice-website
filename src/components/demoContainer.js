@@ -28,36 +28,43 @@ class DemoContainer extends React.Component {
     }
 
     onXYPointerDown = (x, y) => {
-        let freq = getFreq((1 - y), 50, 8000);
-        let volume = getGain((1 - x), 0, -30);
-        if(this.props.trigger){
-            this.analysisGraphRef.current.startTrigger(freq, volume);
+        if(!this.props.disabled){
+            let freq = getFreq((1 - y), 50, 8000);
+            let volume = getGain((1 - x), 0, -30);
+            if(this.props.trigger){
+                this.analysisGraphRef.current.startTrigger(freq, volume);
+            }
+            this.props.onXYPointerDown(x, y);
         }
-        this.props.onXYPointerDown(x, y);
     }
 
     onXYPointerMove = (x, y) =>{
-        let freq = getFreq((1 - y), 50, 8000);
-        let volume = getGain((1 - x), 0, -30);
-        if (this.props.trigger) {
-            this.analysisGraphRef.current.startTrigger(freq, volume);
+        if (!this.props.disabled) {
+            let freq = getFreq((1 - y), 50, 8000);
+            let volume = getGain((1 - x), 0, -30);
+            if (this.props.trigger) {
+                this.analysisGraphRef.current.startTrigger(freq, volume);
+            }
+            this.props.onXYPointerMove(x, y);
         }
-        this.props.onXYPointerMove(x, y);
-
     }
 
     onXYPointerUp = () => {
-        if (this.props.trigger) {
-            this.analysisGraphRef.current.startTrigger(0, 0);
+        if(!this.props.disabled){
+            if (this.props.trigger) {
+                this.analysisGraphRef.current.startTrigger(0, 0);
+            }
+            this.props.onXYPointerUp();
         }
-        this.props.onXYPointerUp();
 
     }
 
     handleSustainToggle = () => {
-        this.props.handleSustainToggle();
-        if(this.props.trigger){
-            this.analysisGraphRef.current.startTrigger(0, 0);
+        if(!this.props.disabled){
+            this.props.handleSustainToggle();
+            if(this.props.trigger){
+                this.analysisGraphRef.current.startTrigger(0, 0);
+            }
         }
     }
 
@@ -69,14 +76,13 @@ class DemoContainer extends React.Component {
         let demoStyle;
         if (this.props.disabled){
             demoStyle = {
-                "cursor": "notAllowed",
-                "pointerEvents": "none"
+                "cursor": "not-allowed",
             }
         }
         return (
             <div className="demo-container" style={demoStyle}>
                 {this.props.children}
-                <div className="demo-graphs" ref={this.demoRef}>
+                <div className="demo-graphs" ref={this.demoRef} style={demoStyle}>
                     <XYController 
                         height = {300} 
                         width = {175} 
@@ -95,6 +101,7 @@ class DemoContainer extends React.Component {
 }
 
 DemoContainer.defaultProps = {
-    trigger: true
+    trigger: true,
+    disable: false
 }
 export default DemoContainer;

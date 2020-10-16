@@ -1,6 +1,6 @@
 .additive-demo-container {
     /* background-color: blue; */
-    font-size: 20px;
+    font-size: 1.3rem;
     display: flex;
     flex-direction: column;
     /* overflow-x: scroll; */
@@ -38,7 +38,7 @@
     flex-direction: column;
     min-width: 30px;
     max-width: 30px;
-    font-size: 14px;
+    font-size: 1rem;
     position: relative;
 }
 
@@ -82,7 +82,7 @@
 .harmonic-preset {
     padding: 1% 3%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     /* box-sizing: border-box; */
@@ -111,7 +111,7 @@
 
 .harmonic-input {
     background-color: transparent;
-    font-size: 18px;
+    font-size: 1.2rem;
     color: #616161;
     flex: 1;
     /* width: default!important; */

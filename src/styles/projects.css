@@ -90,7 +90,7 @@
 }
 
 .project-description {
-    font-size: 14px;
+    font-size: 0.9rem;
     flex: 1;
 }
 .project-date-and-github {
@@ -111,3 +111,24 @@
     z-index: 10;
 }
 
+
+
+.ltw-link {
+    text-decoration: underline;
+    color: white;
+    font-size: 0.9rem;
+    /* padding: 1rem 0.25rem; */
+    cursor: pointer;
+
+}
+
+.ltw-link:hover {
+    /* background-color: grey; */
+    text-decoration: underline;
+    /* color: red; */
+}
+
+.ltw-link:active {
+    text-decoration: none;
+    /* color: rgb(35, 182, 35); */
+}

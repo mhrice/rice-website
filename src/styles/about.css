@@ -88,22 +88,6 @@ ul {
     flex: 10;
 }
 
-.list-item:before {
-    content: '\2022';
-    position: relative;
-    max-width: 0;
-    max-height: 0;
-    color: #E51C00;
-    font-size: 20px;
-    display: inline-block;
-    height: 1em;
-    width: 1em;
-    background-image: url(http://placehold.it/32?text=fallback);
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/93/Tango-bullet.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-right: 1em;
-}
 
 .about-text-description {
     font-size: 1em;

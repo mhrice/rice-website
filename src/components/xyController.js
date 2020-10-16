@@ -87,8 +87,14 @@ class XYController extends React.Component {
         let rotateX = this.props.width - 15;
         let rotateY = 75;
         let transformString = `rotate(-90 ${rotateX} ${rotateY})`
+        let demoStyle;
+        if (this.props.setForSynthIntro) {
+            demoStyle = {
+                "cursor": "not-allowed",
+            }
+        }
         return (
-            <div className="xy-container" onPointerLeave = {this.onPointerOut} >
+            <div className="xy-container" onPointerLeave = {this.onPointerOut} style={demoStyle}>
                 <svg 
                     width = {this.props.width} 
                     height = {this.props.height} 
