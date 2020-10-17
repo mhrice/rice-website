@@ -10,6 +10,8 @@ import "../styles/envelopes.css"
 const envelopePresets = ["Default", "Pluck", "Pad", "Fortepiano", "Swell Up/Down"]
 const wavePresets = ["Sine", "Square", "Sawtooth", "Triangle"]
 const TOP_ENVELOPE_POSITION = 15;
+Tone.Transport.start();
+let dotMode = "";
 
 function EnvelopesDemo(props) {
     let sustainEnd = 0.8 * props.envelopeWidth;
@@ -85,10 +87,6 @@ function EnvelopesDemo(props) {
                 </div>
             </div>
             <div className="envelopes-graph-container">
-                {/* <div className="envelope-graph-triggers-container">
-                    <div className="envelopes-graph-note-trigger">Start</div>
-                    <div className="envelopes-graph-note-trigger" style={{"left": envelopeAttributes.release.rectStart}}>Release</div>
-                </div> */}
                 <svg className="envelopes-graph"
                     onPointerDown={props.onEnvelopePointerDown} 
                     onPointerMove={props.onEnvelopePointerMove} 
@@ -111,7 +109,7 @@ function EnvelopesDemo(props) {
 
                         })}
                     <path d={`M 0 ${TOP_ENVELOPE_POSITION} H ${props.envelopeWidth}`} stroke="rgba(238, 238, 238, 0.75)"/>
-
+                    <circle cx = {props.dotPosition.x} cy={props.dotPosition.y} r="6" fill="#EEEEEE" stroke="#616161" strokeWidth={2}/>
                 </svg>          
 
             </div>
@@ -180,6 +178,8 @@ class Envelopes extends React.Component {
             envelopeheight: 1,
             envelopeCursorFills: {attack: "transparent", decay: "transparent", sustain: "transparent", release: "transparent"},
             envelopePositions: {attack: 0, decay: 0, sustain: 0, release: 0},
+            dotPosition: {x: 5, y: 6},
+            dotMode: "attack"
         }
         this.envelopeRef = React.createRef();
         this.demoContainRef = React.createRef();
@@ -201,7 +201,11 @@ class Envelopes extends React.Component {
                 decay: startingDecayPosition, 
                 sustain: startingSustainLevel, 
                 release: startingReleasePosition
-                }
+                },
+            dotPosition: {
+                x: 5, 
+                y: rect.height - 6
+            }
         });
         this.synth.toDestination();
         this.synth.oscillator.type = "sawtooth";
@@ -210,7 +214,6 @@ class Envelopes extends React.Component {
         this.synth.envelope.decay = 0.2;
         this.synth.envelope.sustain = 0.5;
         this.synth.envelope.release = 1;
-        // console.log(this.synth.envelope)
         this.activeEnvelope = "";
 
     }   
@@ -225,8 +228,13 @@ class Envelopes extends React.Component {
         this.synth.volume.value = volume;
         this.synth.triggerAttack(freq);
         this.playing = true;
+        Tone.Transport.clear(this.dotId);
+        dotMode = "attack";
+        this.animateDot(true);
+        
     }
 
+   
     onXYPointerMove = (x, y) =>{
         if (this.playing) {
             let freq = getFreq((1 - y), 50, 8000);
@@ -240,6 +248,9 @@ class Envelopes extends React.Component {
         if (!this.sustain) {
             this.synth.triggerRelease();
             this.playing = false;
+            Tone.Transport.clear(this.dotId);
+            dotMode = "release";
+            this.animateDot(false);        
         }
     }
 
@@ -364,7 +375,6 @@ class Envelopes extends React.Component {
             }
             
             let sustainEnd = 0.8 * rect.width;
-            // console.log(this.activeEnvelope)
             if(this.activeEnvelope === "attack"){
                 let newAttack = (1 - (sustainEnd - newPosition) / sustainEnd);
                 let decayRange = sustainEnd - newPosition;
@@ -439,6 +449,88 @@ class Envelopes extends React.Component {
 
     }
 
+    animateDot = attackOrRelease => {
+        let startingY;
+        let startingX;
+        if(attackOrRelease){
+            startingX = 5;
+            startingY = this.state.envelopeHeight - 6;
+        } else {
+            startingX = 0.8 * this.state.envelopeWidth;
+            startingY = this.state.envelopePositions.sustain;
+        }
+        let startingTime = Tone.now();
+        this.dotId = Tone.Transport.scheduleRepeat(time => {
+            this.performAnimation(startingX, startingY, time - startingTime);
+        }, 0.02);
+    }
+
+    performAnimation = (startingX, startingY, time) => {
+        let newX, newY;
+        let newMode = this.state.dotMode;
+        let xDistance, yDistance, xRate, yRate;
+        switch (dotMode) {
+            case "attack":
+                xDistance = this.state.envelopePositions.attack - startingX;
+                yDistance = TOP_ENVELOPE_POSITION - startingY;
+                xRate = xDistance / (this.synth.envelope.attack);
+                yRate = yDistance / (this.synth.envelope.attack);
+                newX = (xRate * (time)) + startingX;
+                newY = (yRate * (time)) + startingY;
+
+                if (newX > this.state.envelopePositions.attack || newY < TOP_ENVELOPE_POSITION) {
+                    newX = this.state.envelopePositions.attack;
+                    newY = TOP_ENVELOPE_POSITION;
+                    dotMode = "decay";
+                }
+                break
+
+            case "decay":
+                xDistance = this.state.envelopePositions.decay - this.state.envelopePositions.attack;
+                yDistance = this.state.envelopePositions.sustain - TOP_ENVELOPE_POSITION;
+                xRate = xDistance / (this.synth.envelope.decay);
+                yRate = yDistance / (this.synth.envelope.decay);
+                newX = (xRate * (time)) + startingX;
+                newY = (yRate * (time)) + startingY;
+                if (newX > this.state.envelopePositions.decay || newY > this.state.envelopePositions.sustain) {
+                    newX = this.state.envelopePositions.decay;
+                    newY = this.state.envelopePositions.sustain;
+                    dotMode = "sustain";
+                    Tone.Transport.clear(this.dotId);
+                    Tone.Transport.cancel();
+
+                }
+                break
+
+
+            case "release":                
+                xDistance = this.state.envelopePositions.release - startingX;
+                yDistance = (this.state.envelopeHeight - 6) - startingY;
+                xRate = xDistance / (this.synth.envelope.release);
+                yRate = yDistance / (this.synth.envelope.release);
+                newX = (xRate * (time)) + startingX;
+                newY = (yRate * (time)) + startingY;
+                if (newX > this.state.envelopePositions.release || newY > (this.state.envelopeHeight - 6)) {
+                    newX = this.state.envelopePositions.release;
+                    newY = this.state.envelopeHeight - 6;
+                    dotMode = "";
+                    Tone.Transport.clear(this.dotId);
+                    Tone.Transport.cancel();
+                }
+            break
+
+            default:
+                newX = this.state.dotPosition.x;
+                newY = this.state.dotPosition.y;
+        }
+        this.setState({
+            dotPosition: {
+                x: newX,
+                y: newY,
+                mode: newMode
+            }
+        })
+    }
     render(){
         
         
@@ -474,6 +566,7 @@ class Envelopes extends React.Component {
                     envelopeHeight={150}
                     envelopeCursorFills={this.state.envelopeCursorFills}
                     envelopePositions={this.state.envelopePositions}
+                    dotPosition={this.state.dotPosition}
                     onEnvelopePointerDown={this.onEnvelopePointerDown}
                     onEnvelopePointerMove={this.onEnvelopePointerMove}
                     onEnvelopePointerUp={this.onEnvelopePointerUp}

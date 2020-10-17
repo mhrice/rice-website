@@ -82,7 +82,7 @@ const menuItems = [
 
 
 function Synthesis(){
-    let [currentItem, setCurrentItem] = useState(0);
+    let [currentItem, setCurrentItem] = useState(3);
     let [hover, setHover] = useState(0);
     return (
         <div className="synthesis-page">
