@@ -10,7 +10,6 @@ import "../styles/envelopes.css"
 const envelopePresets = ["Default", "Pluck", "Pad", "Fortepiano", "Swell Up/Down"]
 const wavePresets = ["Sine", "Square", "Sawtooth", "Triangle"]
 const TOP_ENVELOPE_POSITION = 15;
-Tone.Transport.start();
 let dotMode = "";
 
 function EnvelopesDemo(props) {
@@ -207,6 +206,7 @@ class Envelopes extends React.Component {
                 y: rect.height - 6
             }
         });
+        Tone.Transport.start();
         this.synth.toDestination();
         this.synth.oscillator.type = "sawtooth";
         this.synth.volume.value = 0;
@@ -320,7 +320,7 @@ class Envelopes extends React.Component {
             sustain: (1 - sustain) * this.state.envelopeHeight,
             release: (this.state.envelopeWidth - sustainEnd) * release + sustainEnd
         }
-        this.setState({envelopePositions: newEnvelopePositions, envelopePreset: envelopePreset});
+        this.setState({envelopePositions: newEnvelopePositions, envelopePreset: envelopePreset, dotPosition: {x: 5, y: this.state.envelopeHeight - 6}});
     }
 
 
@@ -516,6 +516,14 @@ class Envelopes extends React.Component {
                     dotMode = "";
                     Tone.Transport.clear(this.dotId);
                     Tone.Transport.cancel();
+                    setTimeout(()=>{
+                        this.setState({
+                            dotPosition: {
+                                x: 5,
+                                y: this.state.envelopeHeight - 6
+                            }
+                        })
+                    }, 10)
                 }
             break
 

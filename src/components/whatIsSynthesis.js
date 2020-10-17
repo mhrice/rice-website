@@ -48,7 +48,7 @@ function WhatIsSynthesis(){
                     trigger={false}
                     disabled={true}
                     signal={synth}>
-                Demo Example (click a link the sidebar to try it!) 
+                Demo Example (click a link the sidebar to try one!) 
                 </DemoContainer>
         </>
     )
