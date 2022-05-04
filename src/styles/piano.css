@@ -4,27 +4,41 @@
     /* background-color: blue; */
     margin-top: 5.5rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .piano-options-container {
     display: flex;
+    /* background-color: yellow; */
     position: absolute;
     left: 20%;
-    bottom: 100%;
+    top: 0%;
+    width: 62.5%;
+    justify-content: space-between
+    /* top: 0%; */
+
+}
+.piano-sound-selection-container {
+    display: flex;
     z-index: 22;
+    position: relative;
+    flex: 1;
+    align-items: center;
+
     /* transform: translateX(-40%); */
     /* padding: 1rem; */
 
     /* justify-content: center; */
     /* align-items: center; */
-    margin-bottom: 0.75rem;
     /* background-color: rgba(127, 67, 37, 0.555) */
     /* width: 100%; */
     /* background-color: green; */
 }
 
 
-.piano-option {
+.piano-sound-selection {
     outline: none;
     height: 15px;
     width: 15px;
@@ -33,11 +47,32 @@
     margin: 0 0.5rem 0 0;
 }
 
+.piano-colors-button {
+    /* visibility: hidden; */
+    font-size: 1rem;
+    padding: 5px 10px;
+    display: flex;
+    color: #EEEEEE;
+    justify-content: center;
+    cursor: pointer;
+    /* background-color: #616161; */
+    border: 2px solid #616161;
+    background-color: transparent;
+
+}
+
+
+.piano-colors-button-active {
+    color: black;
+    border: 0px solid #616161;
+    background-image: linear-gradient( 69.7deg,  rgba(244,37,243,1) 1.4%, rgba(244,87,1,1) 36.2%, rgba(255,204,37,1) 72.2%, rgba(20,196,6,1) 113% );
+}
 
 .piano-keyboard-container {
     position: relative;
     z-index: 1;
     flex: 1;
+    top: 2.5rem;
 
 }
 
@@ -86,11 +121,11 @@
 
 .middle-c {
     position: relative;
-    top: 100%;
-    height: 10px;
+    top: calc(100% - 0.7rem);
+    height: 0.7rem;
     border: 2px solid #bebebe;
     border-radius: 50%;
-    width: 8px;
+    width: 0.7rem;
     background-color: #bebebe;
     z-index: 12;
 }
@@ -102,3 +137,12 @@
     z-index: 3;
 
 }
+
+/* .piano-colors {
+    position: absolute;
+    left: 75%;
+    top: -10%;
+    cursor: pointer;
+
+} */
+

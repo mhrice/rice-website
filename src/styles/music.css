@@ -16,7 +16,7 @@
     margin-bottom: 1%;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .music-title {
         align-self: flex-start;
         margin-left: 2%;

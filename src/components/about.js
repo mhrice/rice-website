@@ -4,6 +4,9 @@ import Mixer from "../resources/mixer.svg";
 import DSP from "../resources/dsp.svg";
 import Code from "../resources/code.svg";
 import AboutPhoto from "../resources/prof_pic.jpg";
+import QMULLogo from "../resources/qmul_logo.jpg";
+import UCSDLogo from "../resources/ucsd_logo.png";
+
 
 class About extends Component {
     render(){
@@ -37,7 +40,26 @@ class About extends Component {
                         </div>
                         <div>My work focuses on merging the <b>creative</b> with the <b>technical</b>, looking to explore new avenues of musical creation and analysis to provide better tools to musicians, producers, composers and audio tech enthusiasts. I'm specifically interested in <b>modern synthesis techniques</b>, <b>audio signal processing</b>, and <b>machine learning music applications.</b></div>
                         <br/>
-                        <div>Currently, I'm a hardware engineer at Qualcomm, looking to eventually pursue a MS in music technology before beginning my music software career.</div>
+                        <div className="about-list-title">Education</div>
+                        <div className="about-list">
+                            <div className="about-list">
+                                <div className="about-list-row">
+                                    <img src={QMULLogo} className="education-list-icon" alt="QMUL"/>
+                                    <div className="list-text">
+                                        <b>Queen Mary University of London</b>
+                                        <div>M.S. in Sound and Music Computing, AI Music concentration</div>
+                                    </div>
+                                </div>
+                                <div className="about-list-row">
+                                    <img src={UCSDLogo} className="education-list-icon" alt="QMUL"/>
+                                    <div className="list-text">
+                                        <b>UC San Diego</b>
+                                        <div>B.S. Electrical Engineering, DSP concentration</div>
+                                        <div>Minor in Music Technology</div>
+                                    </div>
+                                </div>                                
+                            </div>     
+                        </div>               
                     </div>
                 </div>
             </div>

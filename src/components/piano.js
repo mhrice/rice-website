@@ -61,6 +61,7 @@ const SOUND_SELECTIONS = [
 function Key(props){
     let position = props.position;
     let className;
+    let color;
     if(props.blackKey){
         className = "piano-key black-key";
         position -= 20
@@ -69,10 +70,15 @@ function Key(props){
     }
     position += "px";
     let style = {left: position};
+    if (props.color === "gold"){
+        color = "gold";
+    } else {
+        color = "#"+Math.floor(Math.random()*16777215).toString(16);
+    }
     if (props.isCurrentNote){
         style = {
             left: position,
-            backgroundColor: "gold",
+            backgroundColor: color,
             boxShadow: "none",
             marginTop: "5px"
 
@@ -102,14 +108,15 @@ class Piano extends Component {
             width: window.innerWidth,
             startKey: 59,
             endKey: 61,
-            soundChoice: "preset1"
+            soundChoice: "preset1",
+            color: "random",
+            started: true,
         }
     }
     componentDidMount(){
-        Tone.context.lookAhead = 0;
-        this.synth = new Tone.PolySynth().toDestination();
         this.allowed = true;
         this.PointerDown = false;
+        this.synth = new Tone.PolySynth().toDestination();
         window.oncontextmenu = function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -123,30 +130,39 @@ class Piano extends Component {
     componentWillUnmount(){
         window.removeEventListener("resize", this.calculateKeyPositions);
         window.removeEventListener("orientationchange", this.calculateKeyPositions);
+        document.removeEventListener("pointerup", this.handlePointerUp);
 
     }
 
     handlePointerDown = (e, midiNum) =>{
         e.preventDefault();
-        this.over = false;
-        if (e.repeat !== undefined) {
-            this.allowed = !e.repeat;
+        if (this.state.started){
+            this.over = false;
+            if (e.repeat !== undefined) {
+                this.allowed = !e.repeat;
+            }
+            if (!this.allowed) return;
+            this.allowed = false;
+            this.PointerDown = true;
+            this.note = midiToFreq(midiNum)
+            this.synth.triggerAttack(midiToFreq(midiNum));
+            this.setState({currentNote: midiNum})
+            document.addEventListener("pointerup", this.handlePointerUp);
+
+        } else {
+            this.setState({highlightEnable: true});
         }
-        if (!this.allowed) return;
-        this.allowed = false;
-        this.PointerDown = true;
-        this.note = midiToFreq(midiNum)
-        this.synth.triggerAttack(midiToFreq(midiNum));
-        this.setState({currentNote: midiNum})
     }
 
     handlePointerMove = e => {
         e.preventDefault();
-        this.over = false;
-        if(e.pointerType === "touch"){
-            this.synth.triggerRelease(this.note);
-            this.allowed = true;
-            this.PointerDown = false;
+        if (this.state.started){
+            this.over = false;
+            if(e.pointerType === "touch"){
+                this.synth.triggerRelease(this.note);
+                this.allowed = true;
+                this.PointerDown = false;
+            }
         }
 
 
@@ -154,22 +170,28 @@ class Piano extends Component {
 
     handlePointerOver = (e, midiNum) => {
         e.preventDefault();
-        this.over = true;
-        if(this.PointerDown && this.note !== midiToFreq(midiNum)){
-            this.synth.triggerRelease(this.note);
-            this.synth.triggerAttack(midiToFreq(midiNum));
-            this.note = midiToFreq(midiNum);
-            this.setState({currentNote: midiNum});
+        if (this.state.started){
+            this.over = true;
+            if(this.PointerDown && this.note !== midiToFreq(midiNum)){
+                this.synth.triggerRelease(this.note);
+                this.synth.triggerAttack(midiToFreq(midiNum));
+                this.note = midiToFreq(midiNum);
+                this.setState({currentNote: midiNum});
 
+            }
         }
     }
 
     handlePointerUp = (e) =>{
-        this.over = false;
-        this.allowed = true;
-        this.PointerDown = false;
-        this.synth.triggerRelease(this.note);
-        this.setState({currentNote: -1})
+        e.preventDefault();
+        if (this.state.started){
+            this.over = false;
+            this.allowed = true;
+            this.PointerDown = false;
+            this.synth.triggerRelease(this.note);
+            this.setState({currentNote: -1});
+        }
+
     }
 
 
@@ -193,7 +215,7 @@ class Piano extends Component {
         i = (END_PIXEL + START_PIXEL) / 2;
         currentNote = MIDDLE_NOTE;
         // Right side 
-        while (i <= END_PIXEL) {
+        while ((i+KEY_SIZE) <= END_PIXEL) {
             let keyName = keyNames[currentNote % 12];
             let blackKey = keyName.indexOf("#") !== -1;
             if (!blackKey) {
@@ -201,7 +223,7 @@ class Piano extends Component {
             }
             currentNote++;
         }
-        let endKey = currentNote;
+        let endKey = currentNote - 1;
 
         this.setState({
             startKey: startKey,
@@ -217,11 +239,11 @@ class Piano extends Component {
             // Cannot start with Black Key
             startKey --;
         }
-        if (keyNames[(endKey - 1) % 12].indexOf("#") !== -1) {
+        if (keyNames[(endKey) % 12].indexOf("#") !== -1) {
             // Cannot end with Black Key
             endKey++;
         }
-        for(let i = startKey; i < endKey; i++){
+        for(let i = startKey; i <= endKey; i++){
             let keyName = keyNames[i % 12];
             let blackKey = keyName.indexOf("#") !== -1;
             keyboard.push(
@@ -231,6 +253,7 @@ class Piano extends Component {
             blackKey={blackKey} 
             number={i} 
             key={i} 
+            color={this.state.color}
             onPointerDown={e=>this.handlePointerDown(e, i)}
             onPointerOver={e=>this.handlePointerOver(e, i)}
             onPointerMove={this.handlePointerMove}
@@ -278,7 +301,7 @@ class Piano extends Component {
                     style={style}
                     onClick={e=>this.handleOptionsChange(sound)}
                     key={i}
-                    className="piano-option"
+                    className="piano-sound-selection"
                 ></div>
                 </React.Fragment>
                )
@@ -287,11 +310,17 @@ class Piano extends Component {
     }
 
 
+
+
     render(){
+        let buttonClassname = !this.state.started ? "piano-colors-button" : "piano-colors-button piano-colors-button-active";
+        let buttonText = !this.state.started ? "Turn on Piano" : "Piano On!";
         return (
             <div className="piano-container" onPointerLeave={this.handlePointerUp}>
                 <div className="piano-options-container">
-                    {this.renderSoundSelections()}
+                    <div className="piano-sound-selection-container">
+                        {this.renderSoundSelections()}
+                    </div>
                 </div>
                 <div className="piano-keyboard-container" onPointerLeave={this.handlePointerUp}>
                 {/* <button className="piano-sustain-button"> <i>Sustain </i>(shift) </button> */}

@@ -1,5 +1,6 @@
 import SpectrogramPic from "./resources/spectrogram.png";
 import SignalGeneratorPic from "./resources/signal-generator.png";
+import MidiPic from "./resources/midi.png";
 import BetternomePic from "./resources/betternome.png";
 import YawnGeneratorPic from "./resources/yawn-generator.png";
 import AIJamPic from "./resources/Ai-jam2.png"
@@ -24,6 +25,16 @@ let ProjectData = [
         picture: SignalGeneratorPic,
         link: "https://signalgenerator.sciencemusic.org/",
         githubLink: "https://github.com/ListeningToWaves/Oscilloscope-v2"
+    },
+    {
+        title: "Transformer-based Symbolic Music Generation",
+        description: "Midi-based music generation using Google Magenta's Music Transformer and the REMI symbolic music data format.\
+        Trained on over 10,000 songs from the Lakh Midi Dataset.",
+        date: "February 2022",
+        picture: MidiPic,
+        link: "https://github.com/mhrice/music-transformer-generation",
+        githubLink: "https://github.com/mhrice/music-transformer-generation"
+        
     },
     {
         title: "Betternome",

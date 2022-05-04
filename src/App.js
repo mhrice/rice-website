@@ -65,7 +65,7 @@ class App extends Component {
 
     return (
     <BrowserRouter>        
-      <div className={className}>
+      <div className={className} style={{backgroundImage: `url(${process.env.PUBLIC_URL+ "/background.webp"})`}}>
         <Navigation/>
         <AnimatedSwitch
             atEnter={transition.atEnter}

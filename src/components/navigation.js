@@ -8,9 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes  } from '@fortawesome/free-solid-svg-icons';
 
 
-let firebase = require('../firebase');
-let storage = firebase.storage();
-
+// let firebase = require('../firebase');
+const firebase = require('firebase/app');
+require('firebase/storage');
+firebase.initializeApp();
+let storage = firebase.storage;
 
 const NAV_LINKS = {
     about: "About",
@@ -73,7 +75,7 @@ class Navigation extends Component {
 
 
     downloadResume = () =>{
-        let pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume_04-26-20.pdf");
+        let pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume.pdf");
         pathReference.getDownloadURL().then((url)=>{
             let xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';

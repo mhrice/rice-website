@@ -206,6 +206,7 @@ class Envelopes extends React.Component {
                 y: rect.height - 6
             }
         });
+        console.log("YE")
         Tone.Transport.start();
         this.synth.toDestination();
         this.synth.oscillator.type = "sawtooth";
