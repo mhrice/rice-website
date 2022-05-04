@@ -48,6 +48,7 @@ class About extends Component {
                                     <div className="list-text">
                                         <b>Queen Mary University of London</b>
                                         <div>M.S. in Sound and Music Computing, AI Music concentration</div>
+                                        <i>Fall 2023</i>
                                     </div>
                                 </div>
                                 <div className="about-list-row">
@@ -56,6 +57,7 @@ class About extends Component {
                                         <b>UC San Diego</b>
                                         <div>B.S. Electrical Engineering, DSP concentration</div>
                                         <div>Minor in Music Technology</div>
+                                        <i>Fall 2019</i>
                                     </div>
                                 </div>                                
                             </div>     

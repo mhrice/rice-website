@@ -6,13 +6,11 @@ import { withRouter } from 'react-router-dom';
 import { ReactComponent as Logo } from "../resources/Logo.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes  } from '@fortawesome/free-solid-svg-icons';
+import firebaseApp from "../firebase";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-
+const storage = getStorage(firebaseApp);
 // let firebase = require('../firebase');
-const firebase = require('firebase/app');
-require('firebase/storage');
-firebase.initializeApp();
-let storage = firebase.storage;
 
 const NAV_LINKS = {
     about: "About",
@@ -75,8 +73,8 @@ class Navigation extends Component {
 
 
     downloadResume = () =>{
-        let pathReference = storage.refFromURL("gs://rice-website.appspot.com/Rice_Resume.pdf");
-        pathReference.getDownloadURL().then((url)=>{
+        const pathReference = ref(storage, "gs://rice-website.appspot.com/Rice_Resume.pdf");
+        getDownloadURL(pathReference).then((url)=>{
             let xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
             xhr.onload = function(event) {
