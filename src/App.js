@@ -11,6 +11,8 @@ import Projects from './components/projects';
 import Synthesis from './components/synthesis';
 import Music from "./components/music";
 
+import HeartLogo from "./resources/heart.svg"
+
 
 function NotFoundPage(props){
 
@@ -42,17 +44,68 @@ const transition = {
   },
 };
 
+function Heart(props) {
+  return (
+    <img 
+    src={HeartLogo} 
+    className="heart" 
+    alt="heart!" 
+    style={{
+      left: props.position, 
+      animationDuration: props.duration,
+      animationDelay: props.delay
+    }}
+    moveDown={'1'}
+    />
+  )
+
+}
+
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      atHome: true
+      atHome: true,
+      enableHearts: 0,
+      hearts: []
     }
   }
   homeMounted = atHome => {
     // console.log("Hi", b)
 
     this.setState({atHome: atHome});
+  }
+
+  showHearts = enable => {
+    if (enable) {
+      this.setState({enableHearts: 1})
+      let hearts = [...new Array(200)].map(()=>{
+        return {
+          position: Math.round(Math.random() * 100) + "vw", 
+          duration: Math.random() * 3 + 2 + "s",
+          delay: Math.random() * 1 + "s",
+          id: Math.random()
+        }
+      });
+
+      this.setState({hearts: hearts})
+    } else {
+      this.setState({enableHearts: 0})
+    }
+  }
+
+
+  renderHearts(){
+    console.log(this.state.hearts)
+    return (
+      <div className='heart-container'>
+        {
+        this.state.hearts.map(heart=>{
+          return <Heart position={heart.position} duration={heart.duration} delay={heart.delay} key={heart.id}/>
+        })
+        }
+      </div>
+    )
   }
 
   render(){
@@ -65,7 +118,8 @@ class App extends Component {
 
     return (
     <BrowserRouter>        
-      <div className={className} style={{backgroundImage: `url(${process.env.PUBLIC_URL+ "/background.webp"})`}}>
+      {this.state.enableHearts == "1" && this.renderHearts()}
+      <div className={className} style={{backgroundImage: `url(${process.env.PUBLIC_URL+ "/background.webp"})`}} >
         <Navigation/>
         <AnimatedSwitch
             atEnter={transition.atEnter}
@@ -73,7 +127,7 @@ class App extends Component {
             atActive={transition.atActive}
             className="route-wrapper"
           >
-          <Route path="/about" component={About}/>
+          <Route path="/about" render={props=> <About {...props} showHearts={this.showHearts}/>}/>
           <Route path="/work" component={Projects}/>
           <Route path="/contact" component={Contact}/>
           <Route path="/synthesis" component={Synthesis}/>

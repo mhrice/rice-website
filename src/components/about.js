@@ -6,6 +6,9 @@ import Code from "../resources/code.svg";
 import AboutPhoto from "../resources/prof_pic.jpg";
 import QMULLogo from "../resources/qmul_logo.jpg";
 import UCSDLogo from "../resources/ucsd_logo.png";
+import Github from "../resources/GitHub-Mark-Light-32px.png";
+import Linkedin from "../resources/linkedin.png";
+import Twitter from "../resources/twitter.svg";
 
 
 class About extends Component {
@@ -13,7 +16,17 @@ class About extends Component {
         return (
             <div className="about-content">
                 <div className="about-content-container">
-                    <div className="about-photo-container"><img className="about-photo" src={AboutPhoto} alt="headshot"></img></div>
+                    <div className="about-photo-container">
+                        <div className="about-photo-photo-container">
+                        <img className="about-photo" src={AboutPhoto} alt="headshot"></img>
+                        <div className='about-secret' onDoubleClick={()=>this.props.showHearts(true)}></div>
+                        </div>
+                        <div className='about-socials-container'>
+                            <a href="https://github.com/mhrice" target="_blank" rel="noopener noreferrer"><img src={Github} alt="github" className="social-icon"/></a> 
+                            <a href="https://www.linkedin.com/in/matthewrice11/" target="_blank" rel="noopener noreferrer"><img src={Linkedin} alt="github" className="social-icon" style={{width: 35}} /></a> 
+                            <a href="https://twitter.com/mattricesound" target="_blank" rel="noopener noreferrer"><img src={Twitter} alt="github" className="social-icon" /></a> 
+                        </div>
+                    </div>
                     <div className="about-paragraph-container">
                         <div>As an <b>audio experience engineer</b> I'm someone who understands how to realize unique 
                             tech-based audio ideas. I'm a: 

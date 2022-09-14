@@ -23,17 +23,46 @@
 
 .about-photo-container {
     flex: 1;
-    /* background-color: blue; */
-    /* padding-left: 10%; */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     
 }
+
+
 
 .about-photo {
     height: 20rem;
     width: 19rem;
+    margin-bottom: 1rem;
 }
+
+.about-photo-photo-container {
+    position: relative;
+}
+.about-secret {
+    position: absolute;
+    z-index: 20;
+    color: green;
+    left: 46%;
+    top: 39%;
+    background-color: black;
+    padding: 0.5rem 1.25rem;
+    opacity: 0;
+}
+
+.about-socials-container {
+    min-width: 19rem;
+    /* align-self: flex-start; */
+    display: flex;
+}
+
+.social-icon {
+    margin-right: 1.2em;
+    height: 30px;
+    width: 30px;
+}
+
 @media (max-width: 1000px) {
     .about-content-container {
         flex-direction: column;

@@ -105,7 +105,7 @@ class Piano extends Component {
     constructor(){
         super();
         this.state = {
-            width: window.innerWidth,
+            width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
             startKey: 59,
             endKey: 61,
             soundChoice: "preset1",
@@ -197,7 +197,7 @@ class Piano extends Component {
 
 
     calculateKeyPositions = () =>{
-        let width = window.screen.width;
+        let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         const START_PIXEL = START_PERCENT_OF_SCREEN * width;
         const END_PIXEL = END_PERCENT_OF_SCREEN * width;
         let i = (END_PIXEL + START_PIXEL) / 2;

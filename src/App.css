@@ -99,3 +99,29 @@ img {
   width: 100vw;
   height: 90vh;
 }
+
+.heart[moveDown='1'] {
+    animation: moveDown 5s 1;
+}
+
+@keyframes moveDown {
+0%{
+    transform: translateY(-10vh) ;
+    opacity: 0.2;
+    visibility: visible;
+}
+100%{
+    transform: translateY(110vh) ;
+    opacity: 1;
+    visibility: visible;
+}
+}
+
+.heart {
+  width: 30px;
+  height: 30px;
+  top: 0%;
+  position: absolute;
+  z-index: 1;
+  visibility: hidden;
+}
