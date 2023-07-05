@@ -5,26 +5,26 @@ import * as Tone from "tone";
 
 
 class Home extends Component {
-    componentDidMount(){
+    componentDidMount() {
         this.props.homeMounted(1);
         document.addEventListener("pointerdown", async () => {
-	        await Tone.start();
+            await Tone.start();
         });
 
     }
 
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.homeMounted(0);
     }
-    render(){
+    render() {
         return (
             <div className="home-container">
                 <div className="home-content">
                     <div className="home-name">Matthew Rice</div>
-                    <div className="home-subtitle">Audio Experience Engineer</div>
+                    <div className="home-subtitle">Audio ML/DSP Engineer</div>
                 </div>
-                <Piano/>
+                <Piano />
             </div>
         )
     }

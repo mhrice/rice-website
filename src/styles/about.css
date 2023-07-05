@@ -1,23 +1,20 @@
 .about-content {
-    /* height: 90vh; */
-    width: 100vw;
     background-color: #293038;
-    /* background-color: #000C22; */
     color: white;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     min-height: 90vh;
 }
 
+.about-content i {
+    font-size: 0.9em;
+}
+
 .about-content-container {
     display: flex;
-    /* justify-content: space-around; */
     align-self: flex-start;
-    width: 100%;
     margin-top: 5%;
-    /* margin: 0% 10%; */
 
 }
 
@@ -26,7 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    word-break: keep-all;
 }
 
 
@@ -40,6 +37,7 @@
 .about-photo-photo-container {
     position: relative;
 }
+
 .about-secret {
     position: absolute;
     z-index: 20;
@@ -53,14 +51,20 @@
 
 .about-socials-container {
     min-width: 19rem;
-    /* align-self: flex-start; */
     display: flex;
+    margin-bottom: 1rem;
 }
 
 .social-icon {
     margin-right: 1.2em;
     height: 30px;
     width: 30px;
+}
+
+.about-blurb-container {
+    width: 60%;
+    line-height: 150%;
+    margin-top: 0%;
 }
 
 @media (max-width: 1000px) {
@@ -72,13 +76,7 @@
 
 
 .about-paragraph-container {
-    flex:2;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* padding-right: 10%; */
-    margin: 0% 5%;
-    height: 100%;
+    flex: 2;
 }
 
 
@@ -97,19 +95,23 @@ ul {
 
 .education-list-icon {
     flex: 0.5;
-    height: 3em;
-    margin-right: 1em
+    height: 4.7em;
+    width: 4.7em;
+    margin-right: 1.25em;
+    justify-items: center;
 }
+
 .about-list {
     padding: 0.5em 0;
+    font-size: 0.9em;
+
 }
 
 
 .about-list-row {
     display: flex;
-    /* height: 3rem; */
     margin: 1rem 0 2rem 0;
-    
+
 }
 
 .about-list-title {
@@ -118,6 +120,17 @@ ul {
 
 .list-text {
     flex: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.list-text * {
+    width: fit-content;
+}
+
+.list-text-title {
+    font-size: 1.25em;
+    margin-bottom: 0.5rem;
 }
 
 
@@ -126,10 +139,5 @@ ul {
 }
 
 .list-icon {
-    /* flex: 1; */
     height: 2em;
-    /* width: 1em; */
-    /* margin-right: 1em */
 }
-
-

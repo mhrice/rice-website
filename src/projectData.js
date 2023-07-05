@@ -4,10 +4,44 @@ import MidiPic from "./resources/midi.png";
 import BetternomePic from "./resources/betternome.png";
 import YawnGeneratorPic from "./resources/yawn-generator.png";
 import AIJamPic from "./resources/Ai-jam2.png"
+import CRASSHHFYPic from "./resources/crasshhfy.png"
+import LenaPic from "./resources/lena.png"
+import BeattrackPic from "./resources/beattrack.png"
 
-let ProjectData = [
+let FeaturedProjects = [
     {
-        title:"Interactive Spectrogram",
+        title: "Lena Singer",
+        description: "The Lena Singer project is a simulation of someone learning how to sing.\
+        Users can select an initial motivation and an initial ability for the singer, then, through a feedback-based process, \
+        the singer may improve at singing, or they may get worse, which in turn boosts or diminishes its confidence, ability, and motivation.\
+        It uses a VISinger2, a singing synthesis model, to generate the singing.",
+        date: "May 2023",
+        picture: LenaPic,
+        link: "https://lena-singer.vercel.app/",
+        githubLink: "https://github.com/mhrice/Lena-singer"
+    },
+    {
+        title: "CRASSHHFY",
+        description: "A neural drum sampler VST that uses a diffusion network to generate drum samples. \
+        Besides unconditional generation, the plugin also supports priming and inpainting.\
+        Based on the 'CRASH' paper and implementation by Rouard and Hadjeres.\
+        Submitted to the 2023 nerual audio plugin competition.",
+        date: "March 2023",
+        picture: CRASSHHFYPic,
+        link: "https://t.co/GmBo7BvCow",
+        githubLink: "https://github.com/calgoheen/crasshhfy"
+    },
+    {
+        title: "TCN Beat and Downbeat Tracking",
+        description: "My pytorch-lightning implementation of 'Temporal convolutional networks for musical audio beat tracking' by Davies and Böck. \
+        Extended the paper to jointly predict downbeat tracking. Achieved comparable performance to the original paper. ",
+        date: "March 2023",
+        picture: BeattrackPic,
+        link: "https://github.com/mhrice/BeatTrack/blob/main/beat_track_assignment.pdf",
+        githubLink: "https://github.com/mhrice/BeatTrack"
+    },
+    {
+        title: "Interactive Spectrogram",
         description: "An insanely interactive live-input web spectrogram with complex sound synthesis built in. Includes\
         features like multi-touch drawable synthesis (for touch screen devices), reverb, delay, and FM. Supports midi input and filter-based synthesis. \
         This project is part of ",
@@ -16,16 +50,8 @@ let ProjectData = [
         link: "https://spectrogram.sciencemusic.org/",
         githubLink: "https://github.com/ListeningToWaves/Spectrogram"
     },
-    {
-        title: "Interactive Signal Generator",
-        description: "A web audio signal generator that displays time-domain information of a user-selected wave shape. \
-        Users can draw to change frequency and amplitude of the sound. Supports multi-touch input to display summation of waveforms. \
-        This project is part of ",
-        date: "June 2019",
-        picture: SignalGeneratorPic,
-        link: "https://signalgenerator.sciencemusic.org/",
-        githubLink: "https://github.com/ListeningToWaves/Oscilloscope-v2"
-    },
+]
+let ProjectData = [
     {
         title: "Transformer-based Symbolic Music Generation",
         description: "Midi-based music generation using Google Magenta's Music Transformer and the REMI symbolic music data format.\
@@ -34,7 +60,6 @@ let ProjectData = [
         picture: MidiPic,
         link: "https://github.com/mhrice/music-transformer-generation",
         githubLink: "https://github.com/mhrice/music-transformer-generation"
-        
     },
     {
         title: "Betternome",
@@ -45,7 +70,16 @@ let ProjectData = [
         picture: BetternomePic,
         link: "https://mhrice.github.io/betternome/",
         githubLink: "https://github.com/mhrice/betternome"
-        
+    },
+    {
+        title: "Interactive Signal Generator",
+        description: "A web audio signal generator that displays time-domain information of a user-selected wave shape. \
+        Users can draw to change frequency and amplitude of the sound. Supports multi-touch input to display summation of waveforms. \
+        This project is part of ",
+        date: "June 2019",
+        picture: SignalGeneratorPic,
+        link: "https://signalgenerator.sciencemusic.org/",
+        githubLink: "https://github.com/ListeningToWaves/Oscilloscope-v2"
     },
     {
         title: "AI Jam 2",
@@ -71,4 +105,4 @@ let ProjectData = [
 ]
 
 
-export default ProjectData;
+export { ProjectData, FeaturedProjects };

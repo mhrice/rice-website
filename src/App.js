@@ -128,7 +128,7 @@ class App extends Component {
             className="route-wrapper"
           >
           <Route path="/about" render={props=> <About {...props} showHearts={this.showHearts}/>}/>
-          <Route path="/work" component={Projects}/>
+          <Route path="/projects" component={Projects}/>
           <Route path="/contact" component={Contact}/>
           <Route path="/synthesis" component={Synthesis}/>
           <Route path="/music" component={Music}/>
