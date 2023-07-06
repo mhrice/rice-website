@@ -26,7 +26,9 @@ function MobileNav(props) {
         <div className="mobile-nav-container">
             {!props.mobileNavClicked ? <FontAwesomeIcon className="mobile-nav-menu" color="white" icon={faBars} onClick={props.handleMobileNavChange} /> :
                 <>
-                    <FontAwesomeIcon className="mobile-nav-menu" color="white" icon={faTimes} onClick={props.handleMobileNavChange} />
+                    <FontAwesomeIcon className="mobile-nav-menu" color="black" icon={faBars} onClick={props.handleMobileNavChange} />
+                    <div className="mobile-nav-menu-title">Menu</div>
+                    <hr width="90%"></hr>
                     <div className="mobile-nav-links">
                         {Object.keys(NAV_LINKS).map(key => {
                             if (key === "resume") {

@@ -71,6 +71,18 @@
     .about-content-container {
         flex-direction: column;
         gap: 12px;
+        align-items: center;
+
+    }
+
+    .about-paragraph-container {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-blurb-container {
+        width: 100%;
     }
 }
 

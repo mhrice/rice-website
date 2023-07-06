@@ -107,17 +107,17 @@ class About extends Component {
                         <div className="about-list">
                             <div className="about-list-row">
                                 <div className="list-text">
-                                    <b className='list-text-title'>Creating your own Singing Voice Synthesizer</b>
+                                    <b className='list-text-title'>Creating Your Own Singing Voice Synthesizer</b>
                                     <div>Harmonai Hangouts. June 2023</div>
                                     <div>
                                         <a href="https://computationalcreativity.net/iccc23/papers/ICCC-2023_paper_108.pdf">Video </a>
-                                        <a href="https://computationalcreativity.net/iccc23/papers/ICCC-2023_paper_108.pdf">Slides</a>
+                                        <a href="https://drive.google.com/file/d/1eE4IrzzLR76vtNoahGfCnXTN2Lr63YWU/view?usp=sharing">Slides</a>
                                     </div>
                                 </div>
                             </div>
                             <div className="about-list-row">
                                 <div className="list-text">
-                                    <b className='list-text-title'>Creating your own Singing Voice Synthesizer</b>
+                                    <b className='list-text-title'>Creating Your Own Singing Voice Synthesizer</b>
                                     <div>ADCx San Francisco. May 2023</div>
                                     <div>
                                         <a href="https://www.youtube.com/watch?v=fqWL2Qj5eSQ&t=11787s">Video </a>
