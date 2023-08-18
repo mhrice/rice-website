@@ -102,7 +102,7 @@ class Navigation extends Component {
         return (
             <div className="navigation-container" style={{ backgroundColor: backgroundColor }}>
                 <NavLink to="/" className="navigation-left-header navigation-link" activeStyle={{ fontWeight: "bold" }}>{homeLinkName}</NavLink>
-                {window.screen.width < 1000 ? <MobileNav mobileNavClicked={this.state.mobileNavClicked} handleMobileNavChange={this.handleMobileNavChange} /> :
+                {window.screen.width < 1000 ? <MobileNav mobileNavClicked={this.state.mobileNavClicked} handleMobileNavChange={this.handleMobileNavChange} downloadResume={this.downloadResume} /> :
                     <>
                         <div className="navigation-left-links">
                             {Object.keys(NAV_LINKS).map(key => {

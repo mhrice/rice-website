@@ -7,8 +7,19 @@ import AIJamPic from "./resources/Ai-jam2.png"
 import CRASSHHFYPic from "./resources/crasshhfy.png"
 import LenaPic from "./resources/lena.png"
 import BeattrackPic from "./resources/beattrack.png"
+import RemfxPic from "./resources/remfx.png"
 
 let FeaturedProjects = [
+    {
+        title: "Audio Effect Removal",
+        description: "Implementation for the paper 'General Purpose Audio Effect Removal' by Rice, Steinmetz, Reiss, and Fazekas.\
+        This project is part of my master's thesis at Queen Mary University of London. We experimented with training SOTA source-separation models for the related task of audio effect removal. \
+        Used pytorch-lightning for implementation, Hydra for experiment management, and wandb for real-time logging. ",
+        date: "October 2023",
+        picture: RemfxPic,
+        link: "https://csteinmetz1.github.io/RemFX/",
+        githubLink: "https://github.com/mhrice/RemFx"
+    },
     {
         title: "Lena Singer",
         description: "The Lena Singer project is a simulation of someone learning how to sing.\
@@ -32,15 +43,6 @@ let FeaturedProjects = [
         githubLink: "https://github.com/calgoheen/crasshhfy"
     },
     {
-        title: "TCN Beat and Downbeat Tracking",
-        description: "My pytorch-lightning implementation of 'Temporal convolutional networks for musical audio beat tracking' by Davies and Böck. \
-        Extended the paper to jointly predict downbeat tracking. Achieved comparable performance to the original paper. ",
-        date: "March 2023",
-        picture: BeattrackPic,
-        link: "https://github.com/mhrice/BeatTrack/blob/main/beat_track_assignment.pdf",
-        githubLink: "https://github.com/mhrice/BeatTrack"
-    },
-    {
         title: "Interactive Spectrogram",
         description: "An insanely interactive live-input web spectrogram with complex sound synthesis built in. Includes\
         features like multi-touch drawable synthesis (for touch screen devices), reverb, delay, and FM. Supports midi input and filter-based synthesis. \
@@ -52,6 +54,15 @@ let FeaturedProjects = [
     },
 ]
 let ProjectData = [
+    {
+        title: "TCN Beat and Downbeat Tracking",
+        description: "My pytorch-lightning implementation of 'Temporal convolutional networks for musical audio beat tracking' by Davies and Böck. \
+        Extended the paper to jointly predict downbeat tracking. Achieved comparable performance to the original paper. ",
+        date: "March 2023",
+        picture: BeattrackPic,
+        link: "https://github.com/mhrice/BeatTrack/blob/main/beat_track_assignment.pdf",
+        githubLink: "https://github.com/mhrice/BeatTrack"
+    },
     {
         title: "Transformer-based Symbolic Music Generation",
         description: "Midi-based music generation using Google Magenta's Music Transformer and the REMI symbolic music data format.\

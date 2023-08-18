@@ -31,8 +31,8 @@ class About extends Component {
                         <p className='about-blurb-container'>
                             I am a master's student at Queen Mary University of London. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
                             looking to explore new avenues of musical creation and analysis
-                            to provide better tools to musicians, producers, composers
-                            and audio tech enthusiasts. <br></br>My master's thesis (in progress) is on general purpose audio effect removal.
+                            to provide better tools to musicians, producers, composers,
+                            and audio tech enthusiasts. <br></br>My master's thesis (in progress) topic is general purpose audio effect removal.
                         </p>
                         <div className="about-list-title">Experience</div>
                         <div className="about-list">
@@ -88,9 +88,9 @@ class About extends Component {
                             <div className="about-list-row">
                                 <div className="list-text">
                                     <b className='list-text-title'>General Purpose Audio Effect Removal</b>
-                                    <div>Matthew Rice and Christian Steinmetz</div>
+                                    <div>Matthew Rice*, Christian Steinmetz*, Joshua Reiss, George Fazekas</div>
                                     <div>IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA). October 2023</div>
-                                    <a href="https://computationalcreativity.net/iccc23/papers/ICCC-2023_paper_108.pdf">Paper</a>
+                                    <div>Paper</div>
                                 </div>
                             </div>
                             <div className="about-list-row">
@@ -110,7 +110,6 @@ class About extends Component {
                                     <b className='list-text-title'>Creating Your Own Singing Voice Synthesizer</b>
                                     <div>Harmonai Hangouts. June 2023</div>
                                     <div>
-                                        <a href="https://computationalcreativity.net/iccc23/papers/ICCC-2023_paper_108.pdf">Video </a>
                                         <a href="https://drive.google.com/file/d/1eE4IrzzLR76vtNoahGfCnXTN2Lr63YWU/view?usp=sharing">Slides</a>
                                     </div>
                                 </div>

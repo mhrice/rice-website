@@ -19,7 +19,7 @@
 }
 
 .about-photo-container {
-    flex: 1;
+    flex: 1.5;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,6 +32,7 @@
     height: 20rem;
     width: 19rem;
     margin-bottom: 1rem;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.9);
 }
 
 .about-photo-photo-container {
@@ -53,6 +54,7 @@
     min-width: 19rem;
     display: flex;
     margin-bottom: 1rem;
+    justify-content: center;
 }
 
 .social-icon {
@@ -88,7 +90,7 @@
 
 
 .about-paragraph-container {
-    flex: 2;
+    flex: 2.5;
 }
 
 
