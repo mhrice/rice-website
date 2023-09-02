@@ -90,7 +90,9 @@ class About extends Component {
                                     <b className='list-text-title'>General Purpose Audio Effect Removal</b>
                                     <div>Matthew Rice*, Christian Steinmetz*, Joshua Reiss, George Fazekas</div>
                                     <div>IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA). October 2023</div>
-                                    <div>Paper</div>
+                                    <a href="https://arxiv.org/abs/2308.16177">Paper</a>
+                                    <a href="https://www.youtube.com/watch?v=0gbiO3LkyuM">Video</a>
+                                    <a href="https://huggingface.co/spaces/mattricesound/RemFx">Demo</a>
                                 </div>
                             </div>
                             <div className="about-list-row">
