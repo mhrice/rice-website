@@ -29,10 +29,10 @@ class About extends Component {
                     </div>
                     <div className="about-paragraph-container">
                         <p className='about-blurb-container'>
-                            I am a master's student at Queen Mary University of London. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
+                            I am an audio research engineer at <a href="https://www.mayk.it/">Mayk</a>. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
                             looking to explore new avenues of musical creation and analysis
                             to provide better tools to musicians, producers, composers,
-                            and audio tech enthusiasts. <br></br>My master's thesis (in progress) topic is general purpose audio effect removal.
+                            and audio tech enthusiasts. <br></br>My master's thesis topic is general purpose audio effect removal.
                         </p>
                         <div className="about-list-title">Experience</div>
                         <div className="about-list">
