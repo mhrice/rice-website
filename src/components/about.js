@@ -9,6 +9,7 @@ import Twitter from "../resources/twitter.svg";
 import Mayk from "../resources/mayk.jpeg";
 import Qualcomm from "../resources/qualcomm.svg";
 import LTW from "../resources/ltw.png";
+import Output from "../resources/output.jpeg";
 
 
 class About extends Component {
@@ -29,7 +30,7 @@ class About extends Component {
                     </div>
                     <div className="about-paragraph-container">
                         <p className='about-blurb-container'>
-                            I am an audio research engineer at <a href="https://www.mayk.it/">Mayk</a>. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
+                            I am an audio research engineer at <a href="https://output.com/">Output</a>. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
                             looking to explore new avenues of musical creation and analysis
                             to provide better tools to musicians, producers, composers,
                             and audio tech enthusiasts.
@@ -37,12 +38,20 @@ class About extends Component {
                         <div className="about-list-title">Experience</div>
                         <div className="about-list">
                             <div className="about-list-row">
+                                <img src={Output} className="education-list-icon" alt="output" style={{ "marginTop": "0.2em" }} />
+                                <div className="list-text">
+                                    <b className='list-text-title'>Output</b>
+                                    <div>Audio Research Engineer</div>
+                                    <i>2023 - Present</i>
+                                </div>
+                            </div>
+                            <div className="about-list-row">
                                 <img src={Mayk} className="education-list-icon" alt="Mayk" style={{ "marginTop": "0.2em" }} />
                                 <div className="list-text">
                                     <b className='list-text-title'>Mayk</b>
-                                    <div>Audio R&D Engineer</div>
+                                    <div>Audio Research Engineer</div>
                                     <div>Audio Software Engineer</div>
-                                    <i>2022 - Present</i>
+                                    <i>2022 - 2023</i>
                                 </div>
                             </div>
                             <div className="about-list-row">
