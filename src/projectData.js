@@ -22,7 +22,7 @@ let FeaturedProjects = [
         githubLink: "https://github.com/mhrice/RemFx"
     },
     {
-        title: "Soundsauce.ai",
+        title: "Soundsauce",
         description: "A web app for text-to-music generation using Meta's MusicGen melody model, fine-tuned on a set of EDM melodies. \
         Supports providing a conditioning melody and parallel inference with four generation variations. \
         Uses Next.js, Beam Cloud, Firebase, GCP, Cloud Functions, and Vercel.",
