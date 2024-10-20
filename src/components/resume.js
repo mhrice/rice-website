@@ -7,7 +7,7 @@ class Resume extends Component {
     return (
       <div className="resume-container">
         <object data="/Rice_Resume.pdf" type="application/pdf" className="resume">
-          <p>Alternative text - include a link <a href="/Rice_Resume.pdf">to the PDF!</a></p>
+          <a href="/Rice_Resume.pdf">Download my resume</a>
         </object>
       </div>
     )
