@@ -24,7 +24,7 @@ let FeaturedProjects = [
     {
         title: "Soundsauce.ai",
         description: "A web app for text-to-music generation using Meta's MusicGen melody model, fine-tuned on a set of EDM melodies. \
-        Supports providing a conditioning melody and parallel inference with 4 generation variations. \
+        Supports providing a conditioning melody and parallel inference with four generation variations. \
         Uses Next.js, Beam Cloud, Firebase, GCP, Cloud Functions, and Vercel.",
         date: "March 2023",
         picture: SoundsaucePic,
@@ -107,23 +107,12 @@ let ProjectData = [
         title: "AI Jam 2",
         description: "Final project for Machine Learning and the Arts course. Live jam session with machine learning music models based on Google's AI Jam. \
         Uses pre-trained Magenta drum-rnn and melody-rnn models to generate accompaniment for user-created baselines and melodies.\
-        Note: For full functionality, download and run locally with npm and use a midi controller.",
+        For full functionality, a midi controller is required.",
         date: "June 2019",
         picture: AIJamPic,
         link: "https://mhrice.github.io/Ai-Jam-2/",
         githubLink: "https://github.com/mhrice/Ai-Jam-2"
     },
-    {
-        title: "Yawn Generator VST",
-        description: "This audio synthesis VST plugin uses concepts from additive synthesis, physical modeling, and filtering to achieve a synthetic yawn sound. \
-        By pressing a desired note on the piano keyboard, the synth will generate a yawn sound centered at that note, before dropping in frequency like a typical yawn does. \
-        The algorithm uses time-variant additive synthesis + noise for the base sound, with filtering, envelopes, panning, and a touch of reverb to make it sound more authentic. \
-        The plugin has yawn speed and noise control providing tailored yawn experiences.",
-        date: "December 2018",
-        picture: YawnGeneratorPic,
-        link: "https://github.com/mhrice/YawnGenerator/raw/master/YawnGenerator.dll",
-        githubLink: "https://github.com/mhrice/YawnGenerator"
-    }
 ]
 
 
