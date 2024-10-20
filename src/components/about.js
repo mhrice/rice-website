@@ -42,7 +42,7 @@ class About extends Component {
                                 <div className="list-text">
                                     <b className='list-text-title'>Output</b>
                                     <div>Audio Research Engineer</div>
-                                    <i>2023 - Present</i>
+                                    <i>2024 - Present</i>
                                 </div>
                             </div>
                             <div className="about-list-row">
@@ -51,7 +51,7 @@ class About extends Component {
                                     <b className='list-text-title'>Mayk</b>
                                     <div>Audio Research Engineer</div>
                                     <div>Audio Software Engineer</div>
-                                    <i>2022 - 2023</i>
+                                    <i>2022 - 2024</i>
                                 </div>
                             </div>
                             <div className="about-list-row">
