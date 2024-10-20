@@ -8,6 +8,7 @@ import CRASSHHFYPic from "./resources/crasshhfy.png"
 import LenaPic from "./resources/lena.png"
 import BeattrackPic from "./resources/beattrack.png"
 import RemfxPic from "./resources/remfx.png"
+import SoundsaucePic from "./resources/soundsauce.png"
 
 let FeaturedProjects = [
     {
@@ -21,15 +22,14 @@ let FeaturedProjects = [
         githubLink: "https://github.com/mhrice/RemFx"
     },
     {
-        title: "Lena Singer",
-        description: "The Lena Singer project is a simulation of someone learning how to sing.\
-        Users can select an initial motivation and an initial ability for the singer, then, through a feedback-based process, \
-        the singer may improve at singing, or they may get worse, which in turn boosts or diminishes its confidence, ability, and motivation.\
-        It uses a VISinger2, a singing synthesis model, to generate the singing.",
-        date: "May 2023",
-        picture: LenaPic,
-        link: "https://lena-singer.vercel.app/",
-        githubLink: "https://github.com/mhrice/Lena-singer"
+        title: "Soundsauce.ai",
+        description: "A web app for text-to-music generation using Meta's MusicGen melody model, fine-tuned on a set of EDM melodies. \
+        Supports providing a conditioning melody and parallel inference with 4 generation variations. \
+        Uses Next.js, Beam Cloud, Firebase, GCP, Cloud Functions, and Vercel.",
+        date: "March 2023",
+        picture: SoundsaucePic,
+        link: "https://soundsauce-web-hd65.vercel.app/",
+        githubLink: "https://github.com/mhrice/"
     },
     {
         title: "CRASSHHFY",
@@ -54,6 +54,17 @@ let FeaturedProjects = [
     },
 ]
 let ProjectData = [
+    {
+        title: "Lena Singer",
+        description: "The Lena Singer project is a simulation of someone learning how to sing.\
+        Users can select an initial motivation and an initial ability for the singer, then, through a feedback-based process, \
+        the singer may improve at singing, or they may get worse, which in turn boosts or diminishes its confidence, ability, and motivation.\
+        It uses a VISinger2, a singing synthesis model, to generate the singing.",
+        date: "May 2023",
+        picture: LenaPic,
+        link: "https://lena-singer.vercel.app/",
+        githubLink: "https://github.com/mhrice/Lena-singer"
+    },
     {
         title: "TCN Beat and Downbeat Tracking",
         description: "My pytorch-lightning implementation of 'Temporal convolutional networks for musical audio beat tracking' by Davies and Böck. \
