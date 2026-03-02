@@ -10,6 +10,8 @@ import Mayk from "../resources/mayk.jpeg";
 import Qualcomm from "../resources/qualcomm.svg";
 import LTW from "../resources/ltw.png";
 import Output from "../resources/output.jpeg";
+import Tamber from "../resources/tamber.png";
+import Stability from "../resources/stability.jpeg";
 
 
 class About extends Component {
@@ -30,7 +32,7 @@ class About extends Component {
                     </div>
                     <div className="about-paragraph-container">
                         <p className='about-blurb-container'>
-                            I am an audio research engineer at <a href="https://output.com/">Output</a>. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
+                            I am an audio research engineer at <a href="https://stability.ai/">Stability AI</a>. My work focuses on merging the <b>creative</b> with the <b>technical</b>,
                             looking to explore new avenues of musical creation and analysis
                             to provide better tools to musicians, producers, composers,
                             and audio tech enthusiasts.
@@ -38,11 +40,27 @@ class About extends Component {
                         <div className="about-list-title">Experience</div>
                         <div className="about-list">
                             <div className="about-list-row">
+                                <img src={Stability} className="education-list-icon" alt="Stability" style={{ "marginTop": "0.2em" }} />
+                                <div className="list-text">
+                                    <b className='list-text-title'>Stability</b>
+                                    <div>Audio Research Engineer</div>
+                                    <i>2025 - 2026</i>
+                                </div>
+                            </div>
+                            <div className="about-list-row">
+                                <img src={Tamber} className="education-list-icon" alt="Tamber" style={{ "marginTop": "0.2em" }} />
+                                <div className="list-text">
+                                    <b className='list-text-title'>Tamber</b>
+                                    <div>Audio Research Engineer</div>
+                                    <i>2025 - 2026</i>
+                                </div>
+                            </div>
+                            <div className="about-list-row">
                                 <img src={Output} className="education-list-icon" alt="output" style={{ "marginTop": "0.2em" }} />
                                 <div className="list-text">
                                     <b className='list-text-title'>Output</b>
                                     <div>Audio Research Engineer</div>
-                                    <i>2024 - Present</i>
+                                    <i>2024 - 2025</i>
                                 </div>
                             </div>
                             <div className="about-list-row">

@@ -9,6 +9,7 @@ import LenaPic from "./resources/lena.png"
 import BeattrackPic from "./resources/beattrack.png"
 import RemfxPic from "./resources/remfx.png"
 import SoundsaucePic from "./resources/soundsauce.png"
+import SoundlabPic from "./resources/soundlab.png"
 
 let FeaturedProjects = [
     {
@@ -43,6 +44,16 @@ let FeaturedProjects = [
         githubLink: "https://github.com/calgoheen/crasshhfy"
     },
     {
+        title: "Soundlab",
+        description: "SoundLab is an interactive web application that records audio from the microphone and visualizes it in real-time. It features waveform and spectrogram analysis, allowing users to explore frequency content and amplitude variations. With built-in analysis tools, filtering options, and event detection, SoundLab is designed for audio research, sound event detection, and signal processing experiments.",
+        date: "February 2025",
+        picture: SoundlabPic,
+        link: "https://soundlab.sciencemusic.org",
+        githubLink: "https://github.com/ListeningToWaves/"
+    },
+]
+let ProjectData = [
+    {
         title: "Interactive Spectrogram",
         description: "An insanely interactive live-input web spectrogram with complex sound synthesis built in. Includes\
         features like multi-touch drawable synthesis (for touch screen devices), reverb, delay, and FM. Supports midi input and filter-based synthesis. \
@@ -50,10 +61,8 @@ let FeaturedProjects = [
         date: "September 2019",
         picture: SpectrogramPic,
         link: "https://spectrogram.sciencemusic.org/",
-        githubLink: "https://github.com/ListeningToWaves/Spectrogram"
+        githubLink: "https://github.com/ListeningToWaves/"
     },
-]
-let ProjectData = [
     {
         title: "Lena Singer",
         description: "The Lena Singer project is a simulation of someone learning how to sing.\
